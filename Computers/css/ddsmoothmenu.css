@@ -27,6 +27,7 @@
 	text-decoration: none;
 	outline: none;
 	text-align: center;
+	font-weight: bold;
 }
 
 * html .ddsmoothmenu ul li a{ /*IE6 hack to get sub menu links to behave correctly*/
