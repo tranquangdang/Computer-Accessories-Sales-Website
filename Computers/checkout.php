@@ -22,7 +22,7 @@
             
             <div class="cleaner h50"></div>
             <h3>Giỏ hàng</h3>
-            <h4>Tổng tiền: <strong>₫11.085.000 </strong></h4>
+            <h4>Tổng tiền: <strong>₫<?php if(isset($_GET['OrderTotalMoney'])) echo $_GET['OrderTotalMoney'];?></strong></h4>
 			<p><input type="checkbox" />
 			Tôi đồng ý với <a href="#">điều khoản</a> của website này</p>
             <table style="border:1px solid #CCCCCC;" width="100%">

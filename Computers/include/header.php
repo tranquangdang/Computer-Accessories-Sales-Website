@@ -1,4 +1,5 @@
-
+<?php session_start(); ?>
+<?php  include("connect.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -34,7 +35,7 @@ ddsmoothmenu.init({
 <div id="templatemo_wrapper">
 
 	<div id="templatemo_header">
-    	<div id="site_title"><h1><a href="index.php"></a></h1></div>
+    	<div id="site_title"><h1><a href="index.php">Đăng Trường Computers</a></h1></div>
         <div id="header_right">
         	<p>
 	        <a href="#">Tài khoản</a> | <a href="#">Yêu thích</a> | <a href="#">Đăng nhập / Đăng ký</a></p>
@@ -48,7 +49,7 @@ ddsmoothmenu.init({
     <div id="templatemo_menubar">
     	<div id="top_nav" class="ddsmoothmenu">
             <ul>
-                <li><a href="index.php" class="selected">Trang chủ</a></li>
+                <li><a href="index.php">Trang chủ</a></li>
                 <li><a href="products.php">Sản phẩm</a>
                     <ul>
                         <li><a href="#submenu1">Linh kiện mới</a></li>
@@ -59,10 +60,9 @@ ddsmoothmenu.init({
                 <li><a href="contact.php">Liên hệ</a>
                     <ul>
                         <li><a href="#submenu1">Thông tin</a></li>
-                        <li><a href="#submenu2">Tuyển dụng</a></li>
                     </ul>
                 </li>
-                <li><a href="faqs.php">Link kiện cũ</a></li>
+                <li><a href="faqs.php">Tuyển dụng</a></li>
                 <li><a href="about.php">Về chúng tôi</a></li>
             </ul>
             <br style="clear: left" />
@@ -81,7 +81,7 @@ ddsmoothmenu.init({
             	<h3>Sản phẩm chính</h3>   
                 <div class="content"> 
                 	<ul class="sidebar_list">
-                        <li class="first"><a href="#">CPU - Bộ vi xử lý</a></li>
+                        <li><a href="products.php">CPU - Bộ vi xử lý</a></li>
                         <li><a href="products.php">VGA - Card màn hình</a></li>
                         <li><a href="products.php">Mainboard - Bo mạch chủ</a></li>
                         <li><a href="products.php">Ram - Bộ nhớ trong</a></li>

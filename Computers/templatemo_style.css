@@ -12,10 +12,6 @@ body {
 }
 
 a, a:link, a:visited { color: #0299aa; font-weight: bold; text-decoration: none }
-a:hover { text-decoration: underline; }
-
-a.addtocart{ display: inline-block; width: 80px; height: 21px; line-height: 21px; text-align: center; font-size: 10px; font-weight: bold; color: #333; background: url(images/templatemo_addtocart.png) }
-a.detail{ display: inline-block; width: 64px; height: 20px; line-height: 20px; text-align: center; font-size: 10px; font-weight: bold; color: #333; background: url(images/templatemo_detail.png) }
 
 p { margin: 0 0 10px 0; padding: 0; }
 img { border: none; }
@@ -83,9 +79,9 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	background: url(images/templatemo_footer.png) no-repeat top
 }
 
-#site_title { float: left; margin-top: 0px; }
-#site_title h1 { margin: 0; padding: 0 }
-#site_title h1 a { display: block; width: 120px; height: 90px; ; background: url(images/dt_logo.png) no-repeat top left }
+#site_title { float: left; margin-top: -20px; }
+#site_title h1 {font-size: 15px; margin: 0; padding: 0 }
+#site_title h1 a { display: block; padding-top: 90px; font-size: 15px; letter-spacing: 1px; color: #2f2f2f; text-align: left; background: url(images/dt_logo.png) no-repeat top left  }
 
 #header_right { float: right; margin: 35px 0px 0 0; color: #666; }
 #header_right { font-size: 15px;}
@@ -163,18 +159,21 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	width: 220px;
 	text-align: center;
 	margin: 0 10px 30px 0;
-	padding-bottom: 20px;
-	border-bottom: 1px dotted #ccc
+	border-bottom: 1px solid #ccc
 }
+
+.product_box:hover {opacity: 0.8;box-shadow: 2px 8px 9px rgba(0,0,0,0.1);}
+
 
 .product_box img {
 	margin-bottom: 5px;
 	width: 200px;
-	height: 150px;
+	height: 200px;
 }
 .product_box h3 {
-	font-size: 18px;
-	line-height: 20px;
+	margin: 7px;
+	font-size: 15px;
+	line-height: 18px;
 	color: #000;
 	font-weight: bold;
 	overflow: hidden;
@@ -183,14 +182,14 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
    -webkit-line-clamp: 2; /* number of lines to show */
    -webkit-box-orient: vertical;
 }
-.product_box .product_price {
+.product_price {
 	color: #1435C3;
 	font-size: 25px;
 	font-weight: 700;
 	margin-bottom: 20px;
 }
 
-.product_box .product_price span {
+.product_price a {
 	color: #1435C3;
 	font-size: 15px;
 	font-weight: 700;
@@ -205,7 +204,7 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	display: block;
 }
 
-.product_box .discount {
+.discount {
 	min-height: 20px;
 	color: #696969;
 	text-decoration: line-through;
@@ -351,3 +350,10 @@ a.nivo-prevNav {
    -webkit-line-clamp: 3; /* number of lines to show */
    -webkit-box-orient: vertical;
 }
+
+a.blackBtn{font-size: 20px; color: #ffffff; background-color: #696969; display: block; padding: 20px; text-decoration: none;}
+
+a.blackBtn:hover, td:hover a.blackBtn{background-color: #000000; }
+
+.update {padding: 10px; font-weight: bold; border:none; background-color: #696969; color: white; cursor: pointer;}
+td:hover input.update {background-color: #000000; cursor: pointer;}
