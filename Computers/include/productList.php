@@ -1,9 +1,24 @@
+
+
 <?php 
-    $sql= "select * from tblProduct";
+    if (isset($_GET['CategoryNo'])) {
+        $cate = $_GET['CategoryNo'];
+        $sql2= "select * from tblProductCategory where CategoryID in (".$cate.")";
+        $result = mysqli_query($connect,$sql2);
+        $st='';
+        while( ($row = mysqli_fetch_assoc($result))!= NULL) {
+            $st .= ' '.$row['CategoryName'];
+        }
+        echo '<h1>'.$st.'</h1>';
+        $sql= "select * from tblProduct where CategoryNo in (".$cate.")";
+    } else {
+        $sql= "select * from tblProduct";
+    }
+
     $results = mysqli_query($connect,$sql);
-    while( ($rows = mysqli_fetch_assoc($results))!= NULL )
-{
+    while( ($rows = mysqli_fetch_assoc($results))!= NULL) {
 ?>
+
 <div class="product_box">
     <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>" style="display: block">
         <h3><?php echo $rows['ProductName']; ?></h3>
@@ -13,5 +28,4 @@
     </a>
 </div>
 <?php }
-    mysqli_close($connect);
 ?>

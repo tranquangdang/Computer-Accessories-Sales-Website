@@ -5,14 +5,15 @@ $cart = array();
     if(isset($_SESSION['cart'])) {
         $cart = $_SESSION['cart'];
     }
-    if (isset($_GET['Action']) && isset($_GET['ProductID'])) {
+    if ((isset($_GET['Action']) && isset($_GET['ProductID'])) || isset($_GET['Qty'])) {
     $ProductID = $_GET['ProductID'];
         if($_GET['Action'] == 'Add') {
         //Thêm sp vào giỏ hàng
         //Duyệt xem đã có chưa
+        $Qty = $_GET['Qty'];
         for($i=0; $i<count($cart); $i++) {
             if ($cart[$i]['ProductID'] == $ProductID) {
-                $cart[$i]['QtyOnHand']++;
+                $cart[$i]['QtyOnHand'] += $Qty;
                 break;
             }
         }
@@ -22,7 +23,7 @@ $cart = array();
             $sql = "select * from tblProduct where ProductID='".$ProductID."'";
             $results = mysqli_query($connect,$sql);
             while( ($rows = mysqli_fetch_assoc($results))!= NULL ) { //lấy tất cả thông tin sp 
-                $rows['QtyOnHand']=1;
+                $rows['QtyOnHand'] = $Qty;
                 //thêm vào giỏ hàng
                 $cart[] = $rows;
                 }
@@ -44,11 +45,11 @@ $cart = array();
     $_SESSION['cart'] = $cart;
 }
 //Xử lý cập nhật giỏ hàng
-if (isset($_POST['ProductID']) && isset($_POST['QtyOnHand'])) {
+if (isset($_POST['ProductID']) && isset($_POST['Qty'])) {
     $ProductID = $_POST['ProductID'];
-    $QtyOnHand = $_POST['QtyOnHand'];
+    $Qty = $_POST['Qty'];
     for($i=0; $i<count($cart); $i++) {
-        $cart[$i]['QtyOnHand'] = $QtyOnHand[$i];
+        $cart[$i]['QtyOnHand'] = $Qty[$i];
     }
     //Cập nhật giỏ hàng vào session
     $_SESSION['cart'] = $cart;
@@ -64,7 +65,7 @@ if (isset($_POST['ProductID']) && isset($_POST['QtyOnHand'])) {
                         <th width="180" align="left">Mô tả </th> 
                         <th width="100" align="center">Số lượng </th> 
                         <th width="60" align="right">Giá tiền </th> 
-                        <th width="90" align="right">Tổng cộng </th> 
+                        <th width="50" align="right">Tổng cộng </th> 
                         <th width="90" align="center">Xóa </th> 
                 </tr>
                 <?php //Hiển thị các sp trong giỏ hàng
@@ -76,7 +77,7 @@ if (isset($_POST['ProductID']) && isset($_POST['QtyOnHand'])) {
                 <tr>
                     <td><img style="width: 200px; height: 200px" src="<?php echo $rows['ProductImg']; ?>" alt="image 1" /></td> 
                     <td><span><?php echo $rows['ProductName']; ?><input type="hidden" name="ProductID[]" value="<?php echo $rows['ProductID']; ?>" /></span></td> 
-                    <td align="center"><input type="number" name="QtyOnHand[]" value="<?php echo $rows['QtyOnHand']; ?>" style="width: 30px; text-align: right" /></td>
+                    <td align="center"><input type="number" name="Qty[]" value="<?php echo $rows['QtyOnHand']; ?>" min="1" onKeyDown="return false" style="width: 30px; text-align: right" /></td>
                     <td align="right">₫<?php echo number_format($rows['UnitPrice']); ?></td> 
                     <td align="right">₫<?php echo number_format($Amount);?></td>
                     <td align="center"> <a href="shoppingcart.php?Action=Delete&ProductID=<?php echo $rows['ProductID']; ?>"><img src="images/remove_x.gif" alt="remove" /><br />Xóa</a> </td>
@@ -95,6 +96,7 @@ if (isset($_POST['ProductID']) && isset($_POST['QtyOnHand'])) {
                 <br>
                 <p><a href="javascript:history.back()">Tiếp tục mua sắm</a></p>        	
             </div>
+        </div>
         <div class="cleaner"></div>
     </div> <!-- END of templatemo_main -->
     

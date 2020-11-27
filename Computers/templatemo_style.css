@@ -351,9 +351,9 @@ a.nivo-prevNav {
    -webkit-box-orient: vertical;
 }
 
-a.blackBtn{font-size: 20px; color: #ffffff; background-color: #696969; display: block; padding: 20px; text-decoration: none;}
+a.blackBtn, input.blackBtn{font-size: 20px; color: #ffffff; background-color: #696969; display: block; padding: 20px; text-decoration: none;}
 
-a.blackBtn:hover, td:hover a.blackBtn{background-color: #000000; }
+a.blackBtn:hover, td:hover input.blackBtn{background-color: #000000; }
 
 .update {padding: 10px; font-weight: bold; border:none; background-color: #696969; color: white; cursor: pointer;}
 td:hover input.update {background-color: #000000; cursor: pointer;}

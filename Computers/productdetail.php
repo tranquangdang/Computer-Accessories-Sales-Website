@@ -13,6 +13,7 @@
         	<a  rel="lightbox[portfolio]" href="#"><img class="detail" src="<?php echo $rows['ProductImg']; ?>" alt="image" /></a>
             </div>
             <div class="content_half float_r">
+                <form action="shoppingcart.php" method="get">
                 <table>
                     <tr>
                         <td align="right"><p class="product_price"><a>₫</a><?php echo number_format($rows['UnitPrice']); ?></p></td>
@@ -28,12 +29,15 @@
                     </tr>
                     <tr>
                     	<td>Số lượng</td>
-                        <td><input type="number" value="1" style="width: 30px; text-align: right" /></td>
+                        <td><input type="number" name="Qty" value="1" min="1" onKeyDown="return false" max="<?php echo $rows['QtyOnHand']; ?>" style="width: 30px; text-align: right" /></td>
                     </tr>
                     <tr>
-                        <td colspan="2" ><a href="shoppingcart.php?Action=Add&ProductID=<?php echo $rows['ProductID']; ?>" class="blackBtn" style="margin-top: 30px; text-align:center;">THÊM VÀO GIỎ HÀNG</a></td>
+                        <input type="hidden" name="ProductID" value="<?php echo $rows['ProductID']; ?>"/>
+                        <input type="hidden" name="Action" value="Add"/>
+                        <td colspan="2"><input type="submit" class="blackBtn" style="margin-top: 30px; text-align:center; cursor: pointer;" value="THÊM VÀO GIỎ HÀNG" /></td>
                     </tr>
                 </table>
+                </form>
                 <div class="cleaner h20"></div>
 
 			</div>

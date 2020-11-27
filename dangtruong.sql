@@ -39,7 +39,7 @@ insert into tblProductCategory values ('CPU02', 'CPU Intel');
 insert into tblProductCategory values ('VGA01', 'Card màn hình Nvidia');
 insert into tblProductCategory values ('VGA02', 'Card màn hình AMD');
 insert into tblProductCategory values ('MAIN1', 'Mainboard Intel');
-insert into tblProductCategory values ('MAIN2', 'Mainboard Intel');
+insert into tblProductCategory values ('MAIN2', 'Mainboard AMD');
 insert into tblProductCategory values ('PSU01', 'Nguồn máy tính');
 insert into tblProductCategory values ('COOL1', 'Tản nhiệt máy tính');
 insert into tblProductCategory values ('CASE1', 'Vỏ máy tính');

@@ -49,7 +49,7 @@ ddsmoothmenu.init({
     <div id="templatemo_menubar">
     	<div id="top_nav" class="ddsmoothmenu">
             <ul>
-                <li><a href="index.php">Trang chủ</a></li>
+                <li><a class="visited" href="index.php">Trang chủ</a></li>
                 <li><a href="products.php">Sản phẩm</a>
                     <ul>
                         <li><a href="#submenu1">Linh kiện mới</a></li>
@@ -81,14 +81,14 @@ ddsmoothmenu.init({
             	<h3>Sản phẩm chính</h3>   
                 <div class="content"> 
                 	<ul class="sidebar_list">
-                        <li><a href="products.php">CPU - Bộ vi xử lý</a></li>
-                        <li><a href="products.php">VGA - Card màn hình</a></li>
-                        <li><a href="products.php">Mainboard - Bo mạch chủ</a></li>
-                        <li><a href="products.php">Ram - Bộ nhớ trong</a></li>
-                        <li><a href="products.php">Ổ cứng</a></li>
-                        <li><a href="products.php">PSU - Nguồn máy tính</a></li>
-                        <li><a href="products.php">Tản nhiệt</a></li>
-                        <li><a href="products.php">Case - Thùng máy tính</a></li>
+                        <li><a href="products.php?CategoryNo='CPU01','CPU02'">CPU - Bộ vi xử lý</a></li>
+                        <li><a href="products.php?CategoryNo='VGA01','VGA02'">VGA - Card màn hình</a></li>
+                        <li><a href="products.php?CategoryNo='MAIN1','MAIN2'">Mainboard - Bo mạch chủ</a></li>
+                        <li><a href="products.php?CategoryNo='RAM01'">Ram - Bộ nhớ trong</a></li>
+                        <li><a href="products.php?CategoryNo='HDD01','SSD01'">Ổ cứng</a></li>
+                        <li><a href="products.php?CategoryNo='PSU01'">PSU - Nguồn máy tính</a></li>
+                        <li><a href="products.php?CategoryNo='COOL1'">Tản nhiệt</a></li>
+                        <li><a href="products.php?CategoryNo='CASE1'">Case - Thùng máy tính</a></li>
                         <li><a href="products.php">Khác</a></li>
                     </ul>
                 </div>
@@ -96,30 +96,18 @@ ddsmoothmenu.init({
             <div class="sidebar_box"><span class="bottom"></span>
             	<h3>Bán chạy nhất </h3>   
                 <div class="content"> 
-                	<div class="bs_box">
-                    	<a href="#"><img src="images/product/01.webp" alt="image" /></a>
-                        <h4><a href="#">Tản nước AIO ASUS ROG RYUJIN 360</a></h4>
-                        <p class="price">₫7.490.000</p>
-                        <div class="cleaner"></div>
-                    </div>
+                    <?php 
+                    $sql= "select * from tblProduct";
+                    $results = mysqli_query($connect,$sql);
+                    $count = 0;
+                    while( ($rows = mysqli_fetch_assoc($results)) != NULL && $count < 5 ) { $count++;?>
                     <div class="bs_box">
-                    	<a href="#"><img src="images/product/02.webp" alt="image" /></a>
-                        <h4><a href="#">Mainboard ASUS EX-B365M-V5</a></h4>
-                        <p class="price">₫2.500.000</p>
+                        <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>"><img src="<?php echo $rows['ProductImg']; ?>" alt="image" /></a>
+                        <h4><a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>"><?php echo $rows['ProductName']; ?></a></h4>
+                        <p class="price">₫<?php echo number_format($rows['UnitPrice']); ?></p>
                         <div class="cleaner"></div>
                     </div>
-                    <div class="bs_box">
-                    	<a href="#"><img src="images/product/03.webp" alt="image" /></a>
-                        <h4><a href="#">Quạt Case Cooler Master Masterfan SF360R ARGB</a></h4>
-                        <p class="price">₫1.195.000</p>
-                        <div class="cleaner"></div>
-                    </div>
-                    <div class="bs_box">
-                    	<a href="#"><img src="images/product/04.webp" alt="image" /></a>
-                        <h4><a href="#">Card màn hình NVIDIA Quadro P2200 5GB GDDR5X</a></h4>
-                        <p class="price">₫11.299.000</p>
-                        <div class="cleaner"></div>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
