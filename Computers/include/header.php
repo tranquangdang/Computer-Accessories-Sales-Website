@@ -7,9 +7,9 @@
 <title>Website Đăng Trường</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<link href="templatemo_style.css" rel="stylesheet" type="text/css" />
+<link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
 
-<link rel="stylesheet" href="nivo-slider.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
 
 <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
 

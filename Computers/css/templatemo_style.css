@@ -20,7 +20,7 @@ cite a, cite a:link, cite a:visited  { font-size: 12px; text-decoration: none; f
 cite span { font-weight: 400; color: #333; }
 
 .tmo_list { margin: 10px 0 10px 15px; padding: 0; list-style: none }
-.tmo_list li { color:#999; margin: 0 0 5px 0; padding: 0 0 0 15px; background: url(images/templatemo_list.png) no-repeat scroll 0 5px  }
+.tmo_list li { color:#999; margin: 0 0 5px 0; padding: 0 0 0 15px; background: url(../images/templatemo_list.png) no-repeat scroll 0 5px  }
 .tmo_list li a { color: #999; font-weight: normal }
 .tmo_list li a:hover { color: #333 }
 
@@ -60,13 +60,13 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 #templatemo_menubar {
 	width: 980px;
 	height: 60px;
-	background: url(images/templatemo_menubar.png) no-repeat;
+	background: url(../images/templatemo_menubar.png) no-repeat;
 }
 
 #templatemo_main {
 	width: 940px;
 	padding: 10px 20px;
-	background: url(images/templatemo_main_bg.png) repeat-y
+	background: url(../images/templatemo_main_bg.png) repeat-y
 }
 
 #content { width: 690px }
@@ -76,12 +76,12 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	width: 960px;
 	padding: 30px 10px;
 	text-align: center;
-	background: url(images/templatemo_footer.png) no-repeat top
+	background: url(../images/templatemo_footer.png) no-repeat top
 }
 
 #site_title { float: left; margin-top: -20px; }
 #site_title h1 {font-size: 15px; margin: 0; padding: 0 }
-#site_title h1 a { display: block; padding-top: 90px; font-size: 15px; letter-spacing: 1px; color: #2f2f2f; text-align: left; background: url(images/dt_logo.png) no-repeat top left  }
+#site_title h1 a { display: block; padding-top: 90px; font-size: 15px; letter-spacing: 1px; color: #2f2f2f; text-align: left; background: url(../images/dt_logo.png) no-repeat top left  }
 
 #header_right { float: right; margin: 35px 0px 0 0; color: #666; }
 #header_right { font-size: 15px;}
@@ -90,7 +90,7 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 #menu_second_bar { padding: px 10px; }
 #top_shopping_cart { float: left; padding: 5px 0; font-size: 11px; }
 
-#templatemo_search { float: right; margin: 10px 30px 0; width: 220px; height: 34px; background: url(images/templatemo_search_bg.png) }
+#templatemo_search { float: right; margin: 10px 30px 0; width: 220px; height: 34px; background: url(../images/templatemo_search_bg.png) }
 #templatemo_search form {
 	margin: 0;
 	padding: 0;
@@ -130,7 +130,7 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	margin-bottom: 36px;
 	border: 1px solid #dbdbdb
 }
-.sidebar_box h3 { font-size: 14px; font-weight: 700; padding: 0 10px 0 35px; margin: 0; width: 185px; height: 33px; line-height: 33px; margin-bottom: 0; background: url(images/templatemo_sidebar_header.png)  no-repeat; color: #2f2f2f }
+.sidebar_box h3 { font-size: 14px; font-weight: 700; padding: 0 10px 0 35px; margin: 0; width: 185px; height: 33px; line-height: 33px; margin-bottom: 0; background: url(../images/templatemo_sidebar_header.png)  no-repeat; color: #2f2f2f }
 
 #sidebar .sidebar_box .content {
 	padding: 10px 10px 0;
@@ -253,6 +253,20 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	text-decoration: line-through;
 }
 
+.page a {
+	font-size: 17px;
+	color: navy;
+	margin: 7px;
+}
+
+.page .current {
+	padding: 5px 12px;
+	font-size: 17px;
+	color: white;
+	background-color: navy;
+	margin: 7px;
+}
+
 #contact_form { padding: 0; width: 300px; margin-bottom: 40px }
 #contact_form form { margin: 0px; padding: 0px; }
 
@@ -318,7 +332,7 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	position:relative;
     width: 620px;
     height: 300px;
-	background:url(images/loading.gif) no-repeat 50% 50%;
+	background:url(../images/loading.gif) no-repeat 50% 50%;
 }
 #slider img {
 	position:absolute;
@@ -338,7 +352,7 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 }
 .nivo-controlNav a {
 	display:block; float: left; margin-left: 5px;
-	width: 12px; height: 12px;  background: gray; cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; box-shadow: inset 0 0 3px rgba(0,0,0,0.3); border:;
+	width: 12px; height: 12px;  background: gray; cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
 }
 
 .nivo-controlNav a:hover{
@@ -353,7 +367,7 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	display:block;
 	width:30px;
 	height:30px;
-	background:url(images/arrows.png) no-repeat;
+	background:url(../../images/arrows.png) no-repeat;
 	text-indent:-9999px;
 	border:0;
 }
@@ -501,28 +515,28 @@ td:hover input.update {background-color: #000000; cursor: pointer;}
 	cursor:pointer;
 }
 .social-icons li.facebook {
-	background:url(images/icon-2.png) no-repeat 0px  -29px;
+	background:url(../images/icon-2.png) no-repeat 0px  -29px;
 }
 .social-icons li.facebook:hover {
-	background:url(images/icon-2.png) no-repeat 0px  0px;
+	background:url(../images/icon-2.png) no-repeat 0px  0px;
 }
 .social-icons li.twitter {
-	background:url(images/icon-3.png) no-repeat 0px  -29px;
+	background:url(../images/icon-3.png) no-repeat 0px  -29px;
 }
 .social-icons li.twitter:hover {
-	background:url(images/icon-3.png) no-repeat 0px  0px;
+	background:url(../images/icon-3.png) no-repeat 0px  0px;
 }
 .social-icons li.googleplus {
-	background:url(images/icon-4.png) no-repeat 0px  -29px;
+	background:url(../images/icon-4.png) no-repeat 0px  -29px;
 }
 .social-icons li.googleplus:hover {
-	background:url(images/icon-4.png) no-repeat 0px  0px;
+	background:url(../images/icon-4.png) no-repeat 0px  0px;
 }
 .social-icons li.contact {
-	background:url(images/icon-1.png) no-repeat 0px  -29px;
+	background:url(../images/icon-1.png) no-repeat 0px  -29px;
 }
 .social-icons li.contact:hover {
-	background:url(images/icon-1.png) no-repeat 0px  0px;
+	background:url(../images/icon-1.png) no-repeat 0px  0px;
 }
  .copy_right{
 	text-align:center;
@@ -554,7 +568,7 @@ td:hover input.update {background-color: #000000; cursor: pointer;}
 	height:48px;
 	border:none;
 	text-indent:100%;
-	background:url(images/arrow_up.png) no-repeat right top;
+	background:url(../images/arrow_up.png) no-repeat right top;
 }
 
 #toTopHover {
@@ -569,4 +583,41 @@ td:hover input.update {background-color: #000000; cursor: pointer;}
 }
 #toTop:active, #toTop:focus {
 	outline:none;
+}
+
+/*** Phân Trang ***/
+.paginate {
+	font-size: 15px;
+}
+#paginate{
+	float: right;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.paginate a {
+	padding: 5px;
+	margin:2px;
+	border:1px solid #999;
+	text-decoration:none;
+	color: #666;
+}
+.paginate a:hover, .paginate a:active {
+	border: 1px solid #999;
+	color: #000;
+}
+.paginate span.current {
+	margin: 2px;
+	padding: 10px;
+	border: 1px solid #999;
+
+	font-weight: bold;
+	background-color: #999;
+	color: #FFF;
+}
+.paginate span.disabled {
+	padding:5px;
+	margin:2px;
+	border:1px solid #eee;
+	color:#DDD;
 }
