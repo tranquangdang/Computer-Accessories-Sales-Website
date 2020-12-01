@@ -1,4 +1,5 @@
 <?php require ("include/header.php") ?>
+<?php require ("include/sidebar.php") ?>
         <div id="content" class="float_r">
         	<div id="slider-wrapper">
                 <div id="slider" class="nivoSlider">

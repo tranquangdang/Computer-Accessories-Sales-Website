@@ -34,10 +34,10 @@
 						</ul>
 				</div>
 				<div class="col_1_of_4 span_1_of_4">
-					<h4>Đường dây nóng</h4>
+					<h4>Địa chỉ và SĐT</h4>
 						<ul>
-							<li><span>113</span></li>
-              				<li><span>114</span></li>
+							<li><span>48 Cao Thắng, Thanh Bình, Hải Châu, Đà Nẵng</span></li>
+              				<li><span>+8469696969</span></li>
 						</ul>
 						<div class="social-icons">
 							<h4>Theo dõi chúng tôi</h4>

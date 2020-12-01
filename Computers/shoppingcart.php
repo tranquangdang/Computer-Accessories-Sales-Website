@@ -1,98 +1,86 @@
-<?php require ("include/header.php"); 
-//session_destroy();
-//Xử lí giỏ hàng
-$cart = array();
-    if(isset($_SESSION['cart'])) {
-        $cart = $_SESSION['cart'];
-    }
-    if ((isset($_GET['Action']) && isset($_GET['ProductID'])) || isset($_GET['Qty'])) {
-    $ProductID = $_GET['ProductID'];
-        if($_GET['Action'] == 'Add') {
-        //Thêm sp vào giỏ hàng
-        //Duyệt xem đã có chưa
-        $Qty = $_GET['Qty'];
-        for($i=0; $i<count($cart); $i++) {
-            if ($cart[$i]['ProductID'] == $ProductID) {
-                $cart[$i]['QtyOnHand'] += $Qty;
-                break;
-            }
-        }
-        if($i == count($cart)){
-            //sản phẩm chưa có trong giỏ hàng => thêm vào
-            //lấy thông tin của sản phẩm
-            $sql = "select * from tblProduct where ProductID='".$ProductID."'";
-            $results = mysqli_query($connect,$sql);
-            while( ($rows = mysqli_fetch_assoc($results))!= NULL ) { //lấy tất cả thông tin sp 
-                $rows['QtyOnHand'] = $Qty;
-                //thêm vào giỏ hàng
-                $cart[] = $rows;
-                }
-            } 
-        } else {
-            if($_GET['Action'] == 'Delete') { 
-            //Xóa sản phẩm trong giỏ hàng
-            //Kiểm tra sản phẩm có trong giỏ hàng chưa => xóa
-            for($i=0; $i<count($cart); $i++) {
-                if ($cart[$i]['ProductID'] == $ProductID) {
-                    array_splice($cart, $i, 1); //Hàm xóa phần tử tại vị trí i
-                    //Tham số thứ 3 trong hàm là số lượng phần tử cần xóa. Ở đây là xóa 1 phần tử
-                    break;
-                }
-            }
-        }
-    }
-    //Cập nhật giỏ hàng vào session
-    $_SESSION['cart'] = $cart;
-}
-//Xử lý cập nhật giỏ hàng
-if (isset($_POST['ProductID']) && isset($_POST['Qty'])) {
-    $ProductID = $_POST['ProductID'];
-    $Qty = $_POST['Qty'];
-    for($i=0; $i<count($cart); $i++) {
-        $cart[$i]['QtyOnHand'] = $Qty[$i];
-    }
-    //Cập nhật giỏ hàng vào session
-    $_SESSION['cart'] = $cart;
+<?php require ("include/header.php"); ?>
+<?php 
+//Sự kiện xóa
+if (isset($_GET['ProductID']) && isset($_GET['CartID'])) {
+    $ProductID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['ProductID']);
+    $CartID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['CartID']);
+    $delProduct = $cart->delProductByCart($CartID,$ProductID);
 }
 
+//Sự kiện cập nhật số lượng
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $CartID = $_POST['CartID'];
+    $ProductID = $_POST['ProductID'];
+    $QtyOrdered = $_POST['QtyOrdered'];
+    $updateCart = $cart->updateCartQuantity($CartID, $ProductID, $QtyOrdered);
+}
 ?>
         <div id="content" class="float_r">
             <h1>Giỏ hàng</h1>
-            <form action="shoppingcart.php" method="post">
         	<table width="680px" cellspacing="0" cellpadding="5">
                 <tr bgcolor="#ddd">
-                        <th width="220" align="left">Hình ảnh </th> 
-                        <th width="180" align="left">Mô tả </th> 
-                        <th width="100" align="center">Số lượng </th> 
-                        <th width="60" align="right">Giá tiền </th> 
-                        <th width="50" align="right">Tổng cộng </th> 
-                        <th width="90" align="center">Xóa </th> 
+                        <th  align="left">Hình ảnh </th> 
+                        <th  align="left">Mô tả </th> 
+                        <th  align="center">Số lượng </th> 
+                        <th  align="right">Giá tiền </th> 
+                        <th  align="right">Tổng cộng </th> 
+                        <th  align="center">Xóa </th> 
                 </tr>
-                <?php //Hiển thị các sp trong giỏ hàng
-                    $OrderTotalMoney = 0;
-                    foreach($cart as $rows) {
-                        $Amount = $rows['UnitPrice']*$rows['QtyOnHand'];
-                        $OrderTotalMoney += $Amount;
-                ?>
+                <?php 
+                    //Lấy id của khách đang đăng nhập
+                    $CustNo = Session::get('customerId');
+                    $select = "SELECT * FROM tblCart WHERE CustNo = '$CustNo'";
+                    $getCustNo = $database->select($select);
+                    if( ($row = $getCustNo->fetch_assoc()) != NULL ) {$CartID = $row['CartID'];}
+                    //Lấy sản phẩm trong giỏ hàng đã có của khách
+                    $getPro = $cart->getCartProduct($CartID);
+
+                    if($getPro) {
+                    $sum = 0;
+                    $qty = 0;
+                    //Duyệt để hiển thị thông tin sản phẩm trong giỏ hàng của khách
+                    while ($rows = $getPro->fetch_assoc()) {
+                    
+                    ?>
                 <tr>
-                    <td><img style="width: 200px; height: 200px" src="<?php echo $rows['ProductImg']; ?>" alt="image 1" /></td> 
-                    <td><span><?php echo $rows['ProductName']; ?><input type="hidden" name="ProductID[]" value="<?php echo $rows['ProductID']; ?>" /></span></td> 
-                    <td align="center"><input type="number" name="Qty[]" value="<?php echo $rows['QtyOnHand']; ?>" min="1" onKeyDown="return false" style="width: 30px; text-align: right" /></td>
-                    <td align="right">₫<?php echo number_format($rows['UnitPrice']); ?></td> 
-                    <td align="right">₫<?php echo number_format($Amount);?></td>
-                    <td align="center"> <a href="shoppingcart.php?Action=Delete&ProductID=<?php echo $rows['ProductID']; ?>"><img src="images/remove_x.gif" alt="remove" /><br />Xóa</a> </td>
+                    <td><img style="width: 200px; height: 200px" src="<?php echo $rows['ProductImg']; ?>" alt="image" /></td> 
+                    <td style="font-size:15px; color: black; font-weight: bold"><span><?php echo $rows['ProductName']; ?></span></td> 
+                    <td align="center">
+                        <form action="" method="post">
+                            <input type="hidden" name="CartID" value="<?php echo $rows['CartID']; ?>"/>
+                            <input type="hidden" name="ProductID" value="<?php echo $rows['ProductID']; ?>"/>
+                            <input type="number" name="QtyOrdered" value="<?php echo $rows['QtyOrdered']; ?>" min="1" onKeyDown="return false" style="width: 30px; text-align: right" />
+                            <input class="update" type="submit" name="submit" value="Cập nhật"/>
+                        </form>
+                    </td>
+                    <td align="right">₫<?php echo number_format($rows['UnitPrice']); ?></td>
+                    <td align="right">₫<?php $total = $rows['UnitPrice'] * $rows['QtyOrdered']; echo number_format($total); ?></td></td>
+                    <td align="center"> <a href="shoppingcart.php?CartID=<?php echo $rows['CartID']; ?>&ProductID=<?php echo $rows['ProductID']; ?>"><img src="images/remove_x.gif" alt="remove" /><br />Xóa</a> </td>
                 </tr>
-                    <?php }?>
+                    <?php 
+                        $qty = $qty + $rows['QtyOrdered'];
+                        $sum = $sum + $total;
+                    }} else { header("Location:index.php");}
+                    ?>
                 <tr>
-                    <td colspan="3" align="right"  height="30px">Vui lòng cập nhật lại giỏ hàng nếu như bạn thay đổi sản phẩm (hoặc số lượng)... <input class="update" type="submit" value="Cập nhật"/></td>
-                    <td width="200px" align="right" style="font-size:15px; background:#ddd; font-weight:bold"> Tổng cộng: </td>
-                    <td align="right" style="background:#ddd; font-weight:bold"><p class="product_price" style="margin: 0; "><a>₫</a><?php echo number_format($OrderTotalMoney); ?></p></td>
-                    <td style="background:#ddd; font-weight:bold"> </td>
+                    <td colspan="3" align="right"  height="30px"> </td>
+                    <td align="right" style="font-size:15px; background:#ddd; font-weight:bold"> Tổng cộng: </td>
+                    <td colspan="3" align="right" style="background:#ddd; font-weight:bold"><p class="product_price" style="margin: 0; "><a>₫</a><?php 
+                        //Coi có sp trong giỏ k
+                        $getData = $cart->checkCartItem();
+                        if ($getData) {
+                            echo number_format($sum);?>
+                        </p>
+                    </td>
                 </tr>
             </table>
-            </form>
+            <?php
+                //k có thì về trang chủ
+                } else {
+                    header("Location:index.php");
+                } ?>
             <div style="float:right; width: 215px; margin-top: 20px;">
-                <a class="blackBtn" href="checkout.php?OrderTotalMoney=<?php echo number_format($OrderTotalMoney);?>" style="width: 135px; ">THANH TOÁN</a>
+                <a class="blackBtn" href="checkout.php?OrderTotalMoney=<?php echo number_format($sum);?>" style="width: 135px; ">THANH TOÁN</a>
                 <br>
                 <p><a href="javascript:history.back()">Tiếp tục mua sắm</a></p>        	
             </div>
