@@ -81,18 +81,24 @@ class Cart
 
         //Nếu sản phẩm đó đã có, tăng số lượng thêm 1
         if ($getPro) {
+            $new = $QtyOrdered;
             //Lấy ra số lượng sản phẩm sẽ tăng
             $select = "SELECT QtyOrdered FROM tblCartDetail WHERE CartID = '$CartID' AND ProductID = '$ProductID' ";
             $getQtyOrdered = $this->database->select($select);
-            while( ($row = $getQtyOrdered->fetch_assoc()) != NULL ) {$QtyOrdered = $row['QtyOrdered'];}
+            while( ($row = $getQtyOrdered->fetch_assoc()) != NULL ) {$old = $row['QtyOrdered'];}
             //Tăng lên 1 rồi cập nhật
-            $QtyOrdered++;
+            $QtyOrdered = $old + $new;
             $query = "UPDATE tblCartDetail
                 SET
                 QtyOrdered = $QtyOrdered
                 WHERE CartID = '$CartID' AND ProductID = '$ProductID' ";
             $updated_row = $this->database->update($query);
-            header("Location:shoppingcart.php");
+            if ($updated_row) {
+                header("Location:shoppingcart.php");
+            } else {
+                echo "<script language='javascript'>alert('Lỗi');";
+                echo "location.href='theloai.php';</script>";
+            }
         } else {
             //Nếu chưa có thì chèn vô bảng chi tiết giỏ hàng
             $query = "INSERT INTO tblCartDetail (CartID, ProductID, QtyOrdered) VALUES ($CartID, $ProductID, $QtyOrdered)";
@@ -100,7 +106,8 @@ class Cart
             if ($inserted_row) {
                 header("Location:shoppingcart.php");
             } else {
-                header("Location:404.php");
+                echo "<script language='javascript'>alert('Lỗi');";
+                echo "location.href='theloai.php';</script>";
             }
         }
     }
@@ -129,8 +136,8 @@ class Cart
         if ($updated_row) {
             header("Location:shoppingcart.php");
         } else {
-            $msg = "<span class='error'>Quantity Not Updated.</span>";
-            return $msg;
+            echo "<script language='javascript'>alert('Lỗi');";
+		    echo "location.href='theloai.php';</script>";
         }
     }
 
@@ -143,6 +150,9 @@ class Cart
         $deldata = $this->database->delete($query);
         if ($deldata) {
             echo "<script> window.location = 'shoppingcart.php'; </script>";
+        } else {
+            echo "<script language='javascript'>alert('Lỗi');";
+		    echo "location.href='theloai.php';</script>";
         }
     }
 

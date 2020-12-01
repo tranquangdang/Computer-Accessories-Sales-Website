@@ -71,9 +71,7 @@ class Customer
         $result = $this->database->select($query);
         if ($result != false) {
             $value = $result->fetch_assoc();
-            Session::set("customerLogin", true);
             Session::set("customerId", $value['CustID']);
-            Session::set("customerName", $value['CustName']);
             header("Location:index.php");
         } else {
             $msg = "<span class='error'>Sai tài khoản hoặc mật khẩu</span>";
@@ -103,7 +101,7 @@ class Customer
         $Email 		= mysqli_real_escape_string($this->database->link, $Email);
 
         if ($CustName == "" || $CustAddress == "" || $TelNo == "" || $Email == "" ) {
-            $msg = "<span class='error'>Fields must not be empty!</span>";
+            $msg = "<span class='error'>Không được bỏ trống trường nào!</span>";
             return $msg;
         } else {
             $query = "UPDATE tblCustomer
@@ -111,8 +109,8 @@ class Customer
         	CustName 	= '$CustName',
         	CustAddress = '$CustAddress',
         	TelNo 	    = '$TelNo',
-        	Email       = '$Email',
-        	WHERE CustID = '$CustID'";
+        	Email       = '$Email'
+        	WHERE CustID = $CustID";
             $updated_row = $this->database->update($query);
             if ($updated_row) {
                 $msg = "<span class='success'>Cập nhật thành công!</span>";

@@ -25,7 +25,11 @@
             });
             </script>
         	<h1>Sản phẩm mới</h1>
-            <?php require ("include/productList.php") ?>    
+            <?php 
+                require ("include/productList.php"); 
+                $Pagination = new Page();
+                $Pagination->Pagination('tblProduct','index.php',$total_pages,$page);
+            ?>    
         </div> 
         <div class="cleaner"></div>
     </div> <!-- END of templatemo_main -->

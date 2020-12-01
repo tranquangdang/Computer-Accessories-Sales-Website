@@ -59,13 +59,12 @@ ddsmoothmenu.init({
     	<div id="site_title"><h1><a href="index.php">Đăng Trường Computers</a></h1></div>
         <div id="header_right">
         	<p>
-            <a href="#">Tài khoản</a> | <a href="#">Yêu thích</a> | 
+            <a href="profile.php">Tài khoản</a> | <a href="#">Yêu thích</a> | 
             <?php
                 if (isset($_GET['CustID'])) {
                     Session::destroy();
                 }
-                    $login = Session::get("customerLogin");
-                    if ($login == false) { ?>
+                    if (!Session::get('customerId')) { ?>
                     <a href="login.php">Đăng nhập/Đăng kí</a>
                 <?php   } else { ?>
                     <a href="?CustID=<?php Session::get('customerId');?>">Đăng xuất</a>

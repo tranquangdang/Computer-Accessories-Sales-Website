@@ -40,6 +40,4 @@ while (($rows = $getProduct->fetch_assoc()) != null) {?>
 <?php }
 $total_pages = mysqli_num_rows($database->select($sql));
 
-$Pagination = new Page();
-$Pagination->Pagination('tblProduct','index.php',$total_pages,$page);
 ?>

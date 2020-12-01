@@ -1,4 +1,5 @@
 <?php require ("include/header.php") ?>
+<?php require ("include/sidebar.php") ?>
         <div id="content" class="float_r">
         	<h1>Thông tin về chúng tôi</h1>
         	<h2>Trần Quang Đăng và Huỳnh Phước trường</h2>

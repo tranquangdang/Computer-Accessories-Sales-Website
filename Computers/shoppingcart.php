@@ -1,10 +1,14 @@
 <?php require ("include/header.php"); ?>
 <?php 
+
 //Sự kiện xóa
 if (isset($_GET['ProductID']) && isset($_GET['CartID'])) {
     $ProductID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['ProductID']);
     $CartID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['CartID']);
     $delProduct = $cart->delProductByCart($CartID,$ProductID);
+    if(!$cart->getCartProduct($CartID)){
+        header("Location:index.php");
+    }
 }
 
 //Sự kiện cập nhật số lượng
@@ -15,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $updateCart = $cart->updateCartQuantity($CartID, $ProductID, $QtyOrdered);
 }
 ?>
+<?php require ("include/sidebar.php"); ?>
         <div id="content" class="float_r">
             <h1>Giỏ hàng</h1>
         	<table width="680px" cellspacing="0" cellpadding="5">
@@ -60,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <?php 
                         $qty = $qty + $rows['QtyOrdered'];
                         $sum = $sum + $total;
-                    }} else { header("Location:index.php");}
+                    }}
                     ?>
                 <tr>
                     <td colspan="3" align="right"  height="30px"> </td>
@@ -69,16 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         //Coi có sp trong giỏ k
                         $getData = $cart->checkCartItem();
                         if ($getData) {
-                            echo number_format($sum);?>
+                            echo number_format($sum);
+                        }?>
                         </p>
                     </td>
                 </tr>
             </table>
-            <?php
-                //k có thì về trang chủ
-                } else {
-                    header("Location:index.php");
-                } ?>
             <div style="float:right; width: 215px; margin-top: 20px;">
                 <a class="blackBtn" href="checkout.php?OrderTotalMoney=<?php echo number_format($sum);?>" style="width: 135px; ">THANH TOÁN</a>
                 <br>

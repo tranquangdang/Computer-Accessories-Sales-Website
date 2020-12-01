@@ -1,4 +1,5 @@
-<?php require ("include/header.php") ?>
+<?php require ("include/header.php"); ?>
+
 <?php
 if (isset($_GET['ProductID'])) {
     $ProductID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['ProductID']);
@@ -9,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
     $addCart = $cart->addToCart($quantity, $ProductID);
 }
 ?>
+<?php require ("include/sidebar.php"); ?>
         <div id="content" class="float_r">
             <?php
                 $results = $product->getProById($ProductID);
@@ -43,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                         <td colspan="2">
                             <?php 
                             if(Session::get('customerId')) {
-                                echo '<input type="submit" name="submit" class="blackBtn" style="margin-top: 30px; text-align:center; cursor: pointer;" value="THÊM VÀO GIỎ HÀNG" />';
+                                echo '<input type="submit" name="submit" class="blackBtn" style="width: 100%; margin-top: 30px; text-align:center; cursor: pointer;" value="THÊM VÀO GIỎ HÀNG" />';
                             } else {
                                 echo '<a href="login.php" class="blackBtn" style="margin-top: 30px; text-align:center; cursor: pointer;">ĐĂNG NHẬP NGAY</a>';
                             }

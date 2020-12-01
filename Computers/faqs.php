@@ -1,4 +1,5 @@
 <?php require ("include/header.php") ?>
+<?php require ("include/sidebar.php") ?>
         <div id="content" class="float_r faqs">
         	<h1>Chi tiết</h1>
             <h5>Trần Quang Đăng</h5>

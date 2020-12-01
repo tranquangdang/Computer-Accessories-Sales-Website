@@ -757,3 +757,17 @@ p.note{
 
 .success{font-size:18px; color:green; margin-bottom: 10px;}
 .error{font-size:18px; color:red; margin-bottom: 10px;}
+
+.tblone {
+	border: 1px solid #fff;
+	margin-bottom: 12px;
+	width: 100%;
+  }
+  .tblone th {
+	background: #666 none repeat scroll 0 0;
+	color: #fff;
+	font-size: 20px;
+	padding: 5px 8px;
+	text-align: center;
+  }
+  .tblone td{padding:10px;text-align:center;}

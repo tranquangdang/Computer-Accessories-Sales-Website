@@ -1,76 +1,58 @@
-<?php include 'inc/header.php'; ?>
+<?php require "include/header.php"; ?>
 <?php 
-$login = Session::get("cuslogin");
-if ($login == false) {
+if(!Session::get('customerId')) {
     header("Location:login.php");
 }
  ?>
  <?php 
-$cmrId = Session::get("cmrId");
+$CustID = Session::get('customerId');
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-    $updateCmr = $cmr->customerUpdate($_POST, $cmrId);
+	$update = $customer->customerUpdate($_POST, $CustID);
+	header("Location:profile.php");
 }
 ?>
 
- <style type="text/css">
+<style type="text/css">
  	.tblone{width: 50%; margin: 0 auto; border:2px solid #ddd;}
- 	.tblone tr td{text-align: justify;}
- 	.tblone input[type="text"]{width:400px; padding: 5px; font-size: 15px;}
+ 	.tblone tr td{text-align: justify; font-size: 20px}
  </style>
-<div class="main">
-	<div class="content">
 		<div class="section group">
 			<?php 
-            $id = Session::get("cmrId");
-            $getData = $cmr->getCustomerData($id);
+            $id = Session::get('customerId');
+            $getData = $customer->getCustomerData($id);
             if ($getData) {
                 while ($result = $getData->fetch_assoc()) {
-                    ?>
-                    <form action="" method="post">
+					?>
+			<form action="" method="post">
 			<table class="tblone">
-				<?php if (isset($updateCmr)) {
-                        echo "<tr><td colspan='3' style='text-align: center;''>".$updateCmr."</td></tr>";
+			<?php if (isset($update)) {
+                        echo "<tr><td colspan='3' style='text-align: center;''>".$update."</td></tr>";
                     } ?>
 				<tr>
-					<td colspan="3" style="text-align: center;"><h2>Update Profile Details</h2></td>					
+					<td  colspan="3" style="text-align: center;"><h2>Thông tin tài khoản</h2></td>					
 				</tr>
 				<tr>
-					<td width="20%">Name</td>
-					<td width="5%">:</td>
-					<td><input type="text" name="name" value="<?php echo $result['name']; ?>"></td>
+					<td width="30%">Tên</td>
+					<td width="10%">:</td>
+					<td><input type="text" name="CustName" value="<?php echo $result['CustName']; ?>"></td>
 				</tr>
 				<tr>
-					<td>Phone</td>
+					<td>Địa chỉ</td>
 					<td>:</td>
-					<td><input type="text" name="phone" value="<?php echo $result['phone']; ?>"></td>
+					<td><input type="text" name="CustAddress" value="<?php echo $result['CustAddress']; ?>"></td>
+				</tr>
+				<tr>
+					<td>Số điện thoại</td>
+					<td>:</td>
+					<td><input type="text" name="TelNo" value="<?php echo $result['TelNo']; ?>"></td>
 				</tr>
 				<tr>
 					<td>Email</td>
 					<td>:</td>
-					<td><input type="text" name="email" value="<?php echo $result['email']; ?>"></td>
+					<td><input type="text" name="Email" value="<?php echo $result['Email']; ?>"></td>
 				</tr>
 				<tr>
-					<td>Address</td>
-					<td>:</td>
-					<td><input type="text" name="address" value="<?php echo $result['address']; ?>"></td>
-				</tr>
-				<tr>
-					<td>City</td>
-					<td>:</td>
-					<td><input type="text" name="city" value="<?php echo $result['city']; ?>"></td>
-				</tr>
-				<tr>
-					<td>Zip Code</td>
-					<td>:</td>
-					<td><input type="text" name="zip" value="<?php echo $result['zip']; ?>"></td>
-				</tr>
-				<tr>
-					<td>Country</td>
-					<td>:</td>					
-					<td><input type="text" name="country" value="<?php echo $result['country']; ?>"></td>
-				</tr>
-				<tr>					
-					<td colspan="3" style="text-align: center;"><input type="submit" name="submit" value="Save"></td>					
+					<td colspan="3"><input  type="submit" name="submit" class="blackBtn" style="width:100%;text-align:center; cursor: pointer;" value="CẬP NHẬT" /></td>
 				</tr>				
 			</table>
 			</form>
@@ -78,5 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                 }
             } ?>			
 		</div>
-	</div>
-<?php include 'inc/footer.php'; ?>
+
+		<div class="cleaner"></div>
+</div> <!-- END of templatemo_main -->
+
+<?php require "include/footer.php"?>

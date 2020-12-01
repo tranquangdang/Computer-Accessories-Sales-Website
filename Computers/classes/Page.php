@@ -16,8 +16,6 @@ class Page
     //Phân trang
     public function Pagination($tableName, $targetpage, $total_pages,$page)
     {
-        $tableName = "tblProduct";
-        $targetpage = "index.php";
         $limit = 12;
         $stages = 3;
 

@@ -6,7 +6,7 @@ create table tblCustomer
 (
 	CustID int primary key AUTO_INCREMENT,
 	CustName varchar(255) not null,
-	CustAddress varchar(255) default 'Đà Nẵng',
+	CustAddress varchar(255) not null,
 	TelNo char(10) not null,
 	Email varchar(255) not null,
 	Pass varchar(32) not null
@@ -38,7 +38,7 @@ create table tblProduct
   	Brand varchar(255) not null,
 	ProductName text not null,
   	ProductImg varchar(255) not null,
-  	Intro Mediumtext null,
+  	Intro Mediumtext not null,
 	UnitPrice int default 0,
 	QtyOnHand int default 0,
   FOREIGN KEY (CategoryNo) REFERENCES tblProductCategory(CategoryID)
@@ -69,9 +69,9 @@ insert into tblProduct (CategoryNo, Brand, ProductName, ProductImg, Intro, UnitP
 ('COOL1', 'ASUS', 'Tản nhiệt nước AIO ASUS TUF LC 240 RGB (Đen)', 'https://lh3.googleusercontent.com/54h_RQP5KjvuCs0wnrooIOx_GRTXCQU4w7zcbCNJY2GEQ2UJSaBB9riGfgms0r9AktWI8NCC0DATNMZJGMj3=w500-rw', 'Đang cập nhật ...', 3500000, 50),
 ('COOL1', 'ASUS', 'Tản nhiệt nước AIO ASUS ROG STRIX LC 360 RGB (Trắng)', 'https://lh3.googleusercontent.com/u3a35VxwN6okMDkHERqnP2WnP3fC39fwlsjYCGPgr7A186tde9tBVo-LB9PW3ZhQUvdvZwP5-MDh4KgPB-BA=w500-rw', 'Đang cập nhật ...', 7490000, 50),
 ('MAIN1', 'GIGABYTE', 'Mainboard GIGABYTE B365M GAMING HD', 'https://lh3.googleusercontent.com/RDzdF-se6u0dKQKqCalwWin6o-xrCefhlzwd6jbnhwYVoq89-NMVHf7kOWmKrMGNmT5YTQ7paUOR87L0Pg=w500-rw', 'Realtek 8118 LAN là chip mạng thân thiện và hiệu suất cao dành cho game thủ với khả năng phân bổ băng thông tự động để đảm bảo mức ưu tiên mạng cao nhất cho trò chơi hoặc ứng dụng. Nó có thể cung cấp cho người dùng các tính năng toàn diện nhất và trải nghiệm Internet nhanh và mượt mà nhất.', 1750000, 50),
-('MAIN1', 'GIGABYTE', 'Mainboard GIGABYTE AB350-Gaming 3', 'https://lh3.googleusercontent.com/EP2up5LSCZ1ccWg9ONrFSEGAiZTOcHvwmMVmmtXhYURXdwKsDFSQB77KbUYkvGSx-bli_hrVHrVnXtoja_Yg=w500-rw', 'GIGABYTE AB350-GAMING 3 là cái tên khá nổi bật trong số các mẫu bo mạch chủ tầm trung dành cho nền tảng AM4 (Ryzen). Điểm mình đánh giá cao ở sản phẩm này là ngoài những tính năng cơ bản của chipset B350, chúng ta còn có các tính năng đặc trưng đến từ GIGABYTE. Trong số đó có thể kể đến thiết kế cách điệu đẹp mắt cùng khả năng các nhân hoá hê thống đèn LED Fusion theo ý của người dùng.', 2850000, 50),
-('MAIN1', 'MSI', 'Mainboard MSI A320M-A PRO MAX', 'https://lh3.googleusercontent.com/PWgB6pmvG1pSP_FwEy50Zi_u7Fa-HsKvvFEjV5G-H5zNVep4tevCPQe6bRH49pCs9TQUXyryG8ksTYT1rw=w500-rw', 'Các bo mạch chủ MSI có hàng tấn thiết kế thông mình và cực kỳ tiện lợi, chẳng hạn như khu vực ngăn chặn và nhận biết chân cắm pin cực kỳ thuận tiện, vị trí SATA & USB thân thiện, v.v., vì vậy người dùng có thể tự tay lựa chọn và build bất kỳ thiết bị chơi game nào họ muốn.\r\n\r\n', 1390000, 50),
-('MAIN1', 'MSI', 'Mainboard MSI A320M GAMING PRO', 'https://lh3.googleusercontent.com/wWcPE1WEmMWOe-EmryR5m8hmJe_u3o3q8HQql7mnWk99Hu1j4EyZxuEZj4zjhanxSByQAquLkiftNGw0q2c5=w500-rw', 'ỗ trợ AMD® Ryzen thế hệ 1 và 2 / Ryzen ™ với Radeon ™ Vega Graphics / Athlon ™ với bộ xử lý Radeon ™ Vega Graphics và A-series / Athlon ™ X4 cho Socket AM4\r\nDDR4 Boost: Công nghệ ép xung tiên tiến được cung cấp bởi phòng thí nghiệm MSI, đảm bảo khả năng tương thích tối đa cho khả năng ép xung..\r\n\r\n', 2150000, 50),
+('MAIN2', 'GIGABYTE', 'Mainboard GIGABYTE AB350-Gaming 3', 'https://lh3.googleusercontent.com/EP2up5LSCZ1ccWg9ONrFSEGAiZTOcHvwmMVmmtXhYURXdwKsDFSQB77KbUYkvGSx-bli_hrVHrVnXtoja_Yg=w500-rw', 'GIGABYTE AB350-GAMING 3 là cái tên khá nổi bật trong số các mẫu bo mạch chủ tầm trung dành cho nền tảng AM4 (Ryzen). Điểm mình đánh giá cao ở sản phẩm này là ngoài những tính năng cơ bản của chipset B350, chúng ta còn có các tính năng đặc trưng đến từ GIGABYTE. Trong số đó có thể kể đến thiết kế cách điệu đẹp mắt cùng khả năng các nhân hoá hê thống đèn LED Fusion theo ý của người dùng.', 2850000, 50),
+('MAIN2', 'MSI', 'Mainboard MSI A320M-A PRO MAX', 'https://lh3.googleusercontent.com/PWgB6pmvG1pSP_FwEy50Zi_u7Fa-HsKvvFEjV5G-H5zNVep4tevCPQe6bRH49pCs9TQUXyryG8ksTYT1rw=w500-rw', 'Các bo mạch chủ MSI có hàng tấn thiết kế thông mình và cực kỳ tiện lợi, chẳng hạn như khu vực ngăn chặn và nhận biết chân cắm pin cực kỳ thuận tiện, vị trí SATA & USB thân thiện, v.v., vì vậy người dùng có thể tự tay lựa chọn và build bất kỳ thiết bị chơi game nào họ muốn.\r\n\r\n', 1390000, 50),
+('MAIN2', 'MSI', 'Mainboard MSI A320M GAMING PRO', 'https://lh3.googleusercontent.com/wWcPE1WEmMWOe-EmryR5m8hmJe_u3o3q8HQql7mnWk99Hu1j4EyZxuEZj4zjhanxSByQAquLkiftNGw0q2c5=w500-rw', 'ỗ trợ AMD® Ryzen thế hệ 1 và 2 / Ryzen ™ với Radeon ™ Vega Graphics / Athlon ™ với bộ xử lý Radeon ™ Vega Graphics và A-series / Athlon ™ X4 cho Socket AM4\r\nDDR4 Boost: Công nghệ ép xung tiên tiến được cung cấp bởi phòng thí nghiệm MSI, đảm bảo khả năng tương thích tối đa cho khả năng ép xung..\r\n\r\n', 2150000, 50),
 ('MAIN1', 'ASUS', 'Mainboard ASUS Z490 ROG MAXIMUS XII APEX', 'https://lh3.googleusercontent.com/2nIpDgSdLLM_Jtjb_mayRR9fh5AX999IzuGDuYaXc51uJw91-8mqomNoZY1Hth7ASKITqHWM1HO6bh7M7W4=w500-rw', 'Bo mạch chủ ASUS ROG MAXIMUS XII APEX với khả năng làm mát toàn diện và tính năng cấp điện cải tiến nhằm cung cấp năng lượng cho các vi xử lý đa nhân cùng tính năng hỗ trợ lưu trữ và bộ nhớ nhanh hơn, sẽ mang đến cho bạn tất cả mọi thứ cần thiết để phát huy tối đa sức mạnh của các linh kiện trong giàn máy của bạn nhằm đạt được hiệu năng chơi game tốt nhất.', 11210000, 50),
 ('PSU01', 'Cooler Master', 'Nguồn máy tính Cooler Master Elite V3 230V PC400 Box - 400W', 'https://lh3.googleusercontent.com/kNUdaIDdwGlTyy55b3EnXPkD7k0vtSNKQK44a-er7hCNnX_YX1-sVfn-zkA6a6PubiVKQSsqdf5eOPs3G9g=w500-rw', 'Nguồn máy tính Cooler Master Elite V3 230V PC400 Box là một nguồn máy tính chịu tải công suất cao, kháng nhiệt độ tốt. Có hiệu suất trung bình trên 80% và tương thích với mọi môi trường.', 695000, 50),
 ('PSU01', 'Cooler Master', 'Nguồn máy tính Cooler Master MWE Gold 750 - 750W - 80 Plus Gold - Full Modular', 'https://lh3.googleusercontent.com/7Ycmutlmx_TwP-iBdOW7wKzoRUH1vM5rNlerr3x6jP8U2SVOlf9dnaZIJCsh3po69Wkt9F3aW_7Zaqj1WQ=w500-rw', 'MWE Gold 750 - Full Modular là bộ nguồn cao cấp đến từ Cooler Master với tổng công suất lên tới 750W, phù hợp với các cấu hình chơi game hoặc làm việc có công suất tiêu thụ lớn.', 3640000, 50),
@@ -121,21 +121,6 @@ create table tblOrderInvoiceDetail
   FOREIGN KEY (OrderID) REFERENCES tblOrderInvoice(OrderID),
   FOREIGN KEY (ProductID) REFERENCES tblProduct(ProductID)
 ) ENGINE = InnoDB;
-
-CREATE TABLE tblWishList (
-  WishListID int primary key AUTO_INCREMENT,
-  CustNo int(11) NOT NULL,
-  FOREIGN KEY (CustNo) REFERENCES tblCustomer(CustID)
-) ENGINE=InnoDB;
-
-CREATE TABLE tblWishListDetail (
-  	WishListID int not null,
-	ProductID int not null,
-	Qty int,
-  primary key(WishListID, ProductID),
-  FOREIGN KEY (WishListID) REFERENCES tblWishList(WishListID),
-  FOREIGN KEY (ProductID) REFERENCES tblProduct(ProductID)
-) ENGINE=InnoDB;
 
 CREATE TABLE tblCart (
   	CartID int primary key AUTO_INCREMENT,
