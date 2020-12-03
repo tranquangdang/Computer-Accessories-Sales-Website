@@ -1,5 +1,4 @@
 <?php
-
 class Session
 {
     public static function init()
@@ -26,6 +25,23 @@ class Session
             return $_SESSION[$key];
         } else {
             return false;
+        }
+    }
+
+    public static function checkSession()
+    {
+        self::init();
+        if (self::get("adminlogin") == false) {
+            self::destroy();
+            header("Location:login.php");
+        }
+    }
+
+    public static function checkLogin()
+    {
+        self::init();
+        if (self::get("adminlogin") == true) {
+            header("Location:dashboard.php");
         }
     }
 

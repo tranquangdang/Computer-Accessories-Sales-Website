@@ -138,7 +138,7 @@ class Product
                     echo "<span class='error'>Bạn chỉ có thể upload các file sau: ".implode(', ', $permited)."</span>";
                 } else {
                     move_uploaded_file($file_temp, $uploaded_image);
-                    $query = "UPDATE tbl_product
+                    $query = "UPDATE tblProduct
                                 SET
                                     CategoryNo ='$CategoryNo',
                                     Brand      ='$Brand',
@@ -147,7 +147,7 @@ class Product
                                     Intro      ='$Intro',
                                     UnitPrice  ='$UnitPrice',
                                     QtyOnHand  ='$QtyOnHand'
-                                WHERE ProductId = '$ProductId'
+                                WHERE ProductID = '$ProductID'
                                 ";
                     $updated_row = $this->database->update($query);
                     if ($updated_row) {
@@ -159,7 +159,7 @@ class Product
                     }
                 }
             } else {
-                $query = "UPDATE tbl_product
+                $query = "UPDATE tblProduct
                                 SET
                                     CategoryNo ='$CategoryNo',
                                     Brand      ='$Brand',
@@ -167,7 +167,7 @@ class Product
                                     Intro      ='$Intro',
                                     UnitPrice  ='$UnitPrice',
                                     QtyOnHand  ='$QtyOnHand'
-                                WHERE productId = '$ProductId'
+                                WHERE ProductID = '$ProductID'
                                 ";
                 $updated_row = $this->database->update($query);
                 if ($updated_row) {
@@ -184,7 +184,7 @@ class Product
     //Xóa sp
     public function delProById($ProductId)
     {
-        $query = "SELECT * FROM tblProduct WHERE ProductId = '$ProductId'";
+        $query = "SELECT * FROM tblProduct WHERE ProductID = '$ProductId'";
         $getData = $this->database->select($query);
         if ($getData) {
             while ($delImg = $getData->fetch_assoc()) {
@@ -192,7 +192,7 @@ class Product
                 unlink($dellink);
             }
         }
-        $delquery = "DELETE FROM tblProduct WHERE ProductId = '$ProductId'";
+        $delquery = "DELETE FROM tblProduct WHERE ProductID = '$ProductId'";
         $deldata = $this->database->delete($delquery);
         if ($deldata) {
             $msg = "<span class='success'>Xóa thành công!</span>";

@@ -151,8 +151,7 @@ class Cart
         if ($deldata) {
             echo "<script> window.location = 'shoppingcart.php'; </script>";
         } else {
-            echo "<script language='javascript'>alert('Lỗi');";
-		    echo "location.href='theloai.php';</script>";
+            echo "<script language='javascript'>alert('Lỗi');</script>";
         }
     }
 
@@ -233,67 +232,87 @@ class Cart
         $result = $this->database->select($query);
         return $result;
     }
-/*
-    public function checkOrder($cmrId)
+    public function getAllOrderProduct()
     {
-        $query = "SELECT * FROM tbl_order WHERE cmrId = '$cmrId'";
+        $CustID = Session::get("customerId");
+        $query = "SELECT * FROM tblOrderInvoice, tblCustomer WHERE tblOrderInvoice.CustNo = tblCustomer.CustID ORDER BY OrderDate DESC";
         $result = $this->database->select($query);
         return $result;
     }
-    public function productShifted($id, $time, $price)
-    {
-        $id     = mysqli_real_escape_string($this->database->link, $id);
-        $time   = mysqli_real_escape_string($this->database->link, $time);
-        $price  = mysqli_real_escape_string($this->database->link, $price);
 
-        $query = "UPDATE tbl_order
+    
+    public function Confirm($OrderID)
+    {
+        $OrderID   = mysqli_real_escape_string($this->database->link, $OrderID);
+
+        $query = "UPDATE tblOrderInvoice
             SET
-            status = '1'
-            WHERE cmrId = '$id' AND date = '$time' AND price = '$price'";
+            OrderStatus = 1
+            WHERE  OrderID = '$OrderID'";
         $updated_row = $this->database->update($query);
         if ($updated_row) {
-            $msg = "<span class='success'>Updated Successfully</span>";
+            $msg = "<span class='success'>Thành công!</span>";
             return $msg;
         } else {
-            $msg = "<span class='error'>Not Updated.</span>";
+            $msg = "<span class='error'>Không thàng công!</span>";
             return $msg;
         }
     }
 
-    public function delProductShifted($id, $time, $price)
+    public function Prepare($OrderID)
     {
-        $id     = mysqli_real_escape_string($this->database->link, $id);
-        $time   = mysqli_real_escape_string($this->database->link, $time);
-        $price  = mysqli_real_escape_string($this->database->link, $price);
+        $OrderID   = mysqli_real_escape_string($this->database->link, $OrderID);
 
-        $query = "DELETE FROM tbl_order WHERE cmrId = '$id' AND date = '$time' AND price = '$price'";
-        $deldata = $this->database->delete($query);
-        if ($deldata) {
-            $msg = "<span class='success'>Data Deleted Successfully</span>";
+        $query = "UPDATE tblOrderInvoice
+            SET
+            OrderStatus = 2
+            WHERE  OrderID = '$OrderID'";
+        $updated_row = $this->database->update($query);
+        if ($updated_row) {
+            $msg = "<span class='success'>Thành công!</span>";
             return $msg;
         } else {
-            $msg = "<span class='error'>Data Not Deleted!</span>";
+            $msg = "<span class='error'>Không thàng công!</span>";
             return $msg;
         }
     }
 
-    public function productShiftConfirm($id, $time, $price)
+    public function Ship($OrderID)
     {
-        $id     = mysqli_real_escape_string($this->database->link, $id);
-        $time   = mysqli_real_escape_string($this->database->link, $time);
-        $price  = mysqli_real_escape_string($this->database->link, $price);
+        $OrderID   = mysqli_real_escape_string($this->database->link, $OrderID);
 
-        $query = "UPDATE tbl_order
+        $query = "UPDATE tblOrderInvoice
             SET
-            status = '2'
-            WHERE cmrId = '$id' AND date = '$time' AND price = '$price'";
+            OrderStatus = 3
+            WHERE  OrderID = '$OrderID'";
         $updated_row = $this->database->update($query);
         if ($updated_row) {
-            $msg = "<span class='success'>Updated Successfully</span>";
+            $msg = "<span class='success'>Thành công!</span>";
             return $msg;
         } else {
-            $msg = "<span class='error'>Not Updated.</span>";
+            $msg = "<span class='error'>Không thàng công!</span>";
             return $msg;
         }
-    }*/
+    }
+
+    public function ConfirmShip($OrderID)
+    {
+        $OrderID   = mysqli_real_escape_string($this->database->link, $OrderID);
+
+        $query = "UPDATE tblOrderInvoice
+            SET
+            OrderStatus = 4
+            WHERE  OrderID = '$OrderID'";
+        $updated_row = $this->database->update($query);
+        if ($updated_row) {
+            echo "<script language='javascript'>alert('Thành công');";
+		    echo "location.href='orderdetails.php';</script>";
+        } else {
+            echo "<script language='javascript'>alert('Lỗi');";
+		    echo "location.href='orderdetails.php';</script>";
+        }
+    }
+
+
+
 }

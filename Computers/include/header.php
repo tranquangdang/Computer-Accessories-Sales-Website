@@ -107,7 +107,7 @@ ddsmoothmenu.init({
                         <li><a href="#submenu1">Thông tin</a></li>
                     </ul>
                 </li>
-                <li><a href="faqs.php">Tuyển dụng</a></li>
+                <li><a href="#">Xây dựng cấu hình</a></li>
                 <li><a href="about.php">Về chúng tôi</a></li>
             </ul>
             <br style="clear: left" />

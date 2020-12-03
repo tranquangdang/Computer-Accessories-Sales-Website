@@ -106,7 +106,7 @@ create table tblOrderInvoice
 	OrderTotalMoney int default 0,
 	TelNo char(10) not null,
 	CustNo int not null,
-	OrderStatus int(1) default 0,
+	OrderStatus tinyint(1) default 0,
   FOREIGN KEY (CustNo) REFERENCES tblCustomer(CustID)
 ) ENGINE = InnoDB;
 
@@ -136,6 +136,16 @@ create table tblCartDetail
   FOREIGN KEY (CartID) REFERENCES tblCart(CartID),
   FOREIGN KEY (ProductID) REFERENCES tblProduct(ProductID)
 ) ENGINE = InnoDB;
+
+CREATE TABLE tblAdmin (
+  AdminID int primary key AUTO_INCREMENT,
+  AdminName varchar(255) NOT NULL,
+  AdminUser varchar(255) NOT NULL,
+  AdminEmail varchar(255) NOT NULL,
+  AdminPass varchar(32) NOT NULL,
+  AdminLevel tinyint not null
+)ENGINE = InnoDB;
+INSERT INTO tblAdmin VALUES (1, 'Trần Quang Đăng', 'admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 1)
 /*
 DROP TRIGGER IF EXISTS trgInsert_OrderInvoiceDetail;
 DROP TRIGGER IF EXISTS trgDelete_OrderInvoiceDetail;
