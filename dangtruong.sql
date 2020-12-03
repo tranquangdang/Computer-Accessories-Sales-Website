@@ -106,8 +106,7 @@ create table tblOrderInvoice
 	OrderTotalMoney int default 0,
 	TelNo char(10) not null,
 	CustNo int not null,
-	InvDate datetime not null default current_timestamp(),
-	DelStatusReceived varchar(255) not null,
+	OrderStatus int(1) default 0,
   FOREIGN KEY (CustNo) REFERENCES tblCustomer(CustID)
 ) ENGINE = InnoDB;
 

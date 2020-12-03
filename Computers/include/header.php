@@ -11,7 +11,6 @@ $database = new Database();
 $format = new Format();
 $product = new Product();
 $cart = new Cart();
-$category = new Category();
 $customer = new Customer(); ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -59,7 +58,6 @@ ddsmoothmenu.init({
     	<div id="site_title"><h1><a href="index.php">Đăng Trường Computers</a></h1></div>
         <div id="header_right">
         	<p>
-            <a href="profile.php">Tài khoản</a> | <a href="#">Yêu thích</a> | 
             <?php
                 if (isset($_GET['CustID'])) {
                     Session::destroy();
@@ -67,6 +65,8 @@ ddsmoothmenu.init({
                     if (!Session::get('customerId')) { ?>
                     <a href="login.php">Đăng nhập/Đăng kí</a>
                 <?php   } else { ?>
+                    <a href="profile.php">Tài khoản</a> | 
+                    <a href="orderdetails.php">Đơn hàng</a> | 
                     <a href="?CustID=<?php Session::get('customerId');?>">Đăng xuất</a>
                 <?php   } ?>
             </p>

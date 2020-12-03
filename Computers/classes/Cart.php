@@ -156,6 +156,16 @@ class Cart
         }
     }
 
+    public function delCustomerCart()
+    {
+        $CustNo = Session::get('customerId');
+        $select = "SELECT * FROM tblCart WHERE CustNo = '$CustNo'";
+        $getCustNo = $this->database->select($select);
+        while( ($rows = $getCustNo->fetch_assoc()) != NULL ) {$CartID = $rows['CartID'];}
+        $query = "DELETE FROM tblCartDetail WHERE CartID = '$CartID'";
+        $this->database->delete($query);
+    }
+
     public function checkCartItem()
     {
         $CustNo = Session::get('customerId');
@@ -164,57 +174,72 @@ class Cart
         return $result;
     }
 
-/*
-    public function orderProduct($CustomerID)
-    {
-        $SessionId = session_id();
-        $query = "SELECT * FROM tblCart WHERE SessionId = '$SessionId'";
-        $createOrder = $this->database->select($query);
 
-        $query = "SELECT * FROM tblCart WHERE SessionId = '$SessionId'";
+    public function orderProduct($CustID,$OrderTotalMoney)
+    {
+        $query = "SELECT * FROM tblCart WHERE CustNo = '$CustID'";
+        $getCart = $this->database->select($query);
+        if ($getCart) {
+            $query = "INSERT INTO tblOrderInvoice(CustNo, OrderTotalMoney) VALUES($CustID, $OrderTotalMoney)";
+            $inserted_row = $this->database->insert($query);
+        }
+
+        $query = "SELECT * FROM tblCartDetail, tblCart, tblProduct 
+        WHERE CustNo = '$CustID' AND tblCartDetail.CartID = tblCart.CartID AND tblCartDetail.ProductID = tblProduct.ProductID";
         $getPro = $this->database->select($query);
         if ($getPro) {
+            $select = "SELECT * FROM tblOrderInvoice WHERE CustNo = '$CustID' AND OrderDate = now()";
+            $getOrderID = $this->database->select($select);
+            while( ($rows = $getOrderID->fetch_assoc()) != NULL ) {$OrderID = $rows['OrderID'];}
             while ($result = $getPro->fetch_assoc()) {
                 $ProductID      = $result['ProductID'];
-                $OrderAddress    = $result['OrderAddress'];
-                $OrderTotalMoney       = $result['OrderTotalMoney'];
-                $TelNo          = $result['price'] * $quantity;
-                $CustNo          = $result['image'];
+                $QtyOrdered       = $result['QtyOrdered'];
+                $Amount          = $result['UnitPrice'] * $QtyOrdered;
 
-                $query = "INSERT INTO tbl_order(cmrId, productId, productName, quantity, price, image) VALUES('$cmrId', '$productId', '$productName', '$quantity', '$price', '$image')";
+                $query = "INSERT INTO tblOrderInvoiceDetail (OrderID, ProductID, QtyOrdered, Amount) VALUES($OrderID, $ProductID, $QtyOrdered, $Amount)";
                 $inserted_row = $this->database->insert($query);
             }
         }
     }
 
-    public function payableAmount($cmrId)
+    public function getTotalMoneyInvoice()
     {
-        $query = "SELECT price FROM tbl_order WHERE cmrId = '$cmrId' AND date = now()";
+        $CustID = Session::get('customerId');
+        $query = "SELECT * FROM tblOrderInvoice WHERE CustNo = '$CustID' AND OrderDate = now()";
+        $result = $this->database->select($query);
+        while( ($rows = $result->fetch_assoc()) != NULL ) {$Total = $rows['OrderTotalMoney'];}
+        return $Total;
+    }
+
+    public function getOrderInvoiceDetail()
+    {
+        $CustID = Session::get("customerId");
+        $query = "SELECT * FROM tblOrderInvoice WHERE CustNo = '$CustID' ORDER BY OrderDate DESC";
         $result = $this->database->select($query);
         return $result;
     }
 
-    public function getOrderProduct($cmrId)
+    public function orderCancel($OrderID)
     {
-        $query = "SELECT * FROM tbl_order WHERE cmrId = '$cmrId' ORDER BY date DESC";
+        $query = "DELETE FROM tblOrderInvoiceDetail WHERE OrderID = '$OrderID'";
+        $result = $this->database->delete($query);
+        $query = "DELETE FROM tblOrderInvoice WHERE OrderID = '$OrderID'";
+        $result = $this->database->delete($query);
+    }
+
+    public function getOrderDetailById($OrderID)
+    {
+        $query = "SELECT * FROM tblOrderDetail WHERE OrderID = '$OrderID'";
         $result = $this->database->select($query);
         return $result;
     }
-
+/*
     public function checkOrder($cmrId)
     {
         $query = "SELECT * FROM tbl_order WHERE cmrId = '$cmrId'";
         $result = $this->database->select($query);
         return $result;
     }
-
-    public function getAllOrderProduct()
-    {
-        $query = "SELECT * FROM tbl_order ORDER BY date DESC";
-        $result = $this->database->select($query);
-        return $result;
-    }
-
     public function productShifted($id, $time, $price)
     {
         $id     = mysqli_real_escape_string($this->database->link, $id);

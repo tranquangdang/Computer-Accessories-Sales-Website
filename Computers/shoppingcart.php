@@ -63,25 +63,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <td align="center"> <a href="shoppingcart.php?CartID=<?php echo $rows['CartID']; ?>&ProductID=<?php echo $rows['ProductID']; ?>"><img src="images/remove_x.gif" alt="remove" /><br />Xóa</a> </td>
                 </tr>
                     <?php 
-                        $qty = $qty + $rows['QtyOrdered'];
-                        $sum = $sum + $total;
-                    }}
+                        }
+                    }
                     ?>
                 <tr>
                     <td colspan="3" align="right"  height="30px"> </td>
                     <td align="right" style="font-size:15px; background:#ddd; font-weight:bold"> Tổng cộng: </td>
                     <td colspan="3" align="right" style="background:#ddd; font-weight:bold"><p class="product_price" style="margin: 0; "><a>₫</a><?php 
                         //Coi có sp trong giỏ k
-                        $getData = $cart->checkCartItem();
+                        $total = $cart->getTotalMoney();
                         if ($getData) {
-                            echo number_format($sum);
+                            echo number_format($total);
                         }?>
                         </p>
                     </td>
                 </tr>
             </table>
             <div style="float:right; width: 215px; margin-top: 20px;">
-                <a class="blackBtn" href="checkout.php?OrderTotalMoney=<?php echo number_format($sum);?>" style="width: 135px; ">THANH TOÁN</a>
+                <a class="blackBtn" href="checkout.php" style=" text-align: center; width: 135px; ">MUA HÀNG</a>
                 <br>
                 <p><a href="javascript:history.back()">Tiếp tục mua sắm</a></p>        	
             </div>

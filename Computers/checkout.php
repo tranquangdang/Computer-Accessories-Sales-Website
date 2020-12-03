@@ -1,45 +1,26 @@
 <?php require ("include/header.php") ?>
 <?php require ("include/sidebar.php") ?>
         <div id="content" class="float_r">
-        	<h2>Thanh Toán</h2>
-            <h5><strong>Hóa Đơn</strong></h5>
-            <div class="content_half float_l checkout">
-				Họ và tên:
-                  <input type="text"  style="width:300px;"  />
-                <br />
-                <br />
-              Địa chỉ:
-				<input type="text"  style="width:300px;"  />
-            </div>
-            
-            <div class="content_half float_r checkout">
-            	eMail:
-				<input type="text"  style="width:300px;"  />
-                <br />
-                <br />
-                Số điện thoại:
-                <input type="text"  style="width:300px;"  />
-            </div>
-            
-            <div class="cleaner h50"></div>
-            <h3>Giỏ hàng</h3>
-            <h4>Tổng tiền: <strong>₫<?php if(isset($_GET['OrderTotalMoney'])) echo $_GET['OrderTotalMoney'];?></strong></h4>
-			<p><input type="checkbox" />
-			Tôi đồng ý với <a href="#">điều khoản</a> của website này</p>
+        	<h2>Lựa chọn phương thức thanh toán</h2>
             <table style="border:1px solid #CCCCCC;" width="100%">
                 <tr>
-                    <td height="80px"> <img src="images/paypal.gif" alt="paypal" /></td>
-                    <td width="400px;" style="padding: 0px 20px;">Thanh toán online
+                    <td height="80px"> <img src="images/paypal.gif" style="margin-left:20px" alt="paypal" /></td>
+                    <td style="padding: 0px 20px; color: black; font-size: 20px">Thanh toán online
                     </td>
-                    <td><a href="#" class="more">Thanh toán ngay</a></td>
+                    <td><a a class="blackBtn" style="display: inline-block; font-size: 13px;  padding: 10px; text-align:center;" href="#">Thanh toán ngay</a></td>
                 </tr>
                 <tr>
-                    <td  height="80px"><img src="images/cod.jpg" alt="paypal" />
-                    </td>
-                    <td  width="400px;" style="padding: 0px 20px;">Thanh toán COD</td>
-                    <td><a href="#" class="more">Thanh toán ngay</a></td>
+                    <td  height="80px"><img src="images/cod.jpg" style="margin-left:20px" alt="paypal" /></td>
+                    <td  style="padding: 0px 20px; color: black; font-size: 20px">Thanh toán COD</td>
+                    <td><a class="blackBtn" style="display: inline-block; font-size: 13px;  padding: 10px; text-align:center;" href="paymentoffline.php">Thanh toán ngay</a></td>
                 </tr>
             </table>
+            <br>
+            <h5><strong>Mã giảm giá</strong></h5>
+            <div class="content_half float_l checkout"  style="width: 45%;">
+                <input type="text"  style="width:200px; height: 30px; font-size: 20px;" placeholder ="Nhập tại đây..." />
+                <a class="blackBtn" style="float: right; font-size: 13px; width:20%;  padding: 10px; text-align:center;" href="#">ÁP DỤNG</a>
+            </div>
         </div> 
         <div class="cleaner"></div>
     </div> <!-- END of templatemo_main -->
