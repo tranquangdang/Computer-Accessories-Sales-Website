@@ -38,14 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                     </tr>
                     <tr>
                     	<td>Số lượng</td>
-                        <td><input type="number" name="quantity" value="1" min="1" onKeyDown="return false" max="<?php echo $rows['QtyOnHand']; ?>" style="width: 30px; text-align: right" /></td>
+                        <td><input type="number" name="quantity" value="1" min="1" onKeyDown="return false" max="<?php echo $rows['QtyOnHand']; ?>" style="width: 50px; text-align: right" /></td>
                     </tr>
                     <tr>
                         <input type="hidden" name="ProductID" value="<?php echo $rows['ProductID']; ?>"/>
                         <td colspan="2">
                             <?php 
                             if(Session::get('customerId')) {
-                                echo '<input type="submit" name="submit" class="blackBtn" style="width: 100%; margin-top: 30px; text-align:center; cursor: pointer;" value="THÊM VÀO GIỎ HÀNG" />';
+                                echo '<input type="submit" name="submit" class="btn blackBtn" style="width: 100%; margin-top: 30px; text-align:center; cursor: pointer;" value="THÊM VÀO GIỎ HÀNG" />';
                             } else {
                                 echo '<a href="login.php" class="blackBtn" style="margin-top: 30px; text-align:center; cursor: pointer;">ĐĂNG NHẬP NGAY</a>';
                             }
@@ -70,6 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
         	<?php require ("include/productList.php") ?>    
         </div> 
         <div class="cleaner"></div>
-    </div> <!-- END of templatemo_main -->
+    </div> <!-- END of main -->
     
     <?php require ("include/footer.php") ?>

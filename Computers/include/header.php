@@ -1,60 +1,43 @@
-<?php 
-include 'lib/Session.php';
-Session::init();
-include 'lib/Database.php';
-include 'helpers/Format.php';
-
-spl_autoload_register(function ($class) {
-    include_once "classes/".$class.".php";
-});
-$database = new Database();
-$format = new Format();
-$product = new Product();
-$cart = new Cart();
-$customer = new Customer(); ?>
+<?php require "include/topheader.php"; ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Website Đăng Trường</title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<link href="css/templatemo_style.css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Website Đăng Trường</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/ddsmoothmenu.js"></script>
+    <script type="text/javascript">
+        ddsmoothmenu.init({
+            mainmenuid: "top_nav", 
+            orientation: 'h', 
+            classname: 'ddsmoothmenu', 
+            contentsource: "markup" 
+        })
 
-<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
-
-<link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
-
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/ddsmoothmenu.js"></script>
-
-<script type="text/javascript">
-
-ddsmoothmenu.init({
-	mainmenuid: "top_nav", 
-	orientation: 'h', 
-	classname: 'ddsmoothmenu', 
-	contentsource: "markup" 
-})
-
-ddsmoothmenu.init({
-	mainmenuid: "sidebar", 
-	orientation: 'h', 
-	classname: 'ddsmoothmenuvertical', 
-	contentsource: "markup" 
-})
-
-</script>
+        ddsmoothmenu.init({
+            mainmenuid: "sidebar", 
+            orientation: 'h', 
+            classname: 'ddsmoothmenuvertical', 
+            contentsource: "markup" 
+        })
+    </script>
 
 </head>
 
 <body>
 
-<div id="templatemo_body_wrapper">
-<div id="templatemo_wrapper">
+<div id="body_wrapper">
+<div id="wrapper">
 
-	<div id="templatemo_header">
+	<div id="header">
     	<div id="site_title"><h1><a href="index.php">Đăng Trường Computers</a></h1></div>
         <div id="header_right">
         	<p>
@@ -89,9 +72,9 @@ ddsmoothmenu.init({
 			</p>
 		</div>
         <div class="cleaner"></div>
-    </div> <!-- END of templatemo_header -->
+    </div> <!-- END of header -->
     
-    <div id="templatemo_menubar">
+    <div id="menubar">
     	<div id="top_nav" class="ddsmoothmenu">
             <ul>
                 <li><a class="visited" href="index.php">Trang chủ</a></li>
@@ -112,13 +95,13 @@ ddsmoothmenu.init({
             </ul>
             <br style="clear: left" />
         </div> <!-- end of ddsmoothmenu -->
-        <div id="templatemo_search">
+        <div id="search">
             <form action="#" method="get">
               <input type="text" value=" " name="keyword" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
               <input type="submit" name="Search" value=" " alt="Search" id="searchbutton" title="Search" class="sub_btn"  />
             </form>
         </div>
-    </div> <!-- END of templatemo_menubar -->
+    </div> <!-- END of menubar -->
     
-    <div id="templatemo_main">
+    <div id="main">
     	

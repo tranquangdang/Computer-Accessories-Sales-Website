@@ -96,8 +96,7 @@ class Cart
             if ($updated_row) {
                 header("Location:shoppingcart.php");
             } else {
-                echo "<script language='javascript'>alert('Lỗi');";
-                echo "location.href='theloai.php';</script>";
+                echo "<script language='javascript'>alert('Lỗi')</script>";
             }
         } else {
             //Nếu chưa có thì chèn vô bảng chi tiết giỏ hàng
@@ -106,8 +105,7 @@ class Cart
             if ($inserted_row) {
                 header("Location:shoppingcart.php");
             } else {
-                echo "<script language='javascript'>alert('Lỗi');";
-                echo "location.href='theloai.php';</script>";
+                echo "<script language='javascript'>alert('Lỗi')</script>";
             }
         }
     }
@@ -136,8 +134,7 @@ class Cart
         if ($updated_row) {
             header("Location:shoppingcart.php");
         } else {
-            echo "<script language='javascript'>alert('Lỗi');";
-		    echo "location.href='theloai.php';</script>";
+            echo "<script language='javascript'>alert('Lỗi')</script>";
         }
     }
 
@@ -250,13 +247,6 @@ class Cart
             OrderStatus = 1
             WHERE  OrderID = '$OrderID'";
         $updated_row = $this->database->update($query);
-        if ($updated_row) {
-            $msg = "<span class='success'>Thành công!</span>";
-            return $msg;
-        } else {
-            $msg = "<span class='error'>Không thàng công!</span>";
-            return $msg;
-        }
     }
 
     public function Prepare($OrderID)
@@ -268,13 +258,6 @@ class Cart
             OrderStatus = 2
             WHERE  OrderID = '$OrderID'";
         $updated_row = $this->database->update($query);
-        if ($updated_row) {
-            $msg = "<span class='success'>Thành công!</span>";
-            return $msg;
-        } else {
-            $msg = "<span class='error'>Không thàng công!</span>";
-            return $msg;
-        }
     }
 
     public function Ship($OrderID)
@@ -286,13 +269,6 @@ class Cart
             OrderStatus = 3
             WHERE  OrderID = '$OrderID'";
         $updated_row = $this->database->update($query);
-        if ($updated_row) {
-            $msg = "<span class='success'>Thành công!</span>";
-            return $msg;
-        } else {
-            $msg = "<span class='error'>Không thàng công!</span>";
-            return $msg;
-        }
     }
 
     public function ConfirmShip($OrderID)
@@ -304,13 +280,6 @@ class Cart
             OrderStatus = 4
             WHERE  OrderID = '$OrderID'";
         $updated_row = $this->database->update($query);
-        if ($updated_row) {
-            echo "<script language='javascript'>alert('Thành công');";
-		    echo "location.href='orderdetails.php';</script>";
-        } else {
-            echo "<script language='javascript'>alert('Lỗi');";
-		    echo "location.href='orderdetails.php';</script>";
-        }
     }
 
 

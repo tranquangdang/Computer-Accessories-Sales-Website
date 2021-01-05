@@ -5,18 +5,17 @@ if(!Session::get('customerId')) {
 }
  ?>
  <?php 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Cancel'])) {
-    $OrderID = $_POST['OrderID'];
+if (isset($_GET['cancel'])) {
+    $OrderID = $_GET['cancel'];
     $cancel = $cart->orderCancel($OrderID);
-    header("Location:orderdetails.php");
 }
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Confirm'])) {
-    $OrderID = $_POST['OrderID'];
+if (isset($_GET['confirm'])) {
+    $OrderID =  $_GET['confirm'];
     $confirm = $cart->ConfirmShip($OrderID);
-    header("Location:orderdetails.php");
 }
   ?>
  <style type="text/css">
+    .order {width: 94%;}
  	.tblone  tr td{text-align:center;}
  </style>
     		<div class="section group">
@@ -26,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Confirm'])) {
                         $getOrder = $cart->getOrderInvoiceDetail();
                         if (!$getOrder) {echo '<p style="text-align: center">Không có đơn hàng nào!</p>';}
                         else {?> 
-    				<table class="tblone">
+    				<table class="tblone table table-responsive table-bordered">
                         <tr>
                             <th>STT</th>
                             <th>Mã đơn hàng</th>
@@ -40,13 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Confirm'])) {
                             while ($result = $getOrder->fetch_assoc()) {
                                 $i++; ?>
                         <tr>
-                            <td><?php echo $i; ?></td>
-                            <td><?php echo $result['OrderID']; ?>
-                                <a href="#" class="hover"  id="<?php echo $result['OrderID']; ?>">(xem chi tiết)</a>
+                            <td style="vertical-align: middle;  text-align: center;"><?php echo $i; ?></td>
+                            <td style="vertical-align: middle;  text-align: center;"><?php $id = $result['OrderID'];  echo $id; ?>
+                                <a type="button" class="btn blackBtn detailsBtn" data-id="<?php echo $id ?>" style="padding: 5px; font-size: 11px; text-align:center;">Xem chi tiết</a>
                             </td>
-                            <td><?php echo $format->formatDate($result['OrderDate']); ?></td>
-                            <td><?php echo number_format($result['OrderTotalMoney']); ?> VNĐ</td>
-                            <td>
+                            <td style="vertical-align: middle;  text-align: center;"><?php echo $format->formatDate($result['OrderDate']); ?></td>
+                            <td style="vertical-align: middle;  text-align: center;"><?php echo number_format($result['OrderTotalMoney']); ?> VNĐ</td>
+                            <td style="vertical-align: middle;  text-align: center;">
                                 <?php
                                     if ($result['OrderStatus'] == '0') {
                                         echo "Chưa xác nhận";
@@ -60,22 +59,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Confirm'])) {
                                         echo "Đã giao hàng";
                                     }
                                 ?>
-                            </td>
-                            <input type="hidden" name="OrderID" value="<?php echo $result['OrderID'];?>"/>
+                            </td style="vertical-align: middle;  text-align: center;">
                             <?php if ($result['OrderStatus'] == '0') {?>
-                                <form action="" method="post">
-                                    <td><input type="submit" name="Cancel" value="Hủy đơn hàng" /><input type="hidden" name="OrderID" value="<?php $result['OrderID']?>" /></td>
-                                </form>
+                                <td style="vertical-align: middle;  text-align: center;"><a class="blackBtn btn" style="padding: 5px; font-size: 11px; text-align:center;" href="?cancel=<?php echo $result['OrderID'] ?>">Hủy đơn hàng</a></td>
                             <?php } elseif ($result['OrderStatus'] == '1') {?>
-                                <td><a onclick="<?php echo "<script language='javascript'>alert('Không thể hủy');"; echo "location.href='orderdetails.php';</script>";?>">Hủy đơn hàng</a></td>
+                                <td style="vertical-align: middle;  text-align: center;"><p style="margin: 0; padding: 5px;">Không thể hủy</p></td>
                             <?php } elseif ($result['OrderStatus'] == '2') {?>
-                                <td><a onclick="<?php echo "<script language='javascript'>alert('Không thể hủy');"; echo "location.href='orderdetails.php';</script>";?>">Hủy đơn hàng</a></td>
+                                <td style="vertical-align: middle;  text-align: center;"><p style="margin: 0; padding: 5px;">Không thể hủy</p></td>
                             <?php } elseif ($result['OrderStatus'] == '3') {?>
-                                <form method="post">
-                                    <td><input type="submit" name="Confirm" value="Đã nhận được hàng" /><input type="hidden" name="OrderID" value="<?php $result['OrderID']?>" /></td>
-                                </form>
+                                <td style="vertical-align: middle;  text-align: center;"><a class="blackBtn btn" style="padding: 5px; font-size: 11px; text-align:center;" href="?confirm=<?php echo $result['OrderID'] ?>">Đã nhận được hàng</a></td>
                             <?php } else { ?>
-                                <td>Hoàn thành</td>
+                                <td style="vertical-align: middle;  text-align: center;">Hoàn thành</td>
                             <?php } ?>
                         </tr>
                         <?php
@@ -85,5 +79,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Confirm'])) {
     			</div>
     		</div>
        <div class="clear"></div>
-</div> <!-- END of templatemo_main -->
+</div> <!-- END of main -->
 <?php require "include/footer.php"; ?>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Chi tiết sản phẩm</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script type="text/javascript">
+var $details = $.noConflict();
+$details(document).ready(function(){  
+    $details('.detailsBtn').click(function(){
+        var OrderNo = $details(this).data("id");  
+           $details.ajax({  
+                url:"modalorderdetails.php",  
+                method:"post",  
+                data:{OrderNo:OrderNo},  
+                success:function(data){  
+                    $details('.modal-body').html(data);  
+                    $details('#myModal').modal('show');  
+                }  
+           });  
+    });  
+});
+</script>

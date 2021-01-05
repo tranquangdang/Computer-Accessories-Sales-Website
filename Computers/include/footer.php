@@ -1,8 +1,8 @@
 
-<div id="templatemo_footer">
+<div id="footer">
     
-</div> <!-- END of templatemo_wrapper -->
-</div> <!-- END of templatemo_body_wrapper -->
+</div> <!-- END of wrapper -->
+</div> <!-- END of wrapper -->
 <div class="footer">
    	  <div class="wrapper">	
 	     <div class="section group">
@@ -55,15 +55,13 @@
 				<p>Trần Quang Đăng &amp; All rights Reseverd </p>
 		   </div>
      	</div>
-    </div>
-    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> 
-    <script type="text/javascript">
-      var $jQuery_1_7_2 = $.noConflict();
-    </script>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> 
     <script type="text/javascript" src="js/move-top.js"></script>
     <script type="text/javascript" src="js/easing.js"></script> 
-    <script type="text/javascript">
-		$jQuery_1_7_2(document).ready(function() {
+	<script type="text/javascript">
+		var $top = $.noConflict();
+		$1_7_2(document).ready(function() {
 			/*
 			var defaults = {
 	  			containerID: 'toTop', // fading element id
@@ -73,7 +71,7 @@
 	 		};
 			*/
 			
-			$jQuery_1_7_2().UItoTop({ easingType: 'easeOutQuart' });
+			$1_7_2().UItoTop({ easingType: 'easeOutQuart' });
 			
 		});
 	</script>

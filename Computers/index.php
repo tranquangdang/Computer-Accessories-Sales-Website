@@ -14,15 +14,13 @@
                     <a href="#"><img src="images/slider/09.jpg" alt="" /></a>
                 </div>
             </div>
-            <script type="text/javascript" src="js/jquery-1.4.3.min.js"></script>
-            <script type="text/javascript">
-                var $jQuery_1_4_3 = $.noConflict();
-            </script>
+            <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
             <script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
             <script type="text/javascript">
-            $jQuery_1_4_3(window).load(function() {
-                $jQuery_1_4_3('#slider').nivoSlider();
-            });
+                var $1_3_2 = $.noConflict();
+                $1_3_2(document).ready(function() {
+                    $1_3_2('#slider').nivoSlider();
+                });
             </script>
         	<h1>Sản phẩm mới</h1>
             <?php 
@@ -32,6 +30,6 @@
             ?>    
         </div> 
         <div class="cleaner"></div>
-    </div> <!-- END of templatemo_main -->
+    </div> <!-- END of main -->
     
     <?php require ("include/footer.php") ?>

@@ -21,5 +21,5 @@ if(!Session::get('customerId')) {
             <p>Bạn có thể kiểm tra đơn hàng <a href="orderdetails.php">tại đây</a></p>			
 		</div>
 	</div>
-</div> <!-- END of templatemo_main -->
+</div> <!-- END of main -->
 <?php require "include/footer.php"?>

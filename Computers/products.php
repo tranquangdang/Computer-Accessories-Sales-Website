@@ -8,6 +8,6 @@
             ?>   
         </div> 
         <div class="cleaner"></div>
-    </div> <!-- END of templatemo_main -->
+    </div> <!-- END of main -->
     
     <?php require ("include/footer.php") ?>

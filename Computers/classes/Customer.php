@@ -112,12 +112,9 @@ class Customer
         	Email       = '$Email'
         	WHERE CustID = $CustID";
             $updated_row = $this->database->update($query);
-            if ($updated_row) {
-                $msg = "<span class='success'>Cập nhật thành công!</span>";
-                return $msg;
-            } else {
-                $msg = "<span class='error'>Cập nhật thất bại!</span>";
-                return $msg;
+            if (!$updated_row) {
+                echo "<script language='javascript'>alert('Cập nhật thất bại!');";
+                echo "location.href='profile.php';</script>";
             }
         }
     }
