@@ -17,6 +17,11 @@ class Cart
         $this->format = new Format();
     }
 
+    public function DiscountPrice($UnitPrice, $PerDiscount)
+    {
+        return $UnitPrice - (($UnitPrice * $PerDiscount)/100);
+    }
+
     //Tính tổng tiền giỏ hàng, hóa đơn
     public function getTotalMoney() {
         //Lấy ra id giỏ hàng
@@ -32,7 +37,7 @@ class Cart
         $OrderTotalMoney = 0;
         //Duyệt và tính tổng tiền
         while( ($rows = $getQtyOrdered->fetch_assoc()) != NULL ) {
-            $Amount = $rows['UnitPrice']*$rows['QtyOrdered'];
+            $Amount = $this->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])*$rows['QtyOrdered'];
             $OrderTotalMoney += $Amount;
         }
         return $OrderTotalMoney;
@@ -190,7 +195,7 @@ class Cart
             while ($result = $getPro->fetch_assoc()) {
                 $ProductID      = $result['ProductID'];
                 $QtyOrdered       = $result['QtyOrdered'];
-                $Amount          = $result['UnitPrice'] * $QtyOrdered;
+                $Amount          = $this->DiscountPrice($result['UnitPrice'],$result['PerDiscount']) * $QtyOrdered;
 
                 $query = "INSERT INTO tblOrderInvoiceDetail (OrderID, ProductID, QtyOrdered, Amount) VALUES($OrderID, $ProductID, $QtyOrdered, $Amount)";
                 $inserted_row = $this->database->insert($query);
@@ -281,7 +286,5 @@ class Cart
             WHERE  OrderID = '$OrderID'";
         $updated_row = $this->database->update($query);
     }
-
-
-
+    
 }

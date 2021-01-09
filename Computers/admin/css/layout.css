@@ -51,7 +51,7 @@ a:hover {
 ----------------------------------------------- */
 .container_12,
 .container_16 {
-	background:#2E5E79;
+	background:#dfdfdf;
 }
 
 
@@ -189,7 +189,7 @@ div.menu .block {
 /* sidebar menu
 ----------------------------------------------- */
 
-.box.sidemenu{ background-color:#D1DEE4; border-right:1px solid #3A5665; padding:0px; margin:0px; cursor:pointer; }
+.box.sidemenu{ background-color:#D1DEE4;  padding:0px; margin:0px; cursor:pointer; }
 .box.sidemenu .block{padding-top:0px; margin-top:0px;}
 
 /* paragraphs, quotes and lists

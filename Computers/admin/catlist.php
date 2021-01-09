@@ -10,7 +10,7 @@ if (isset($_GET['delcat'])) {
  ?>
         <div class="grid_10">
             <div class="box round first grid">
-                <h2>Category List</h2>
+                <h2>Quản lý danh mục</h2>
                 <div class="block">
                 <?php 
                 if (isset($delCat)) {
@@ -20,9 +20,9 @@ if (isset($_GET['delcat'])) {
                     <table class="data display datatable" id="example">
 					<thead>
 						<tr>
-							<th>Serial No.</th>
-							<th>Category Name</th>
-							<th>Action</th>
+							<th>Mã danh mục</th>
+							<th>Tên danh mục</th>
+							<th>Hành động</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -35,7 +35,7 @@ if (isset($_GET['delcat'])) {
 						<tr class="odd gradeX">
 							<td><?php echo $i; ?></td>
 							<td><?php echo $result['CategoryName']; ?></td>
-							<td><a href="catedit.php?CategoryID=<?php echo $result['CategoryID']; ?>">Edit</a> || <a onclick="return confirm('Are you sure to delete this?')" href="?delcat=<?php echo $result['CategoryID']; ?>">Delete</a></td>
+							<td><a href="catedit.php?CategoryID=<?php echo $result['CategoryID']; ?>">Sửa</a> || <a onclick="return confirm('Are you sure to delete this?')" href="?delcat=<?php echo $result['CategoryID']; ?>">Xóa</a></td>
 						</tr>
 						<?php
                             }

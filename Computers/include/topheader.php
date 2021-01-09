@@ -11,4 +11,5 @@ $database = new Database();
 $format = new Format();
 $product = new Product();
 $cart = new Cart();
-$customer = new Customer(); ?>
+$customer = new Customer(); 
+$pagination = new Page();?>

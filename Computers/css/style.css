@@ -10,7 +10,7 @@ body {
 	background-repeat: repeat;
 }
 
-a, a:link, a:visited { color: #0299aa; font-weight: bold; text-decoration: none }
+a, a:link, a:visited {font-weight: bold; text-decoration: none }
 
 p { margin: 0 0 10px 0; padding: 0; }
 img { border: none; }
@@ -62,6 +62,7 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 }
 
 #main {
+	position: relative;
 	width: 980px;
 	padding: 10px 30px;
 	background: url(../images/main_bg.png) repeat-y
@@ -184,12 +185,17 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	font-weight: 700;
 	background: #222;
 }
-
-.bs_box { clear: both; margin-bottom: 20px }
-.bs_box:hover {padding: 10px; opacity: 0.8;box-shadow: 2px 8px 9px rgba(0,0,0,0.1);}
+.bs_box {height: 85px; margin-bottom: 10px;}
+.bs_box a {padding: 10px; display: block; text-decoration: none; height: 85px; }
+.bs_box a:hover {opacity: 0.8;box-shadow: 2px 8px 9px rgba(0,0,0,0.1); transform: scale(1.05); text-decoration: none;} 
 .bs_box img { float: left; margin-right: 10px; border: 4px solid #fff; width: 66px; height: 66px;}
-.bs_box h4 { margin-bottom: 0 }
-.bs_box h4 a { font-size: 11px; color: #000; font-weight: 700; overflow: hidden;
+.bs_box h5 {
+	text-decoration: none;
+	margin-bottom: 0; 
+	font-size: 11px; 
+	color: #000; 
+	font-weight: 700; 
+	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
 	-webkit-line-clamp: 1; /* number of lines to show */
@@ -201,14 +207,18 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	float: left;
 	width: 205px;
 	text-align: center;
-	margin: 10px 10px 20px 10px;
+	margin: 10px;
 	border-bottom: 1px solid #ccc
 }
 
 .product_box:hover {opacity: 0.8;box-shadow: 2px 8px 9px rgba(0,0,0,0.1);}
 .product_box a{ padding:5px;}
-.product_box a:hover {text-decoration: none; transform: scale(1.1);}
+.product_box a:hover {text-decoration: none; transform: scale(1.05);}
+.product_box a:hover label {transform: scale(0.9);}
 
+.product_box label {
+	background-color: Red; color: White;padding: 5px 15px; position: absolute; top: 60px; right: 0px;
+}
 
 .product_box img {
 	margin-bottom: 5px;
@@ -216,8 +226,9 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	height: 200px;
 }
 .product_box h3 {
-	margin: 7px;
+	margin: 12px;
 	font-size: 13px;
+	min-height: 36px;
 	line-height: 18px;
 	color: #000;
 	font-weight: bold;
@@ -238,8 +249,12 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	color: #1435C3;
 	font-size: 15px;
 	font-weight: 700;
-	margin-bottom: 20px;
 }
+
+.product_price p {
+	margin: 0;
+}
+
 .product_box .addtocart {
 	float: left;
 	display: block;
@@ -472,32 +487,33 @@ td:hover input.update {background-color: #000000; cursor: pointer; color:#ffffff
 	padding:1.5% 1.5% 0 1.5%; 
 }
 .span_1_of_4  h4 {
-	color:#ccc;
+	color:#fff;
 	margin-bottom: .5em;
-	font-size:1em;
+	font-size:1.2em;
 	line-height: 1.2;
 	font-family:'Doppio One', sans-serif;
 	font-weight : normal;
 	margin-top: 0px;
 	letter-spacing: -1px;
 	text-transform:uppercase;
-	border-bottom:1px solid #474747;
+	border-bottom:1px solid #dfdfdf;
 	padding-bottom:0.5em;
 }
 .span_1_of_4  li a{
 	font-size:0.8125em;
 	padding:0.4em 0;
-	color:#979797;
+	color:#dfdfdf;
 	font-family :Arial, Helvetica, sans-serif;
-	display:block;	 	 
+	display:block;	 	
+	font-weight: normal; 
 }
 .span_1_of_4  li a:hover,.span_1_of_4  li span:hover{
-	color:#BBB7B7;
+	text-decoration: underline;
 }
 .span_1_of_4  li span{
 	font-size:1em;
 	padding:0.2em 0;
-	color:#979797;
+	color:#dfdfdf;
 	display:block;
 	cursor:pointer;
 }
@@ -543,16 +559,16 @@ td:hover input.update {background-color: #000000; cursor: pointer; color:#ffffff
  }
  .copy_right p{
 	font-size:12px;
-	color:#747474;
+	color:#fff;
  }
  .copy_right p a{
-    color:#747474;
+    color:#fff;
 	font-size:12px;
 	text-decoration:underline;
  }
  .copy_right p a:hover{
-	color:#BBB7B7;
-	text-decoration:none;
+	color:#fff;
+	text-decoration:underline;
  }
 
  /*** move top **/
@@ -783,3 +799,5 @@ p.note{
 	height: 20px;
 	width: 30px;
   }
+
+  .intro img{max-width: 680px; max-height: 300px;}

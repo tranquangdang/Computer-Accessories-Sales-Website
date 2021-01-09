@@ -46,9 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			<tr>
 				<td><?php echo $i; ?></td>
 				<td><?php echo $result['ProductName']; ?></td>								
-				<td>₫<?php echo number_format($result['UnitPrice']); ?></td>
+				<td>₫<?php echo number_format($cart->DiscountPrice($result['UnitPrice'],$result['PerDiscount'])); ?></td>
 				<td><?php echo $result['QtyOrdered']; ?></td>								
-				<td>₫<?php echo number_format($total = $result['UnitPrice'] * $result['QtyOrdered']); ?></td>								
+				<td>₫<?php echo number_format($total = $cart->DiscountPrice($result['UnitPrice'],$result['PerDiscount']) * $result['QtyOrdered']); ?></td>								
 			</tr>
 			<?php 
 				}}

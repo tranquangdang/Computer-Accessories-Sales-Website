@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 }
 ?>
 <?php require ("include/sidebar.php"); ?>
-        <div id="content" class="float_r">
+        <div id="content" class="float_r" style="margin-bottom: 70px">
             <?php
                 $results = $product->getProById($ProductID);
                 while( ($rows = $results->fetch_assoc())!= NULL )
@@ -19,17 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 			?>
         	<h1><?php echo $rows['ProductName']; ?></h1>
             <div class="content_half float_l">
-        	<a  rel="lightbox[portfolio]" href="#"><img class="detail" src="<?php echo $rows['ProductImg']; ?>" alt="image" /></a>
+        	    <a  rel="lightbox[portfolio]" href="#"><img class="detail" src="<?php echo $product->checkImg($rows['ProductImg']);  ?>" alt="image" /></a>
             </div>
             <div class="content_half float_r">
                 <form action="" method="post">
                 <table>
                     <tr>
-                        <td align="right"><p class="product_price"><a>₫</a><?php echo number_format($rows['UnitPrice']); ?></p></td>
-                        <td ><p class="discount">₫<?php echo number_format($rows['UnitPrice']); ?></p></td>
+                        <td align="right"><p class="product_price"><a>₫</a><?php echo number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></p></td>
+                        <td ><p class="discount"><?php if ($rows['PerDiscount'] > 0) echo '₫'.number_format($rows['UnitPrice']); ?></p></td>
                     </tr>
                     <tr>
-                        <td>Số lượng trong kho:</td>
+                        <td>Số lượng còn lại:</td>
                         <td><?php echo $rows['QtyOnHand']; ?></td>
                     </tr>
                     <tr>
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                             if(Session::get('customerId')) {
                                 echo '<input type="submit" name="submit" class="btn blackBtn" style="width: 100%; margin-top: 30px; text-align:center; cursor: pointer;" value="THÊM VÀO GIỎ HÀNG" />';
                             } else {
-                                echo '<a href="login.php" class="blackBtn" style="margin-top: 30px; text-align:center; cursor: pointer;">ĐĂNG NHẬP NGAY</a>';
+                                echo '<a href="login.php" class="btn blackBtn" style="margin-top: 30px; text-align:center; cursor: pointer;">ĐĂNG NHẬP NGAY</a>';
                             }
                             ?>
                         </td>
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
             <div class="cleaner h30"></div>
             
             <h5>Mô tả sản phẩm:</h5>
-            <p><?php echo $rows['Intro']; ?></p>	
+            <div class="intro"><?php echo(htmlspecialchars_decode(stripslashes($rows['Intro']))); ?></div>	
             <?php 
                 }
             ?>

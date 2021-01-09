@@ -1,8 +1,10 @@
 ﻿<?php include 'inc/header.php';?>
 <?php include 'inc/sidebar.php';?>
 <?php include '../classes/Product.php'; ?>
+<?php include '../classes/Cart.php'; ?>
 <?php include_once '../helpers/Format.php'; ?>
 <?php 
+$cart = new Cart();
 $pd = new Product();
 $fm = new Format();
  ?>
@@ -15,7 +17,7 @@ if (isset($_GET['delpro'])) {
 
 <div class="grid_10">
     <div class="box round first grid">
-        <h2>Post List</h2>
+        <h2>Quản lý sản phẩm</h2>
         <?php 
                 if (isset($delPro)) {
                     echo $delPro;
@@ -25,14 +27,12 @@ if (isset($_GET['delpro'])) {
             <table class="data display datatable" id="example">
 			<thead>
 				<tr>
-					<th width="40px">Mã</th>
-					<th>Tên sản phẩm</th>
+					<th	>Mã</th>
+					<th >Tên sản phẩm</th>
 					<th>Danh mục</th>
 					<th>Hãng</th>
-					<th>Mô tả</th>
 					<th>Giá bán</th>
 					<th>Kho</th>
-					<th>Hình ảnh</th>
 					<th>Sửa/Xóa</th>
 				</tr>
 			</thead>
@@ -42,16 +42,14 @@ if (isset($_GET['delpro'])) {
                 if ($getPd) {
                     while ($result = $getPd->fetch_assoc()) { ?>
 					<tr class="odd gradeX">
-					<td><?php echo $result['ProductID']; ?></td>
-					<td><?php echo $fm->textShorten($result['ProductName'],50); ?></td>
-					<td><?php echo $result['CategoryNo']; ?></td>
-					<td><?php echo $result['Brand']; ?></td>
-					<td><?php echo $fm->textShorten($result['Intro'], 50); ?></td>
-					<td>đ<?php echo $result['UnitPrice']; ?></td>
-					<td><?php echo $result['QtyOnHand']." cái"; ?></td>
-					<td><img src="<?php echo $result['ProductImg']; ?>" height="60px" width="60px"></td>
-					<td><a href="productedit.php?proid=<?php echo $result['ProductID']; ?>">Sửa</a> || <a onclick="return confirm('Bạn có muốn xóa sản phẩm này không?')" href="?delpro=<?php echo $result['ProductID']; ?>">Xóa</a></td>
-				</tr>
+						<td><?php echo $result['ProductID']; ?></td>
+						<td><?php echo $fm->textShorten($result['ProductName'],50); ?></td>
+						<td><?php echo $result['CategoryNo']; ?></td>
+						<td><?php echo $result['Brand']; ?></td>
+						<td>đ<?php echo number_format($cart->DiscountPrice($result['UnitPrice'],$result['PerDiscount'])); ?></td>
+						<td><?php echo $result['QtyOnHand']." cái"; ?></td>
+						<td><a href="productedit.php?proid=<?php echo $result['ProductID']; ?>">Sửa</a> || <a onclick="return confirm('Bạn có muốn xóa sản phẩm này không?')" href="?delpro=<?php echo $result['ProductID']; ?>">Xóa</a></td>
+					</tr>
 				<?php
                     }
                 } ?>

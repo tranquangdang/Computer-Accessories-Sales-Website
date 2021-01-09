@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     ?>
                 <tr>
-                    <td><img style="width: 200px; height: 200px; vertical-align: middle;  text-align: center;" src="<?php echo $rows['ProductImg']; ?>" alt="image" /></td> 
+                    <td><img style="width: 200px; height: 200px; vertical-align: middle;  text-align: center;" src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="image" /></td> 
                     <td style="font-size:15px; color: black; font-weight: bold; vertical-align: middle;  text-align: center;"><span><?php echo $rows['ProductName']; ?></span></td> 
                     <td style="vertical-align: middle;  text-align: center;">
                         <form action="" method="post">
@@ -58,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <input class="update btn" type="submit" name="submit" value="Cập nhật"/>
                         </form>
                     </td>
-                    <td style="vertical-align: middle;  text-align: center;">₫<?php echo number_format($rows['UnitPrice']); ?></td>
-                    <td style="vertical-align: middle;  text-align: center;">₫<?php $total = $rows['UnitPrice'] * $rows['QtyOrdered']; echo number_format($total); ?></td></td>
+                    <td style="vertical-align: middle;  text-align: center;">₫<?php echo number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></td>
+                    <td style="vertical-align: middle;  text-align: center;">₫<?php $total = $cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount']) * $rows['QtyOrdered']; echo number_format($total); ?></td></td>
                     <td style="vertical-align: middle;  text-align: center;"> <a class="btn" href="shoppingcart.php?CartID=<?php echo $rows['CartID']; ?>&ProductID=<?php echo $rows['ProductID']; ?>"><img src="images/remove_x.gif" alt="remove" /><br />Xóa</a> </td>
                 </tr>
                     <?php 

@@ -40,6 +40,7 @@ create table tblProduct
   	ProductImg varchar(255) not null,
   	Intro Mediumtext not null,
 	UnitPrice int default 0,
+	PerDiscount int default 0,
 	QtyOnHand int default 0,
   FOREIGN KEY (CategoryNo) REFERENCES tblProductCategory(CategoryID)
 ) ENGINE = InnoDB;

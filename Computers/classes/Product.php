@@ -58,6 +58,7 @@ class Product
         $ProductName= $this->format->validation($data['ProductName']);
         $Intro      = $this->format->validation($data['Intro']);
         $UnitPrice  = $this->format->validation($data['UnitPrice']);
+        $PerDiscount  = $this->format->validation($data['PerDiscount']);
         $QtyOnHand  = $this->format->validation($data['QtyOnHand']);
 
         $CategoryNo = mysqli_real_escape_string($this->database->link, $CategoryNo);
@@ -65,6 +66,7 @@ class Product
         $ProductName= mysqli_real_escape_string($this->database->link, $ProductName);
         $Intro      = mysqli_real_escape_string($this->database->link, $Intro);
         $UnitPrice  = mysqli_real_escape_string($this->database->link, $UnitPrice);
+        $PerDiscount  = mysqli_real_escape_string($this->database->link, $PerDiscount);
         $QtyOnHand  = mysqli_real_escape_string($this->database->link, $QtyOnHand);
 
         $permited  = array('jpg', 'jpeg', 'png', 'gif');
@@ -75,7 +77,7 @@ class Product
         $div = explode('.', $file_name);
         $file_ext = strtolower(end($div));
         $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
-        $uploaded_image = "upload/".$unique_image;
+        $uploaded_image = "../images/product/".$unique_image;
 
         if (empty($file_name)) {
             echo "<span class='error'>Vui lòng chọn hình ảnh !</span>";
@@ -83,12 +85,12 @@ class Product
             echo "<span class='error'>Dung lượng ảnh phải nhỏ hơn 4MB! </span>";
         } elseif (in_array($file_ext, $permited) === false) {
             echo "<span class='error'>Bạn chỉ có thể upload các file sau: ".implode(', ', $permited)."</span>";
-        } elseif ($CategoryNo == "" || $Brand == "" || $ProductName == "" || $Intro == "" || $UnitPrice == "" || $QtyOnHand == "") {
+        } elseif ($CategoryNo == "" || $Brand == "" || $ProductName == "" || $Intro == "" || $UnitPrice == "" || $PerDiscount == "" || $QtyOnHand == "") {
             $msg = "<span class='error'>Chưa điền đầy đủ cho tất cả các trường!</span>";
             return $msg;
         } else {
             move_uploaded_file($file_temp, $uploaded_image);
-            $query = "INSERT INTO tblProduct (CategoryNo, Brand, ProductName, ProductImg, Intro, UnitPrice, QtyOnHand) VALUES('$CategoryNo', '$Brand', '$ProductName', '$uploaded_image', '$Intro', '$UnitPrice', '$QtyOnHand')";
+            $query = "INSERT INTO tblProduct (CategoryNo, Brand, ProductName, ProductImg, Intro, UnitPrice, PerDiscount, QtyOnHand) VALUES('$CategoryNo', '$Brand', '$ProductName', '$uploaded_image', '$Intro', '$UnitPrice', $PerDiscount, '$QtyOnHand')";
             $inserted_row = $this->database->insert($query);
             if ($inserted_row) {
                 $msg = "<span class='success'>Thêm sản phẩm thành công!</span>";
@@ -108,6 +110,7 @@ class Product
         $ProductName= $this->format->validation($data['ProductName']);
         $Intro      = $this->format->validation($data['Intro']);
         $UnitPrice  = $this->format->validation($data['UnitPrice']);
+        $PerDiscount  = $this->format->validation($data['PerDiscount']);
         $QtyOnHand  = $this->format->validation($data['QtyOnHand']);
 
         $CategoryNo = mysqli_real_escape_string($this->database->link, $CategoryNo);
@@ -115,6 +118,7 @@ class Product
         $ProductName= mysqli_real_escape_string($this->database->link, $ProductName);
         $Intro      = mysqli_real_escape_string($this->database->link, $Intro);
         $UnitPrice  = mysqli_real_escape_string($this->database->link, $UnitPrice);
+        $PerDiscount  = mysqli_real_escape_string($this->database->link, $PerDiscount);
         $QtyOnHand  = mysqli_real_escape_string($this->database->link, $QtyOnHand);
 
         $permited  = array('jpg', 'jpeg', 'png', 'gif');
@@ -125,9 +129,9 @@ class Product
         $div = explode('.', $file_name);
         $file_ext = strtolower(end($div));
         $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
-        $uploaded_image = "upload/".$unique_image;
+        $uploaded_image = "../images/product/".$unique_image;
 
-        if ($CategoryNo == "" || $Brand == "" || $ProductName == "" || $Intro == "" || $UnitPrice == "" || $QtyOnHand == "") {
+        if ($CategoryNo == "" || $Brand == "" || $ProductName == "" || $Intro == "" || $UnitPrice == "" || $PerDiscount == "" ||  $QtyOnHand == "") {
             $msg = "<span class='error'>Chưa điền đầy đủ cho tất cả các trường!</span>";
             return $msg;
         } else {
@@ -146,6 +150,7 @@ class Product
                                     ProductImg ='$uploaded_image',
                                     Intro      ='$Intro',
                                     UnitPrice  ='$UnitPrice',
+                                    PerDiscount = '$PerDiscount',
                                     QtyOnHand  ='$QtyOnHand'
                                 WHERE ProductID = '$ProductID'
                                 ";
@@ -166,6 +171,7 @@ class Product
                                     ProductName='$ProductName',
                                     Intro      ='$Intro',
                                     UnitPrice  ='$UnitPrice',
+                                    PerDiscount = '$PerDiscount',
                                     QtyOnHand  ='$QtyOnHand'
                                 WHERE ProductID = '$ProductID'
                                 ";
@@ -203,4 +209,11 @@ class Product
         }
     }
 
+    public function checkImg($ProductImg)
+    {
+        if(substr($ProductImg,0,3) == "../"){
+            $ProductImg = substr($ProductImg,3);
+        }
+        return $ProductImg;
+    }
 }

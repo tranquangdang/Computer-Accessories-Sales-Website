@@ -8,9 +8,18 @@ if (isset($_GET['CategoryNo'])) {
         $st .= ' ' . $row['CategoryName'];
     }
     echo '<h1>' . $st . '</h1>';
-    $sql = "select * from tblProduct where CategoryNo in (" . $cate . ")";
+    $sql = "SELECT * FROM tblProduct WHERE CategoryNo in (" . $cate . ")";
+
+    $targetPage = "products.php?CategoryNo=".urlencode($_GET['CategoryNo'])."&";
+} else if (isset($_GET['Keyword'])) {
+    $keyword = $_GET['Keyword'];
+    $sql = "SELECT * FROM tblProduct WHERE ProductName LIKE '%$keyword%'";
+
+    $targetPage = "products.php?Keyword=".$_GET['Keyword']."&";
 } else {
     $sql = "select * from tblProduct";
+
+    $targetPage = "products.php?";
 }
 
 $limit = 12;
@@ -26,18 +35,31 @@ if ($page) {
 }
 
 $getProduct = $database->select($sql." LIMIT " . $start . ", " . $limit);
-
-while (($rows = $getProduct->fetch_assoc()) != null) {?>
-<div class="product_box">
-    <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>" style="display: block">
-        <h3><?php echo $rows['ProductName']; ?></h3>
-        <img src="<?php echo $rows['ProductImg']; ?>" alt="product image" />
-        <p class="discount">₫<?php echo number_format($rows['UnitPrice']); ?></p>
-        <p class="product_price"><a>₫</a><?php echo number_format($rows['UnitPrice']); ?></p>
-    </a>
-</div>
-
-<?php }
-$total_pages = mysqli_num_rows($database->select($sql));
-
+    if($getProduct) {
+        if (isset($_GET['Keyword'])) {
+            $keyword = $_GET['Keyword'];
+            echo "<h3> Kết quả cho từ khóa '$keyword'</h3>";
+        }
+        while ($rows = $getProduct->fetch_assoc()) {?>
+        <div class="product_box"  style="position: relative;">
+            <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>" style="display: block ">
+                <h3><?php echo $rows['ProductName']; ?></h3>
+                <img src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="product image"/>
+                <label style=" <?php if ($rows['PerDiscount'] <= 0) echo 'display: none;'?> ">Giảm <?php echo $rows['PerDiscount'].'%'; ?></label>
+                <p class="discount"><?php if ($rows['PerDiscount'] > 0) echo '₫'.number_format($rows['UnitPrice']); ?></p>
+                <p class="product_price"><span>₫</span><?php echo number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></p>
+            </a>
+        </div>
+    <?php }
+    $total_pages = mysqli_num_rows($database->select($sql));
+    } else {
+        echo '<h1>Không tìm thấy kết quả trên!</h1>';
+    }
+    if(isset($total_pages)){
+        ?>
+        <div style="position: absolute; bottom: 0; right: 0; padding: 10px 30px;">
+            <?php $pagination->Pagination('tblProduct', $targetPage, $total_pages, $page); ?>
+        </div>
+    <?php
+    }
 ?>

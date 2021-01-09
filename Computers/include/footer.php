@@ -60,7 +60,7 @@
     <script type="text/javascript" src="js/move-top.js"></script>
     <script type="text/javascript" src="js/easing.js"></script> 
 	<script type="text/javascript">
-		var $top = $.noConflict();
+		var $1_7_2 = $.noConflict();
 		$1_7_2(document).ready(function() {
 			/*
 			var defaults = {

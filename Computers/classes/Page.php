@@ -14,7 +14,7 @@ class Page
         $this->database = new Database();
     }
     //Phân trang
-    public function Pagination($tableName, $targetpage, $total_pages,$page)
+    public function Pagination($tableName, $targetpage, $total_pages, $page)
     {
         $limit = 12;
         $stages = 3;
@@ -31,7 +31,7 @@ class Page
             $paginate .= "<div class='paginate'>";
             //Quay lại
             if ($page > 1) {
-                $paginate .= "<a href='$targetpage?page=$prev'>Quay lại</a>";
+                $paginate .= "<a href='$targetpage page=$prev'>Quay lại</a>";
             } else {
                 $paginate .= "<span class='disabled'>Quay lại</span>";}
 
@@ -42,7 +42,7 @@ class Page
                     if ($counter == $page) {
                         $paginate .= "<span class='current'>$counter</span>";
                     } else {
-                        $paginate .= "<a href='$targetpage?page=$counter'>$counter</a>";}
+                        $paginate .= "<a href='$targetpage page=$counter'>$counter</a>";}
                 }
             } elseif ($lastpage > 5 + ($stages * 2))//Nhiều trang nên ẩn bớt
             {
@@ -52,44 +52,44 @@ class Page
                         if ($counter == $page) {
                             $paginate .= "<span class='current'>$counter</span>";
                         } else {
-                            $paginate .= "<a href='$targetpage?page=$counter'>$counter</a>";}
+                            $paginate .= "<a href='$targetpage page=$counter'>$counter</a>";}
                     }
                     $paginate .= "...";
-                    $paginate .= "<a href='$targetpage?page=$LastPagem1'>$LastPagem1</a>";
-                    $paginate .= "<a href='$targetpage?page=$lastpage'>$lastpage</a>";
+                    $paginate .= "<a href='$targetpage page=$LastPagem1'>$LastPagem1</a>";
+                    $paginate .= "<a href='$targetpage page=$lastpage'>$lastpage</a>";
                 }
                 //Ẩn các trang sau và đầu nếu đang ở giữa
                 elseif ($lastpage - ($stages * 2) > $page && $page > ($stages * 2)) {
-                    $paginate .= "<a href='$targetpage?page=1'>1</a>";
-                    $paginate .= "<a href='$targetpage?page=2'>2</a>";
+                    $paginate .= "<a href='$targetpage page=1'>1</a>";
+                    $paginate .= "<a href='$targetpage page=2'>2</a>";
                     $paginate .= "...";
                     for ($counter = $page - $stages; $counter <= $page + $stages; $counter++) {
                         if ($counter == $page) {
                             $paginate .= "<span class='current'>$counter</span>";
                         } else {
-                            $paginate .= "<a href='$targetpage?page=$counter'>$counter</a>";}
+                            $paginate .= "<a href='$targetpage page=$counter'>$counter</a>";}
                     }
                     $paginate .= "...";
-                    $paginate .= "<a href='$targetpage?page=$LastPagem1'>$LastPagem1</a>";
-                    $paginate .= "<a href='$targetpage?page=$lastpage'>$lastpage</a>";
+                    $paginate .= "<a href='$targetpage page=$LastPagem1'>$LastPagem1</a>";
+                    $paginate .= "<a href='$targetpage page=$lastpage'>$lastpage</a>";
                 }
                 //Ẩn các trang đầu nếu đang ở cuối
                 else {
-                    $paginate .= "<a href='$targetpage?page=1'>1</a>";
-                    $paginate .= "<a href='$targetpage?page=2'>2</a>";
+                    $paginate .= "<a href='$targetpage page=1'>1</a>";
+                    $paginate .= "<a href='$targetpage page=2'>2</a>";
                     $paginate .= "...";
                     for ($counter = $lastpage - (2 + ($stages * 2)); $counter <= $lastpage; $counter++) {
                         if ($counter == $page) {
                             $paginate .= "<span class='current'>$counter</span>";
                         } else {
-                            $paginate .= "<a href='$targetpage?page=$counter'>$counter</a>";}
+                            $paginate .= "<a href='$targetpage page=$counter'>$counter</a>";}
                     }
                 }
             }
 
             //Tiếp theo
             if ($page < $counter - 1) {
-                $paginate .= "<a href='$targetpage?page=$next'>Tiếp theo</a>";
+                $paginate .= "<a href='$targetpage page=$next'>Tiếp theo</a>";
             } else {
                 $paginate .= "<span class='disabled'>Tiếp theo</span>";
             }

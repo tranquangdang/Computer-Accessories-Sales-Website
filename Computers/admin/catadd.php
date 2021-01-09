@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
         <div class="grid_10">
             <div class="box round first grid">
-                <h2>Add New Category</h2>
+                <h2>Thêm mới danh mục</h2>
                <div class="block copyblock">
                <?php 
                if (isset($insertCat)) {

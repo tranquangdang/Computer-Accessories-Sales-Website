@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                         <label>Mô tả</label>
                     </td>
                     <td>
-                        <textarea class="tinymce" name="Intro"><?php echo $value['Intro'] ?></textarea>
+                        <textarea style="resize: none; width: 580px; height: 300px;"  name="Intro"><?php echo $value['Intro'] ?></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -88,6 +88,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                     </td>
                     <td>
                         <input type="text" name="UnitPrice" value="<?php echo $value['UnitPrice'] ?>" class="medium" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>% Giảm giá</label>
+                    </td>
+                    <td>
+                        <input type="text" name="PerDiscount"  value="<?php echo $value['PerDiscount'] ?>" placeholder="Nhập % muốn giảm..." class="medium" />
                     </td>
                 </tr>
                 <tr>

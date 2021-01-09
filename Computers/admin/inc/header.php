@@ -45,9 +45,6 @@ Session::checkSession();
     <div class="container_12">
         <div class="grid_12 header-repeat">
             <div id="branding">
-                <div class="floatleft logo">
-                    <img src="img/livelogo.png" alt="Logo" />
-                </div>
                 <div class="floatleft middle">
                     <h1>Trang quản trị viên</h1>
                     <p>Website Đăng Trường</p>
@@ -77,7 +74,7 @@ Session::checkSession();
             <ul class="nav main">
                 <li class="ic-dashboard"><a href="dashboard.php"><span>Trang chủ</span></a> </li>
                 <li class="ic-grid-tables"><a href="inbox.php"><span>Xử lí đơn hàng</span></a></li>
-                <li class="ic-charts"><a href=""><span>Website Đăng Trường</span></a></li>
+                <li class="ic-charts"><a href="#"><span>Website Đăng Trường</span></a></li>
             </ul>
         </div>
         <div class="clear">

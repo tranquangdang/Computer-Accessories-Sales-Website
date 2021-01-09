@@ -80,9 +80,14 @@
                 <li><a class="visited" href="index.php">Trang chủ</a></li>
                 <li><a href="products.php">Sản phẩm</a>
                     <ul>
-                        <li><a href="#submenu1">Linh kiện mới</a></li>
-                        <li><a href="#submenu2">Linh kiện cũ</a></li>
-                        <li><a href="#submenu3">Sản phẩm khác</a></li>
+                        <li><a href="#submenu1">PC - Máy tính bộ</a>
+                            <ul>
+                                <li><a href="#submenu1">Văn phòng</a></li>
+                                <li><a href="#submenu2">Gaming</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#submenu2">Laptop</a></li>
+                        <li><a href="#submenu3">Link kiện cũ</a></li>
                     </ul>
                 </li>
                 <li><a href="contact.php">Liên hệ</a>
@@ -96,9 +101,9 @@
             <br style="clear: left" />
         </div> <!-- end of ddsmoothmenu -->
         <div id="search">
-            <form action="#" method="get">
-              <input type="text" value=" " name="keyword" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
-              <input type="submit" name="Search" value=" " alt="Search" id="searchbutton" title="Search" class="sub_btn"  />
+            <form action="products.php" method="get">
+              <input type="text" value="" name="Keyword" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
+              <input type="submit" name="" value="" alt="Search" id="searchbutton" title="Search" class="sub_btn"  />
             </form>
         </div>
     </div> <!-- END of menubar -->

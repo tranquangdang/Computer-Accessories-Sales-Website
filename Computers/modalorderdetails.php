@@ -18,13 +18,13 @@ if(isset($_POST['OrderNo']))
     $sum = 0;
     $qty = 0;
     while ($rows = $getPro->fetch_assoc()) {
-        $total = $rows['UnitPrice'] * $rows['QtyOrdered'];
+        $total = $cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount']) * $rows['QtyOrdered'];
         $output .= '
         <tr>
-            <td><img style="width: 100px; height: 100px" src="'. $rows['ProductImg'] .'" alt="image" /></td> 
+            <td style="vertical-align: middle;  text-align: center;"><img style="width: 100px; height: 100px" src="'. $product->checkImg($rows['ProductImg']) .'" alt="image" /></td> 
             <td style="vertical-align: middle;  text-align: center;"><span>'. $rows['ProductName'].'</span></td> 
             <td style="vertical-align: middle;  text-align: center;"><p>'. $rows['QtyOrdered'].'</p></td>
-            <td style="vertical-align: middle;  text-align: center;">₫'. number_format($rows['UnitPrice']).'</td>
+            <td style="vertical-align: middle;  text-align: center;">₫'. number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])).'</td>
             <td style="vertical-align: middle;  text-align: center;">₫'. number_format($total) .'</td></td>
         </tr>';
                 }

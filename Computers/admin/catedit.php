@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
         <div class="grid_10">
             <div class="box round first grid">
-                <h2>Edit Category</h2>
+                <h2>Chỉnh sửa danh mục</h2>
                <div class="block copyblock">
                <?php 
                if (isset($updatetCat)) {

@@ -1,6 +1,6 @@
 <?php require ("include/header.php") ?>
 <?php require ("include/sidebar.php") ?>
-        <div id="content" class="float_r">
+        <div id="content" class="float_r" style="margin-bottom: 70px">
         	<div id="slider-wrapper">
                 <div id="slider" class="nivoSlider">
                     <a href="#"><img src="images/slider/01.jpg" alt="" /></a>
@@ -25,8 +25,6 @@
         	<h1>Sản phẩm mới</h1>
             <?php 
                 require ("include/productList.php"); 
-                $Pagination = new Page();
-                $Pagination->Pagination('tblProduct','index.php',$total_pages,$page);
             ?>    
         </div> 
         <div class="cleaner"></div>

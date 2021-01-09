@@ -33,13 +33,19 @@
                 <li><a href="products.php?CategoryNo='CASE1'">Case - Thùng máy tính</a></li>
                 <li><a href="products.php">Khác</a>
                     <ul>
-                        <li><a href="#submenu1">PC - Máy tính bộ</a>
+                        <li><a href="#submenu1">Phụ kiện laptop</a>
                             <ul>
-                                <li><a href="#submenu1">Văn phòng</a></li>
-                                <li><a href="#submenu2">Gaming</a></li>
+                                <li><a href="#submenu1">Pin - cáp sạc</a></li>
+                                <li><a href="#submenu2">Linh kiện laptop</a></li>
                             </ul>
                         </li>
-                        <li><a href="#submenu2">Laptop</a></li>
+                        <li><a href="#submenu1">Phần mềm</a>
+                            <ul>
+                                <li><a href="#submenu1">Windows</a></li>
+                                <li><a href="#submenu2">Anti Virus</a></li>
+                                <li><a href="#submenu2">Khác</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -53,11 +59,13 @@
             $getProduct = $product->getAllProduct();
             while( ($rows = $getProduct->fetch_assoc()) != NULL && $count < 5 ) { $count++;?>
             <div class="bs_box">
-                <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>"><img src="<?php echo $rows['ProductImg']; ?>" alt="image" /></a>
-                <h4><a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>"><?php echo $rows['ProductName']; ?></a></h4>
-                <p class="price">₫<?php echo number_format($rows['UnitPrice']); ?></p>
-                <div class="cleaner"></div>
+                <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>">
+                    <img src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="image" />
+                    <h5><?php echo $rows['ProductName']; ?></h5>
+                    <p class="price">₫<?php echo number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></p>
+                </a>
             </div>
+            <div class="cleaner"></div>
             <?php } ?>
         </div>
     </div>
