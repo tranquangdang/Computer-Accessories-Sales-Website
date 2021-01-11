@@ -58,7 +58,7 @@ class Product
         $ProductName= $this->format->validation($data['ProductName']);
         $Intro      = $this->format->validation($data['Intro']);
         $UnitPrice  = $this->format->validation($data['UnitPrice']);
-        $PerDiscount  = $this->format->validation($data['PerDiscount']);
+        $PerDiscount= $this->format->validation($data['PerDiscount']);
         $QtyOnHand  = $this->format->validation($data['QtyOnHand']);
 
         $CategoryNo = mysqli_real_escape_string($this->database->link, $CategoryNo);
@@ -66,7 +66,7 @@ class Product
         $ProductName= mysqli_real_escape_string($this->database->link, $ProductName);
         $Intro      = mysqli_real_escape_string($this->database->link, $Intro);
         $UnitPrice  = mysqli_real_escape_string($this->database->link, $UnitPrice);
-        $PerDiscount  = mysqli_real_escape_string($this->database->link, $PerDiscount);
+        $PerDiscount= mysqli_real_escape_string($this->database->link, $PerDiscount);
         $QtyOnHand  = mysqli_real_escape_string($this->database->link, $QtyOnHand);
 
         $permited  = array('jpg', 'jpeg', 'png', 'gif');
@@ -87,6 +87,12 @@ class Product
             echo "<span class='error'>Bạn chỉ có thể upload các file sau: ".implode(', ', $permited)."</span>";
         } elseif ($CategoryNo == "" || $Brand == "" || $ProductName == "" || $Intro == "" || $UnitPrice == "" || $PerDiscount == "" || $QtyOnHand == "") {
             $msg = "<span class='error'>Chưa điền đầy đủ cho tất cả các trường!</span>";
+            return $msg;
+        } else if ($QtyOnHand <= 0) {
+            $msg = "<span class='error'>Phải lớn hơn 0!</span>";
+            return $msg;
+        } else if ($UnitPrice < 0 || $PerDiscount < 0) {
+            $msg = "<span class='error'>Phải lớn hơn hoặc bằng 0!</span>";
             return $msg;
         } else {
             move_uploaded_file($file_temp, $uploaded_image);
@@ -110,7 +116,7 @@ class Product
         $ProductName= $this->format->validation($data['ProductName']);
         $Intro      = $this->format->validation($data['Intro']);
         $UnitPrice  = $this->format->validation($data['UnitPrice']);
-        $PerDiscount  = $this->format->validation($data['PerDiscount']);
+        $PerDiscount= $this->format->validation($data['PerDiscount']);
         $QtyOnHand  = $this->format->validation($data['QtyOnHand']);
 
         $CategoryNo = mysqli_real_escape_string($this->database->link, $CategoryNo);
@@ -118,7 +124,7 @@ class Product
         $ProductName= mysqli_real_escape_string($this->database->link, $ProductName);
         $Intro      = mysqli_real_escape_string($this->database->link, $Intro);
         $UnitPrice  = mysqli_real_escape_string($this->database->link, $UnitPrice);
-        $PerDiscount  = mysqli_real_escape_string($this->database->link, $PerDiscount);
+        $PerDiscount= mysqli_real_escape_string($this->database->link, $PerDiscount);
         $QtyOnHand  = mysqli_real_escape_string($this->database->link, $QtyOnHand);
 
         $permited  = array('jpg', 'jpeg', 'png', 'gif');
@@ -133,6 +139,12 @@ class Product
 
         if ($CategoryNo == "" || $Brand == "" || $ProductName == "" || $Intro == "" || $UnitPrice == "" || $PerDiscount == "" ||  $QtyOnHand == "") {
             $msg = "<span class='error'>Chưa điền đầy đủ cho tất cả các trường!</span>";
+            return $msg;
+        } else if ($QtyOnHand <= 0) {
+            $msg = "<span class='error'>Phải lớn hơn 0!</span>";
+            return $msg;
+        } else if ($UnitPrice < 0 || $PerDiscount < 0) {
+            $msg = "<span class='error'>Phải lớn hơn hoặc bằng 0!</span>";
             return $msg;
         } else {
             if (!empty($file_name)) {

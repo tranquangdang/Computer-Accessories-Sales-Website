@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                 </tr>
                 <tr>
                     <td>
-                        <label>Giá bán</label>
+                        <label>Số lượng</label>
                     </td>
                     <td>
                         <input type="text" name="QtyOnHand" placeholder="Nhập số lượng..." class="medium" />

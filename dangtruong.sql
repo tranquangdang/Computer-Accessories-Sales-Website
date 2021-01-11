@@ -1,3 +1,5 @@
+/*Author Trần Quang Đăng*/
+
 DROP DATABASE IF EXISTS dangtruong;
 CREATE DATABASE dangtruong;
 USE dangtruong;
@@ -48,10 +50,10 @@ create table tblProduct
 	ProductName text not null,
   	ProductImg varchar(255) not null,
   	Intro Mediumtext not null,
-	UnitPrice int default 0,
-	PerDiscount int default 0,
-	QtyOnHand int default 0,
-  FOREIGN KEY (CategoryNo) REFERENCES tblProductCategory(CategoryID)
+	UnitPrice int default 0 CHECK (UnitPrice >= 0),
+	PerDiscount int default 0 CHECK (PerDiscount >= 0),
+	QtyOnHand int default 0 CHECK (QtyOnHand >= 0),
+  FOREIGN KEY (CategoryNo) REFERENCES tblProductCategory(CategoryID) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 insert into tblProduct (CategoryNo, Brand, ProductName, ProductImg, Intro, UnitPrice, QtyOnHand)-- CPU trong đó AMD là CPU01 Intel CPU02
@@ -117,7 +119,7 @@ create table tblOrderInvoice
 	TelNo char(10) not null,
 	CustNo int not null,
 	OrderStatus tinyint(1) default 0,
-  FOREIGN KEY (CustNo) REFERENCES tblCustomer(CustID)
+  FOREIGN KEY (CustNo) REFERENCES tblCustomer(CustID) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 create table tblOrderInvoiceDetail
@@ -127,14 +129,14 @@ create table tblOrderInvoiceDetail
 	QtyOrdered int default 0,
 	Amount int default 0,
   primary key(OrderID, ProductID),
-  FOREIGN KEY (OrderID) REFERENCES tblOrderInvoice(OrderID),
-  FOREIGN KEY (ProductID) REFERENCES tblProduct(ProductID)
+  FOREIGN KEY (OrderID) REFERENCES tblOrderInvoice(OrderID) ON DELETE CASCADE,
+  FOREIGN KEY (ProductID) REFERENCES tblProduct(ProductID) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE tblCart (
   	CartID int primary key AUTO_INCREMENT,
 	CustNo int NOT NULL,
-  FOREIGN KEY (CustNo) REFERENCES tblCustomer(CustID)	
+  FOREIGN KEY (CustNo) REFERENCES tblCustomer(CustID)	 ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 create table tblCartDetail
@@ -143,25 +145,55 @@ create table tblCartDetail
 	ProductID int not null,
 	QtyOrdered int,
   primary key(CartID, ProductID),
-  FOREIGN KEY (CartID) REFERENCES tblCart(CartID),
-  FOREIGN KEY (ProductID) REFERENCES tblProduct(ProductID)
+  FOREIGN KEY (CartID) REFERENCES tblCart(CartID) ON DELETE CASCADE,
+  FOREIGN KEY (ProductID) REFERENCES tblProduct(ProductID) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE tblAdmin (
   AdminID int primary key AUTO_INCREMENT,
   AdminName varchar(255) NOT NULL,
   AdminUser varchar(255) NOT NULL,
-  AdminEmail varchar(255) NOT NULL,
   AdminPass varchar(32) NOT NULL,
   AdminLevel tinyint not null
 )ENGINE = InnoDB;
 
-INSERT INTO tblAdmin VALUES (1, 'Trần Quang Đăng', 'admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 0)
-/*
-DROP TRIGGER IF EXISTS trgInsert_OrderInvoiceDetail;
-DROP TRIGGER IF EXISTS trgDelete_OrderInvoiceDetail;
+INSERT INTO tblAdmin VALUES (1, 'Trần Quang Đăng', 'admin', '21232f297a57a5a743894a0e4a801fc3', 0);
+
+/*Khi khách hàng mua hàng xong giảm số lượng trong kho ở bảng tblProduct */
+DROP TRIGGER IF EXISTS trgInsert_UpdateQtyOnHand;
 DELIMITER $$
-create trigger trgInsert_OrderInvoiceDetail
+create trigger trgInsert_UpdateQtyOnHand
+after insert on tblOrderInvoiceDetail
+FOR EACH
+ROW
+begin
+	update tblProduct
+	set QtyOnHand = QtyOnHand - new.QtyOrdered
+	where
+		tblProduct.ProductID = new.ProductID;
+END$$
+DELIMITER ;
+
+/*Khi khách hàng hủy sản phẩm trong đơn hàng, tăng lại số lượng trong kho ở bảng tblProduct
+DROP TRIGGER IF EXISTS trgDelete_UpdateQtyOnHand;
+DELIMITER $$
+create trigger trgDelete_UpdateQtyOnHand
+after delete on tblOrderInvoiceDetail
+FOR EACH
+ROW
+begin
+	update tblProduct
+	set QtyOnHand = QtyOnHand - old.QtyOrdered
+	where
+		tblProduct.ProductID = old.ProductID;
+END$$
+DELIMITER ;
+
+
+/*Tính tổng tiền của sản phẩm ở bảng chi tiết hóa đơn khi khách thêm sản phẩm vào giỏ
+DROP TRIGGER IF EXISTS trgInsert_UpdateAmount;
+DELIMITER $$
+create trigger trgInsert_UpdateAmount
 after insert on tblOrderInvoiceDetail
 FOR EACH
 ROW
@@ -169,57 +201,83 @@ begin
 	update tblOrderInvoiceDetail
 	set Amount = QtyOrdered * UnitPrice
 	where
-		tblProduct.ProductID = new.ProductID and
-		tblOrderInvoiceDetail.OrderID = new.OrderID and
-		tblOrderInvoiceDetail.ProductID = new.ProductID;
+		tblProduct.ProductID = ProductID and
+		tblOrderInvoiceDetail.OrderID = OrderID and
+		tblOrderInvoiceDetail.ProductID = ProductID;
 END$$
+DELIMITER ;
 
- DELIMITER ;
-
-
-DROP TRIGGER IF EXISTS trgInsert_OrderInvoiceDetail;
-DROP TRIGGER IF EXISTS trgDelete_OrderInvoiceDetail;
+/*Tính tổng tiền của sản phẩm ở bảng chi tiết hóa đơn khi khách cập nhật số lượng sản phẩm trong giỏ
+DROP TRIGGER IF EXISTS trgUpdate_UpdateAmount;
 DELIMITER $$
-create trigger trgInsert_OrderInvoiceDetail
-after insert on tblOrderInvoiceDetail
+create trigger trgUpdate_UpdateAmount
+after update on tblOrderInvoiceDetail
 FOR EACH
 ROW
 begin
 	update tblOrderInvoiceDetail
 	set Amount = QtyOrdered * UnitPrice
 	where
-		tblProduct.ProductID = new.ProductID and
-		tblOrderInvoiceDetail.OrderID = new.OrderID and
-		tblOrderInvoiceDetail.ProductID = new.ProductID;
+		tblProduct.ProductID = ProductID and
+		tblOrderInvoiceDetail.OrderID = OrderID and
+		tblOrderInvoiceDetail.ProductID = ProductID;
 END$$
+DELIMITER ;
 
- DELIMITER ;
-
+/*Tính tổng tiền của sản phẩm ở bảng chi tiết hóa đơn khi khách xóa sản phẩm trong giỏ
+DROP TRIGGER IF EXISTS trgDelete_UpdateAmount;
 DELIMITER $$
-create trigger trgDelete_OrderInvoiceDetail
+create trigger trgDelete_UpdateAmount
 after delete on tblOrderInvoiceDetail
 FOR EACH
 ROW
 begin
 	update tblOrderInvoiceDetail
-	set tblOrderInvoiceDetail.Amount = tblOrderInvoiceDetail.QtyOrdered * tblProduct.UnitPrice
+	set Amount = QtyOrdered * UnitPrice
 	where
-		tblProduct.ProductID = old.ProductID and
-		tblOrderInvoiceDetail.OrderID = old.OrderID and
-		tblOrderInvoiceDetail.ProductID = old.ProductID;
+		tblProduct.ProductID = ProductID and
+		tblOrderInvoiceDetail.OrderID = OrderID and
+		tblOrderInvoiceDetail.ProductID = ProductID;
 END$$
+DELIMITER ;
 
- DELIMITER ;
-
+/*Khi thêm sản phẩm ở bản chi tiết hóa đơn, cập nhật lại tiền cho hóa đơn đó
+DROP TRIGGER IF EXISTS trgInsert_TotalMoney;
 DELIMITER $$
- CREATE TRIGGER trg_TotalMoney
-   after update on tblOrderInvoiceDetail
+CREATE TRIGGER trgInsert_TotalMoney
+after insert on tblOrderInvoiceDetail
 FOR EACH
 ROW
 BEGIN
     UPDATE tblOrderInvoice
 	set tblOrderInvoice.OrderTotalMoney = (select sum(tblOrderInvoiceDetail.Amount) where tblOrderInvoice.OrderID = tblOrderInvoiceDetail.OrderID);
 END$$
+DELIMITER ;
 
- DELIMITER ;*/
+/*Khi thay đổi sản phẩm ở bản chi tiết hóa đơn, cập nhật lại tiền cho hóa đơn đó
+DROP TRIGGER IF EXISTS trgUpdate_TotalMoney;
+DELIMITER $$
+CREATE TRIGGER trgUpdate_TotalMoney
+after update on tblOrderInvoiceDetail
+FOR EACH
+ROW
+BEGIN
+    UPDATE tblOrderInvoice
+	set tblOrderInvoice.OrderTotalMoney = (select sum(tblOrderInvoiceDetail.Amount) where tblOrderInvoice.OrderID = tblOrderInvoiceDetail.OrderID);
+END$$
+DELIMITER ;
+
+/*Khi xóa sản phẩm ở bản chi tiết hóa đơn, cập nhật lại tiền cho hóa đơn đó
+DROP TRIGGER IF EXISTS trgDelete_TotalMoney;
+DELIMITER $$
+CREATE TRIGGER trgDelete_TotalMoney
+after delete on tblOrderInvoiceDetail
+FOR EACH
+ROW
+BEGIN
+    UPDATE tblOrderInvoice
+	set tblOrderInvoice.OrderTotalMoney = (select sum(tblOrderInvoiceDetail.Amount) where tblOrderInvoice.OrderID = tblOrderInvoiceDetail.OrderID);
+END$$
+DELIMITER ;
+*/
 

@@ -57,16 +57,18 @@
             <?php
             $count = 0;
             $getProduct = $product->getAllProduct();
-            while( ($rows = $getProduct->fetch_assoc()) != NULL && $count < 5 ) { $count++;?>
-            <div class="bs_box">
-                <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>">
-                    <img src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="image" />
-                    <h5><?php echo $rows['ProductName']; ?></h5>
-                    <p class="price">₫<?php echo number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></p>
-                </a>
-            </div>
-            <div class="cleaner"></div>
-            <?php } ?>
+            while( ($rows = $getProduct->fetch_assoc()) != NULL && $count < 5 ) { $count++;
+                if ($rows['QtyOnHand'] > 0) {?>
+                <div class="bs_box">
+                    <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>">
+                        <img src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="image" />
+                        <h5><?php echo $rows['ProductName']; ?></h5>
+                        <p class="price">₫<?php echo number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></p>
+                    </a>
+                </div>
+                <div class="cleaner"></div>
+            <?php }
+            } ?>
         </div>
     </div>
 </div>

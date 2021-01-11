@@ -125,7 +125,7 @@ class Cart
     }
 
 
-    //Cập nhật số lượng giỏ hàng
+    //Cập nhật số lượng trong giỏ hàng
     public function updateCartQuantity($CartID, $ProductID, $QtyOrdered)
     {
         $CartID    = mysqli_real_escape_string($this->database->link, $CartID);

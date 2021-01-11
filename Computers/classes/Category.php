@@ -78,6 +78,8 @@ class Category
     {
         $query = "DELETE FROM tblProductCategory WHERE CategoryID = '$id'";
         $deldata = $this->database->delete($query);
+        $query = "DELETE FROM tblProductCategory WHERE CategoryID = '$id'";
+        $deldata = $this->database->delete($query);
         if ($deldata) {
             $msg = "<span class='success'>Thành công</span>";
             return $msg;

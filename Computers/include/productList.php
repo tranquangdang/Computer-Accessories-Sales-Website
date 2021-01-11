@@ -40,17 +40,19 @@ $getProduct = $database->select($sql." LIMIT " . $start . ", " . $limit);
             $keyword = $_GET['Keyword'];
             echo "<h3> Kết quả cho từ khóa '$keyword'</h3>";
         }
-        while ($rows = $getProduct->fetch_assoc()) {?>
-        <div class="product_box"  style="position: relative;">
-            <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>" style="display: block ">
-                <h3><?php echo $rows['ProductName']; ?></h3>
-                <img src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="product image"/>
-                <label style=" <?php if ($rows['PerDiscount'] <= 0) echo 'display: none;'?> ">Giảm <?php echo $rows['PerDiscount'].'%'; ?></label>
-                <p class="discount"><?php if ($rows['PerDiscount'] > 0) echo '₫'.number_format($rows['UnitPrice']); ?></p>
-                <p class="product_price"><span>₫</span><?php echo number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></p>
-            </a>
-        </div>
-    <?php }
+        while ($rows = $getProduct->fetch_assoc()) {
+            if ($rows['QtyOnHand'] > 0) {?>
+            <div class="product_box"  style="position: relative;">
+                <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>" style="display: block ">
+                    <h3><?php echo $rows['ProductName']; ?></h3>
+                    <img src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="product image"/>
+                    <label style=" <?php if ($rows['PerDiscount'] <= 0) echo 'display: none;'?> ">Giảm <?php echo $rows['PerDiscount'].'%'; ?></label>
+                    <p class="discount"><?php if ($rows['PerDiscount'] > 0) echo '₫'.number_format($rows['UnitPrice']); ?></p>
+                    <p class="product_price"><span>₫</span><?php echo number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></p>
+                </a>
+            </div>
+    <?php   }
+        }
     $total_pages = mysqli_num_rows($database->select($sql));
     } else {
         echo '<h1>Không tìm thấy kết quả trên!</h1>';
