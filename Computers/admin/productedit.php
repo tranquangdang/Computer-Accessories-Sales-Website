@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                     </td>
                     <td>
                         <img src="<?php echo $value['ProductImg']; ?>" height="200px" width="200px"><br>
-                        <input type="file" name="ProductImg" />
+                        <input type="text" name="ProductImg" />
                     </td>
                 </tr>
                 <tr>

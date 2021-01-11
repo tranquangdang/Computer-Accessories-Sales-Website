@@ -53,6 +53,7 @@ create table tblProduct
 	UnitPrice int default 0 CHECK (UnitPrice >= 0),
 	PerDiscount int default 0 CHECK (PerDiscount >= 0),
 	QtyOnHand int default 0 CHECK (QtyOnHand >= 0),
+	TimeCreate datetime default  current_timestamp(),
   FOREIGN KEY (CategoryNo) REFERENCES tblProductCategory(CategoryID) ON DELETE CASCADE
 ) ENGINE = InnoDB;
 

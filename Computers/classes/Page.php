@@ -98,6 +98,22 @@ class Page
         //Hiển thị phân trang
         echo '<div id="paginate">'.'<p>'.$total_pages . ' Kết quả</p>'.'<p>'.$paginate.'</p></div>';
     }
+
+    public function sortProduct($type) {
+        if ($type = 'asc') {
+            return 'ORDER BY UnitPrice ASC';
+        } else if ($type = 'desc') {
+            return 'ORDER BY UnitPrice ASC';
+        } else if ($type = 'az') {
+            return 'ORDER BY ProductName ASC';
+        } else if ($type = 'new') {
+            return 'ORDER BY TimeCreate ASC';
+        } else if ($type = 'discount') {
+            return 'AND PerDiscount > 0';
+        } else if ($type = 'topsell') {
+            return 'ORDER BY ProductName ASC';
+        }
+    }
 }
 
 ?>

@@ -39,7 +39,19 @@ $getProduct = $database->select($sql." LIMIT " . $start . ", " . $limit);
         if (isset($_GET['Keyword'])) {
             $keyword = $_GET['Keyword'];
             echo "<h3> Kết quả cho từ khóa '$keyword'</h3>";
-        }
+        }?>
+        <div>
+            <select style="height: 30px; align: right; margin-right: 50px;">
+                <option value="none"> Sắp xếp </option>
+                <option value="asc" > Từ thấp đến cao </option>
+                <option value="desc" > Từ cao đến thấp </option>
+                <option value="az" > Từ A - Z </option>
+                <option value="new" > Mới nhất </option>
+                <option value="discount" > Khuyến mãi </option>
+                <option value="topsell" > Mua nhiều </option>
+            </select>
+        </div>
+        <?php
         while ($rows = $getProduct->fetch_assoc()) {
             if ($rows['QtyOnHand'] > 0) {?>
             <div class="product_box"  style="position: relative;">

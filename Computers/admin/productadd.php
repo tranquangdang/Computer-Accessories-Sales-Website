@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                         <label>Hình ảnh</label>
                     </td>
                     <td>
-                        <input type="file" name="ProductImg" />
+                        <input type="text" name="ProductImg" />
                     </td>
                 </tr>
 
