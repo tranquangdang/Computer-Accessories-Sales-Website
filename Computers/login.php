@@ -52,7 +52,7 @@ if (isset($customerReg)) {
                             <input type="text" name="Email" placeholder="Email" />
                         </div>
                         <div>
-                            <input type="text" name="Pass" placeholder="Mật khẩu" />
+                            <input type="password" name="Pass" placeholder="Mật khẩu" />
                         </div>
 
                     </td>

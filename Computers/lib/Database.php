@@ -32,7 +32,7 @@ class Database
         }
     }
 
-    // Select or Read data
+    //Xem
     public function select($query)
     {
         $result = $this->link->query($query) or
@@ -44,7 +44,7 @@ class Database
         }
     }
 
-    // Insert data
+    //Chèn
     public function insert($query)
     {
         $insert_row = $this->link->query($query) or
@@ -56,7 +56,7 @@ class Database
         }
     }
 
-    // Update data
+    //Sửa
     public function update($query)
     {
         $update_row = $this->link->query($query) or
@@ -68,7 +68,7 @@ class Database
         }
     }
 
-    // Delete data
+    //Xóa
     public function delete($query)
     {
         $delete_row = $this->link->query($query) or

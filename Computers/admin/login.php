@@ -24,13 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				<span style="color:red; font-size:18px;">
 			</span>
 			<div>
-				<input type="text" placeholder="Username" name="AdminUser"/>
+				<input type="text" placeholder="Tài khoản" name="AdminUser"/>
 			</div>
 			<div>
-				<input type="password" placeholder="Password" name="AdminPass"/>
+				<input type="password" placeholder="Mật khẩu" name="AdminPass"/>
 			</div>
 			<div>
-				<input type="submit" value="Log in" />
+				<input type="submit" value="Đăng nhập" />
 			</div>
 		</form><!-- form -->
 	</section><!-- content -->

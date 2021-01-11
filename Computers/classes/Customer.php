@@ -113,9 +113,44 @@ class Customer
         	WHERE CustID = $CustID";
             $updated_row = $this->database->update($query);
             if (!$updated_row) {
-                echo "<script language='javascript'>alert('Cập nhật thất bại!');";
-                echo "location.href='profile.php';</script>";
+                $msg = "<span class='success'>Cập nhật thành công! </span>";
+            }
+            $msg = "<span class='success'>Cập nhật thành công! </span>";
+        }
+        return $msg;
+    }
+
+    public function customerResetPassword($data, $CustID){
+        $OldPass   = $this->format->validation($data['OldPass']);
+        $NewPass= $this->format->validation($data['NewPass']);
+        $ConfirmPass= $this->format->validation($data['ConfirmPass']);
+
+        if($OldPass == "" || $NewPass == "" || $ConfirmPass == ""){
+            $msg = "<span class='error'>Không được bỏ trống trường nào!</span>";
+        } else if ($NewPass != $ConfirmPass) {
+            $msg = "<span class='error'>Mật khẩu nhập lại không khớp! Vui lòng kiểm tra lại!</span>";
+        } else if ($OldPass == $NewPass) {
+            $msg = "<span class='error'>Mật khẩu cũ và mật khẩu mới không được giống nhau!</span>";
+        } else  {
+            $OldPass 	= mysqli_real_escape_string($this->database->link, md5($OldPass));
+            $NewPass 	= mysqli_real_escape_string($this->database->link, md5($NewPass));
+
+            $query = "SELECT * FROM tblCustomer WHERE CustID = '$CustID' AND Pass = '$OldPass'";
+            $checkpass = $this->database->select($query);
+            if($checkpass) {
+                $query = "UPDATE tblCustomer
+                SET
+                Pass 	= '$NewPass'
+                WHERE CustID = $CustID";
+                $updated_row = $this->database->update($query);
+                $msg = "<span class='success'>Cập nhật thành công! </span>";
+                if (!$updated_row) {
+                    $msg = "<span class='error'>Lỗi!</span>";
+                }
+            } else {
+                $msg = "<span class='error'>Sai mật khẩu! Vui lòng kiểm tra lại!</span>";
             }
         }
+        return $msg;
     }
 }

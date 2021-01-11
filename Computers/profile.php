@@ -16,8 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
  </style>
 		<div id="content" class="float_r">
 		<?php 
-            $id = Session::get('customerId');
-            $getData = $customer->getCustomerData($id);
+            $getData = $customer->getCustomerData($CustID);
             if ($getData) {
                 while ($result = $getData->fetch_assoc()) {
 					?>

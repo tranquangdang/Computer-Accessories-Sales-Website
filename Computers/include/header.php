@@ -90,12 +90,8 @@
                         <li><a href="#submenu3">Link kiện cũ</a></li>
                     </ul>
                 </li>
-                <li><a href="contact.php">Liên hệ</a>
-                    <ul>
-                        <li><a href="#submenu1">Thông tin</a></li>
-                    </ul>
-                </li>
                 <li><a href="#">Xây dựng cấu hình</a></li>
+                <li><a href="contact.php">Liên hệ</a></li>
                 <li><a href="about.php">Về chúng tôi</a></li>
             </ul>
             <br style="clear: left" />

@@ -5,11 +5,11 @@
             <ul class="sidebar_list">
                 <li><a href="profile.php">Thông tin cá nhân</a>
                     <ul>
-                        <li><a href="profile.php">Mật khẩu</a></li>
+                        <li><a href="resetpass.php">Mật khẩu</a></li>
                         <li><a href="profile.php">Sổ địa chỉ</a></li>
                     </ul>
                 </li>
-                <li><a href="profile.php">Quản lý đơn hàng</a>
+                <li><a href="orderdetails.php">Quản lý đơn hàng</a>
                 </li>
                 <li><a href="profile.php">Thông báo</a>
                 </li>

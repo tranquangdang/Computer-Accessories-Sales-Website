@@ -6,20 +6,13 @@
                 <p>Gửi mail bằng cách điền các thông tin dưới đây:</p>
                 <div id="contact_form">
                    <form method="post" name="contact" action="#">
-                        
-                        <label for="author">Họ và tên:</label> <input type="text" id="author" name="author" class="required input_field" />
-                        <div class="cleaner h10"></div>
-                        <label for="email">Email:</label> <input type="text" id="email" name="email" class="validate-email required input_field" />
-                        <div class="cleaner h10"></div>
-                        
-                        <label for="phone">Số điện thoại:</label> <input type="text" name="phone" id="phone" class="input_field" />
+                        <label for="author">Vấn đề khiếu nại:</label> <input type="text" id="author" name="author" class="required input_field" />
                         <div class="cleaner h10"></div>
         
-                        <label for="text">Nội dung:</label> <textarea id="text" name="text" rows="0" cols="0" class="required"></textarea>
+                        <label for="text">Nội dung:</label> <textarea id="text" name="text" rows="0" cols="0" class="required" style="resize: none;"></textarea>
                         <div class="cleaner h10"></div>
                         
                         <input type="submit" class="submit_btn" name="submit" id="submit" value="Gửi" />
-                        
                     </form>
                 </div>
             </div>

@@ -21,7 +21,7 @@
 						<li><a href="about.php">Về chúng tôi</a></li>
 						<li><a href="contact.php">Liên hệ</a></li>
 						<li><a href="faqs.php">Tuyển dụng</a></li>
-						<li><a href="faqs.php">Vị trí</a></li>
+						<li><a href="faqs.php">Điều khoản sử dụng</a></li>
 						</ul>
 				</div>
 				<div class="col_1_of_4 span_1_of_4">

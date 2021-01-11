@@ -2,8 +2,8 @@
 <?php require ("include/sidebar.php") ?>
         <div id="content" class="float_r">
         	<h1>Thông tin về chúng tôi</h1>
-        	<h2>Trần Quang Đăng và Huỳnh Phước trường</h2>
-        <p>Validate <a href="#" rel="nofollow">Trần Quang Đăng</a> &amp; <a href="#" rel="nofollow">Huỳnh Phước Trường</a>. Donec sapien. Nam ac nunc. Aliquam fermentum cursus risus. Aliquam erat volutpat. Morbi a augue eget orci sodales blandit. Morbi et mi in mi eleifend adipiscing. Nullam id quam a ligula semper feugiat. Sed ultricies. Nulla et pede eu pede ultrices commodo. Nulla semper accumsan pede. Donec ut quam. Quisque egestas felis in diam.</p>
+        	<h2>Báo cáo cuối kì PHP</h2>
+        <p>Website trên được code bởi <a href="https://www.facebook.com/tranquangdangg/" rel="nofollow">Trần Quang Đăng</a> &amp; <a href="https://www.facebook.com/P.T.H.9100" rel="nofollow">Huỳnh Phước Trường</a>.</p>
         <ul class="tmo_list">
         	<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
             <li>Pellentesque quis nulla id orci malesuada porta posuere quis massa.</li>
