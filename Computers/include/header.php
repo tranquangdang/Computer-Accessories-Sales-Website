@@ -87,7 +87,7 @@
                             </ul>
                         </li>
                         <li><a href="#submenu2">Laptop</a></li>
-                        <li><a href="#submenu3">Link kiện cũ</a></li>
+                        <li><a href="#submenu3">Linh kiện cũ</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Xây dựng cấu hình</a></li>

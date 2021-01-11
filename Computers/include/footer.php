@@ -9,19 +9,17 @@
 				<div class="col_1_of_4 span_1_of_4">
 						<h4>Báo cáo PHP</h4>
 						<ul>
-            <li><a href="#">Trần Quang Đăng</a></li>
-            <li><a href="#">18T2</a></li>
-            <li><a href="#">Huỳnh Phước Trường</a></li>
-            <li><a href="#">18T1</a></li>
+							<li><a href="https://www.facebook.com/100028284979748">Trần Quang Đăng</a></li>
+							<li><a href="https://www.facebook.com/100004801414568">Huỳnh Phước Trường</a></li>
 						</ul>
 					</div>
 				<div class="col_1_of_4 span_1_of_4">
 					<h4>Thông tin</h4>
 						<ul>
-						<li><a href="about.php">Về chúng tôi</a></li>
-						<li><a href="contact.php">Liên hệ</a></li>
-						<li><a href="faqs.php">Tuyển dụng</a></li>
-						<li><a href="faqs.php">Điều khoản sử dụng</a></li>
+							<li><a href="about.php">Về chúng tôi</a></li>
+							<li><a href="contact.php">Liên hệ</a></li>
+							<li><a href="faqs.php">Tuyển dụng</a></li>
+							<li><a href="faqs.php">Điều khoản sử dụng</a></li>
 						</ul>
 				</div>
 				<div class="col_1_of_4 span_1_of_4">

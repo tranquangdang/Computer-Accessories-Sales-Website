@@ -30,6 +30,15 @@ insert into tblProductCategory values ('CASE1', 'Vỏ máy tính');
 insert into tblProductCategory values ('RAM01', 'Bộ nhớ RAM');
 insert into tblProductCategory values ('HDD01', 'Ổ cứng HDD');
 insert into tblProductCategory values ('SSD01', 'Ổ cứng SSD');
+insert into tblProductCategory values ('LAP01', 'Laptop Gaming');
+insert into tblProductCategory values ('LAP02', 'Laptop Văn phòng');
+insert into tblProductCategory values ('PC001', 'PC Văn phòng');
+insert into tblProductCategory values ('PC002', 'PC Gaming');
+insert into tblProductCategory values ('LAPIN', 'Pin - cáp sạc laptop');
+insert into tblProductCategory values ('ACLAP', 'Linh kiện laptop');
+insert into tblProductCategory values ('AVKEY', 'Phần mềm bảo mật');
+insert into tblProductCategory values ('WDKEY', 'Windows');
+insert into tblProductCategory values ('OSKEY', 'Phầm mềm khác');
 
 create table tblProduct
 (
@@ -146,7 +155,8 @@ CREATE TABLE tblAdmin (
   AdminPass varchar(32) NOT NULL,
   AdminLevel tinyint not null
 )ENGINE = InnoDB;
-INSERT INTO tblAdmin VALUES (1, 'Trần Quang Đăng', 'admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 1)
+
+INSERT INTO tblAdmin VALUES (1, 'Trần Quang Đăng', 'admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 0)
 /*
 DROP TRIGGER IF EXISTS trgInsert_OrderInvoiceDetail;
 DROP TRIGGER IF EXISTS trgDelete_OrderInvoiceDetail;

@@ -3,7 +3,7 @@
         <div id="content" class="float_r">
         	<h1>Thông tin về chúng tôi</h1>
         	<h2>Báo cáo cuối kì PHP</h2>
-        <p>Website trên được code bởi <a href="https://www.facebook.com/tranquangdangg/" rel="nofollow">Trần Quang Đăng</a> &amp; <a href="https://www.facebook.com/P.T.H.9100" rel="nofollow">Huỳnh Phước Trường</a>.</p>
+        <p>Website trên được code bởi <a href="https://www.facebook.com/100028284979748" rel="nofollow">Trần Quang Đăng</a> &amp; <a href="https://www.facebook.com/100004801414568" rel="nofollow">Huỳnh Phước Trường</a>.</p>
         <ul class="tmo_list">
         	<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
             <li>Pellentesque quis nulla id orci malesuada porta posuere quis massa.</li>
