@@ -1,14 +1,10 @@
-<?php require ("include/header.php"); ?>
+<?php require ("include/topheader.php"); ?>
 <?php 
-
 //Sự kiện xóa
 if (isset($_GET['ProductID']) && isset($_GET['CartID'])) {
     $ProductID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['ProductID']);
     $CartID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['CartID']);
     $delProduct = $cart->delProductByCart($CartID,$ProductID);
-    if(!$cart->getCartProduct($CartID)){
-        header("Location:index.php");
-    }
 }
 
 //Sự kiện cập nhật số lượng
@@ -19,6 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $updateCart = $cart->updateCartQuantity($CartID, $ProductID, $QtyOrdered);
 }
 ?>
+<?php require ("include/header.php"); ?>
+<?php require ("include/search.php"); ?>
 <?php require ("include/sidebar.php"); ?>
         <div id="content" class="float_r">
             <h1>Giỏ hàng</h1>
@@ -41,14 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $getPro = $cart->getCartProduct($CartID);
 
                     if($getPro) {
-                    $sum = 0;
-                    $qty = 0;
                     //Duyệt để hiển thị thông tin sản phẩm trong giỏ hàng của khách
                     while ($rows = $getPro->fetch_assoc()) {
                     
                     ?>
                 <tr>
-                    <td><img style="width: 200px; height: 200px; vertical-align: middle;  text-align: center;" src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="image" /></td> 
+                    <td><img style="max-width: 140px; height: 150px; vertical-align: middle;  text-align: center;" src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="image" /></td> 
                     <td style="font-size:15px; color: black; font-weight: bold; vertical-align: middle;  text-align: center;"><span><?php echo $rows['ProductName']; ?></span></td> 
                     <td style="vertical-align: middle;  text-align: center;">
                         <form action="" method="post">
@@ -58,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <input class="update btn" type="submit" name="submit" value="Cập nhật"/>
                         </form>
                     </td>
-                    <td style="vertical-align: middle;  text-align: center;">₫<?php echo number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></td>
-                    <td style="vertical-align: middle;  text-align: center;">₫<?php $total = $cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount']) * $rows['QtyOrdered']; echo number_format($total); ?></td></td>
+                    <td style="vertical-align: middle;  text-align: center;">₫<?php echo number_format($product->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></td>
+                    <td style="vertical-align: middle;  text-align: center;">₫<?php $total = $product->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount']) * $rows['QtyOrdered']; echo number_format($total); ?></td></td>
                     <td style="vertical-align: middle;  text-align: center;"> <a class="btn" href="shoppingcart.php?CartID=<?php echo $rows['CartID']; ?>&ProductID=<?php echo $rows['ProductID']; ?>"><img src="images/remove_x.gif" alt="remove" /><br />Xóa</a> </td>
                 </tr>
                     <?php 

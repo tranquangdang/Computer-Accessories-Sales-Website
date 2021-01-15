@@ -32,6 +32,7 @@ if (isset($_GET['delpro'])) {
 					<th>Danh mục</th>
 					<th>Hãng</th>
 					<th>Giá bán</th>
+					<th>% Giảm</th>
 					<th>Kho</th>
 					<th>Sửa/Xóa</th>
 				</tr>
@@ -47,6 +48,7 @@ if (isset($_GET['delpro'])) {
 						<td><?php echo $result['CategoryNo']; ?></td>
 						<td><?php echo $result['Brand']; ?></td>
 						<td>đ<?php echo number_format($cart->DiscountPrice($result['UnitPrice'],$result['PerDiscount'])); ?></td>
+						<td><?php echo $result['PerDiscount']; ?></td>
 						<td><?php echo $result['QtyOnHand']." cái"; ?></td>
 						<td><a href="productedit.php?proid=<?php echo $result['ProductID']; ?>">Sửa</a> || <a onclick="return confirm('Bạn có muốn xóa sản phẩm này không?')" href="?delpro=<?php echo $result['ProductID']; ?>">Xóa</a></td>
 					</tr>

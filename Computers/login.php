@@ -1,8 +1,11 @@
-<?php require "include/header.php";
+<?php require "include/topheader.php"; ?>
+<?php 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
     $custLogin = $customer->customerLogin($_POST);
 }
 ?>
+<?php require "include/header.php"; ?>
+<?php require "include/search.php"; ?>
 <div class="loginform">
 <div class="login_panel">
     <?php

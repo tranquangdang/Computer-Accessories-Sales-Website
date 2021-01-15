@@ -33,17 +33,17 @@
                 <li><a href="products.php?CategoryNo='CASE1'">Case - Thùng máy tính</a></li>
                 <li><a href="products.php">Khác</a>
                     <ul>
-                        <li><a href="#submenu1">Phụ kiện laptop</a>
+                        <li><a href="products.php?CategoryNo='LAPIN','ACLAP'">Phụ kiện laptop</a>
                             <ul>
-                                <li><a href="#submenu1">Pin - cáp sạc</a></li>
-                                <li><a href="#submenu2">Linh kiện laptop</a></li>
+                                <li><a href="products.php?CategoryNo='LAPIN'">Pin - cáp sạc</a></li>
+                                <li><a href="products.php?CategoryNo='ACLAP'">Linh kiện laptop</a></li>
                             </ul>
                         </li>
-                        <li><a href="#submenu1">Phần mềm</a>
+                        <li><a href="products.php?CategoryNo='AVKEY','WDKEY','OSKEY'">Phần mềm</a>
                             <ul>
-                                <li><a href="#submenu1">Windows</a></li>
-                                <li><a href="#submenu2">Anti Virus</a></li>
-                                <li><a href="#submenu2">Khác</a></li>
+                                <li><a href="products.php?CategoryNo='AVKEY'">Windows</a></li>
+                                <li><a href="products.php?CategoryNo='WDKEY'">Anti Virus</a></li>
+                                <li><a href="products.php?CategoryNo='OSKEY'">Khác</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -55,19 +55,26 @@
         <h3>Bán chạy nhất </h3>   
         <div class="content"> 
             <?php
-            $count = 0;
-            $getProduct = $product->getAllProduct();
-            while( ($rows = $getProduct->fetch_assoc()) != NULL && $count < 5 ) { $count++;
-                if ($rows['QtyOnHand'] > 0) {?>
-                <div class="bs_box">
-                    <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>">
-                        <img src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="image" />
-                        <h5><?php echo $rows['ProductName']; ?></h5>
-                        <p class="price">₫<?php echo number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></p>
-                    </a>
-                </div>
-                <div class="cleaner"></div>
-            <?php }
+            $query = "SELECT tblProduct.*
+            FROM tblOrderInvoiceDetail, tblProduct 
+            WHERE tblOrderInvoiceDetail.ProductID = tblProduct.ProductID
+            GROUP BY ProductID 
+            ORDER BY SUM(QtyOrdered) DESC
+            LIMIT 0, 5";
+            $getProduct = $database->select($query);
+            if($getProduct) {
+                while($rows = $getProduct->fetch_assoc()) {
+                    if ($rows['QtyOnHand'] > 0) {?>
+                    <div class="bs_box">
+                        <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>">
+                            <img src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="image" />
+                            <h5><?php echo $rows['ProductName']; ?></h5>
+                            <p class="price">₫<?php echo number_format($product->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></p>
+                        </a>
+                    </div>
+                    <div class="cleaner"></div>
+            <?php   }
+                }
             } ?>
         </div>
     </div>

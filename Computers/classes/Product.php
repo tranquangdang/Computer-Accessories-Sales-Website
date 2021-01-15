@@ -9,11 +9,13 @@ class Product
 {
     private $database;
     private $format;
+    private $cart;
 
     public function __construct()
     {
         $this->database = new Database();
         $this->format = new Format();
+        $this->cart = new Cart();
     }
 
     //Lấy tất cả các sp
@@ -69,38 +71,23 @@ class Product
         $PerDiscount= mysqli_real_escape_string($this->database->link, $PerDiscount);
         $QtyOnHand  = mysqli_real_escape_string($this->database->link, $QtyOnHand);
 
-        $ProductImg = "";
-        if($ProductImg != NULL || isset($data['ProductImg'])) {
-            $ProductImg  = $this->format->validation($data['ProductImg']);
-            $ProductImg = mysqli_real_escape_string($this->database->link, $ProductImg);
-        }
+        $permited  = array('jpg', 'jpeg', 'png', 'gif');
+        $file_name = $file['ProductImg']['name'];
+        $file_size = $file['ProductImg']['size'];
+        $file_temp = $file['ProductImg']['tmp_name'];
 
-        if(substr($ProductImg,0,4) != "http") {
-            $permited  = array('jpg', 'jpeg', 'png', 'gif');
-            $file_name = $file['ProductImg']['name'];
-            $file_size = $file['ProductImg']['size'];
-            $file_temp = $file['ProductImg']['tmp_name'];
+        $div = explode('.', $file_name);
+        $file_ext = strtolower(end($div));
+        $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
+        $uploaded_image = "../images/product/".$unique_image;
 
-            $div = explode('.', $file_name);
-            $file_ext = strtolower(end($div));
-            $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
-            $uploaded_image = "../images/product/".$unique_image; 
-        } else {
-            $ProductImg  = $this->format->validation($data['ProductImg']);
-            $ProductImg = mysqli_real_escape_string($this->database->link, $ProductImg);
-        }
-
-        if(substr($ProductImg,0,4) != "http") {
-            if (empty($file_name)) {
-                echo "<span class='error'>Vui lòng chọn hình ảnh !</span>";
-            } else if ($file_size >4048567) {
-                echo "<span class='error'>Dung lượng ảnh phải nhỏ hơn 4MB! </span>";
-            } else if (in_array($file_ext, $permited) === false) {
-                echo "<span class='error'>Bạn chỉ có thể upload các file sau: ".implode(', ', $permited)."</span>";
-            }
-        }
-        
-        if ($CategoryNo == "" || $Brand == "" || $ProductName == "" || $Intro == "" || $UnitPrice == "" || $PerDiscount == "" || $QtyOnHand == "") {
+        if (empty($file_name)) {
+            echo "<span class='error'>Vui lòng chọn hình ảnh !</span>";
+        } elseif ($file_size >4048567) {
+            echo "<span class='error'>Dung lượng ảnh phải nhỏ hơn 4MB! </span>";
+        } elseif (in_array($file_ext, $permited) === false) {
+            echo "<span class='error'>Bạn chỉ có thể upload các file sau: ".implode(', ', $permited)."</span>";
+        } elseif ($CategoryNo == "" || $Brand == "" || $ProductName == "" || $Intro == "" || $UnitPrice == "" || $PerDiscount == "" || $QtyOnHand == "") {
             $msg = "<span class='error'>Chưa điền đầy đủ cho tất cả các trường!</span>";
             return $msg;
         } else if ($QtyOnHand <= 0) {
@@ -110,12 +97,8 @@ class Product
             $msg = "<span class='error'>Phải lớn hơn hoặc bằng 0!</span>";
             return $msg;
         } else {
-            if(substr($ProductImg,0,4) != "http") {
-                move_uploaded_file($file_temp, $uploaded_image);
-                $query = "INSERT INTO tblProduct (CategoryNo, Brand, ProductName, ProductImg, Intro, UnitPrice, PerDiscount, QtyOnHand) VALUES('$CategoryNo', '$Brand', '$ProductName', '$uploaded_image', '$Intro', '$UnitPrice', $PerDiscount, '$QtyOnHand')";
-            } else {
-                $query = "INSERT INTO tblProduct (CategoryNo, Brand, ProductName, ProductImg, Intro, UnitPrice, PerDiscount, QtyOnHand) VALUES('$CategoryNo', '$Brand', '$ProductName', '$ProductImg', '$Intro', '$UnitPrice', $PerDiscount, '$QtyOnHand')";
-            }
+            move_uploaded_file($file_temp, $uploaded_image);
+            $query = "INSERT INTO tblProduct (CategoryNo, Brand, ProductName, ProductImg, Intro, UnitPrice, PerDiscount, QtyOnHand) VALUES('$CategoryNo', '$Brand', '$ProductName', '$uploaded_image', '$Intro', '$UnitPrice', $PerDiscount, '$QtyOnHand')";
             $inserted_row = $this->database->insert($query);
             if ($inserted_row) {
                 $msg = "<span class='success'>Thêm sản phẩm thành công!</span>";
@@ -146,27 +129,15 @@ class Product
         $PerDiscount= mysqli_real_escape_string($this->database->link, $PerDiscount);
         $QtyOnHand  = mysqli_real_escape_string($this->database->link, $QtyOnHand);
 
-        $ProductImg = "";
-        if($ProductImg != NULL || substr($data['ProductImg'],0,4) == "http") {
-            $ProductImg  = $this->format->validation($data['ProductImg']);
-            $ProductImg = mysqli_real_escape_string($this->database->link, $ProductImg);
-        }
-        
+        $permited  = array('jpg', 'jpeg', 'png', 'gif');
+        $file_name = $file['ProductImg']['name'];
+        $file_size = $file['ProductImg']['size'];
+        $file_temp = $file['ProductImg']['tmp_name'];
 
-        if(substr($ProductImg,0,4) != "http") {
-            $permited  = array('jpg', 'jpeg', 'png', 'gif');
-            $file_name = $file['ProductImg']['name'];
-            $file_size = $file['ProductImg']['size'];
-            $file_temp = $file['ProductImg']['tmp_name'];
-
-            $div = explode('.', $file_name);
-            $file_ext = strtolower(end($div));
-            $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
-            $uploaded_image = "../images/product/".$unique_image; 
-        } else {
-            $ProductImg  = $this->format->validation($data['ProductImg']);
-            $ProductImg = mysqli_real_escape_string($this->database->link, $ProductImg);
-        }
+        $div = explode('.', $file_name);
+        $file_ext = strtolower(end($div));
+        $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
+        $uploaded_image = "../images/product/".$unique_image;
 
         if ($CategoryNo == "" || $Brand == "" || $ProductName == "" || $Intro == "" || $UnitPrice == "" || $PerDiscount == "" ||  $QtyOnHand == "") {
             $msg = "<span class='error'>Chưa điền đầy đủ cho tất cả các trường!</span>";
@@ -178,7 +149,7 @@ class Product
             $msg = "<span class='error'>Phải lớn hơn hoặc bằng 0!</span>";
             return $msg;
         } else {
-            if (!empty($file_name) AND substr($ProductImg,0,4) != "http") {
+            if (!empty($file_name)) {
                 if ($file_size >4048567) {
                     echo "<span class='error'>Dung lượng ảnh phải nhỏ hơn 4MB! </span>";
                 } elseif (in_array($file_ext, $permited) === false) {
@@ -233,13 +204,12 @@ class Product
     //Xóa sp
     public function delProById($ProductId)
     {
-        $ProductImg = "";
         $query = "SELECT * FROM tblProduct WHERE ProductID = '$ProductId'";
         $getData = $this->database->select($query);
         if ($getData) {
             while ($delImg = $getData->fetch_assoc()) {
                 $dellink = $delImg['ProductImg'];
-                if($ProductImg != "") {
+                if(substr($dellink,0,4) != "http") {
                     unlink($dellink);
                 }
             }
@@ -262,4 +232,89 @@ class Product
         }
         return $ProductImg;
     }
+
+    public function DiscountPrice($UnitPrice, $PerDiscount)
+    {
+        return $UnitPrice - (($UnitPrice * $PerDiscount)/100);
+    }
+
+    public function checkType($Type) {
+        if ($Type != "") {
+            switch ($Type) {
+                case 'MAIN':
+                    return 'MAIN';
+                    break;
+                case 'CPU0':
+                    return 'CPU0';
+                    break;
+                case 'RAM0':
+                    return 'RAM0';
+                    break;
+                case 'PSU0':
+                    return 'PSU0';
+                    break;
+                case 'VGA0':
+                    return 'VGA0';
+                    break;
+                case 'COOL':
+                    return 'COOL';
+                    break;
+                case 'CASE':
+                    return 'CASE';
+                    break;
+                case 'HDD0':
+                    return 'HDD0';
+                    break;
+                case 'SSD0':
+                    return 'SSD0';
+                    break;
+                default:
+                    return  "";
+            }
+        }
+    }
+
+    public function buildPC($Type,$ProductID) {
+        $dot = "'";
+        $select = $this->getProById($ProductID);
+        if($select) {
+            $rows= $select->fetch_assoc();
+            $price = $this->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount']);  
+        $output = '
+        <div style="height: 152px">
+            <a href="productdetail.php?ProductID='.$rows["ProductID"].'">
+                <img style="width: 150px; height: 150px; float: left; margin: 0 10px" src="'.$this->checkImg($rows["ProductImg"]).'" alt="image" />
+                <h4>'.$rows['ProductName'].'</h4>
+                <p class="price">₫'.number_format($price).'</p>
+            </a>
+            <input type="hidden" value="1" class="proid'.$rows["ProductID"].'" data-id="'.$rows["ProductID"].'"/>
+            <span>Số lượng: </span><input type="number" name="quantity" class="clp'.$rows["ProductID"].'" data-id="'.$price.'" value="1" onKeyDown="return false" min="1" max="'.$rows["QtyOnHand"].'"/>
+            <br><br>
+            <span>Tổng tiền: ₫</span><span class="total" id="id'.$rows["ProductID"].'">'.number_format($price).'</span>
+            <a  class="btn blackBtn"
+            href ="buildpc.php?Action=Remove&Type='.$Type.'"
+            style="
+                float: right; 
+                width: 10%; color: white; 
+                padding: 5px; 
+                font-size: 11px;
+                text-align: center;
+            ">
+            Xóa
+            </a>
+        </div>
+        <div class="cleaner"></div>
+        <script type="text/javascript">
+        $(".clp'.$rows["ProductID"].'").on("change keyup click", function() {
+            var price = $(this).data("id");
+            var quantity = $(this).val();
+            
+            $("#id'. $rows["ProductID"].'").text(formatMoney(price * quantity));
+            $('.$dot.'input[class^="proid'.$rows["ProductID"].'"]'.$dot.').val(quantity);
+        });
+        </script>';
+        }
+        return $output;
+    }
+
 }

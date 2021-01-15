@@ -1,4 +1,6 @@
+<?php require ("include/topheader.php") ?>
 <?php require ("include/header.php") ?>
+<?php require ("include/search.php") ?>
 <?php require ("include/sidebar.php") ?>
         <div id="content" class="float_r">
         	<h1>Liên hệ với chúng tôi</h1>

@@ -1,9 +1,11 @@
-<?php require "include/header.php"; ?>
+<?php require "include/topheader.php"; ?>
 <?php 
 if(!Session::get('customerId')) {
     header("Location:login.php");
 }
- ?>
+?>
+<?php require "include/header.php"; ?>
+<?php require "include/search.php"; ?>
 <style type="text/css">
 .psuccess{width: 500px; min-height: 200px; text-align: center; border: 1px solid #ddd; margin: 0 auto; padding:20px;}	
 .psuccess h2{border-bottom: 1px solid #ddd; margin-bottom: 20px; padding-bottom: 10px; color: crimson;}	

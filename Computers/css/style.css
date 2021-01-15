@@ -334,75 +334,30 @@ h6 { font-size: 12px; margin: 0 0 5px; padding: 0; }
 	color: #000000;
 }
 
-/*============================*/
-/*=== Custom Slider Styles ===*/
-/*============================*/
-#slider-wrapper {
-	float: left;
-    width: 680px;
-    height: 300px;
-	margin-right: 20px;
-	margin-bottom: 60px;
+/*** slide ***/
+.swiper-container {
+	width: 100%;
+	height: 100%;
 }
 
-#slider {
-	position:relative;
-    width: 620px;
-    height: 300px;
-	background:url(../images/loading.gif) no-repeat 50% 50%;
-}
-#slider img {
-	position:absolute;
-	top:0px;
-	left:0px;
-	display:none;
-}
-#slider a {
-	border:0;
-	display:block;
-}
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
 
-.nivo-controlNav {
-	position:absolute;
-	right: 10px;
-	bottom: -30px;
-}
-.nivo-controlNav a {
-	display:block; float: left; margin-left: 5px;
-	width: 12px; height: 12px;  background: gray; cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
-}
-
-.nivo-controlNav a:hover{
-	background: steelblue;
-}
-.nivo-controlNav a.active {
-	background-position:0 -18px;
-	background: navy;
-}
-
-.nivo-directionNav a {
-	display:block;
-	width:30px;
-	height:30px;
-	background:url(../../images/arrows.png) no-repeat;
-	text-indent:-9999px;
-	border:0;
-}
-a.nivo-nextNav {
-	background-position:-30px 0;
-	right:15px;
-}
-a.nivo-prevNav {
-	left:15px;
-}
-
-.nivo-caption {
-    text-shadow:none;
-    font-family: Helvetica, Arial, sans-serif;
-}
-.nivo-caption a { 
-    color:#efe9d1;
-    text-decoration:underline;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
 }
 
 #top_nav ul li a {font-size: 13px;}
@@ -800,4 +755,18 @@ p.note{
 	width: 30px;
   }
 
-  .intro img{max-width: 680px; max-height: 300px;}
+.intro img{max-width: 680px; max-height: 300px;}
+
+.sortType{
+	padding: 10px 0;
+	border-bottom: 1px solid #dfdfdf;
+}
+
+.sortType a {
+	color: #000;
+	margin-right: 10px;
+}
+
+.sortType a:hover{
+	color: #000;
+}

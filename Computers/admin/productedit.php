@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                         <label>Mô tả</label>
                     </td>
                     <td>
-                        <textarea style="resize: none; width: 580px; height: 300px;"  name="Intro"><?php echo $value['Intro'] ?></textarea>
+                        <textarea class="tinymce" style="resize: none; width: 580px; height: 300px;"  name="Intro"><?php echo $value['Intro'] ?></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                     </td>
                     <td>
                         <img src="<?php echo $value['ProductImg']; ?>" height="200px" width="200px"><br>
-                        <input type="text" name="ProductImg" />
+                        <input type="file" name="ProductImg" />
                     </td>
                 </tr>
                 <tr>

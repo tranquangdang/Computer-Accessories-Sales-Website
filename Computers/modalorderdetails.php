@@ -5,6 +5,16 @@ if(isset($_POST['OrderNo']))
     $output = '';  
     $select = "SELECT * FROM tblOrderInvoiceDetail, tblProduct WHERE OrderID = '".$_POST['OrderNo']."' AND tblOrderInvoiceDetail.ProductID = tblProduct.ProductID";
     $getPro = $database->select($select);
+    $query = "SELECT * FROM tblOrderInvoice WHERE OrderID = '".$_POST['OrderNo']."'";
+    $getInfo = $database->select($query);
+    if($getInfo) {
+        while ($rows = $getInfo->fetch_assoc()) {
+    $output .= '
+    <p>Số điện thoại: '.$rows['TelNo'].'</p>
+    <p>Địa chỉ nhận hàng: '.$rows['OrderAddress'].'</p>
+    <br>';
+        }
+    }
     $output .= '
     <table class="table table-responsive table-bordered">
         <tr>
@@ -18,13 +28,13 @@ if(isset($_POST['OrderNo']))
     $sum = 0;
     $qty = 0;
     while ($rows = $getPro->fetch_assoc()) {
-        $total = $cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount']) * $rows['QtyOrdered'];
+        $total = $product->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount']) * $rows['QtyOrdered'];
         $output .= '
         <tr>
             <td style="vertical-align: middle;  text-align: center;"><img style="width: 100px; height: 100px" src="'. $product->checkImg($rows['ProductImg']) .'" alt="image" /></td> 
             <td style="vertical-align: middle;  text-align: center;"><span>'. $rows['ProductName'].'</span></td> 
             <td style="vertical-align: middle;  text-align: center;"><p>'. $rows['QtyOrdered'].'</p></td>
-            <td style="vertical-align: middle;  text-align: center;">₫'. number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])).'</td>
+            <td style="vertical-align: middle;  text-align: center;">₫'. number_format($product->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])).'</td>
             <td style="vertical-align: middle;  text-align: center;">₫'. number_format($total) .'</td></td>
         </tr>';
                 }

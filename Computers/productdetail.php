@@ -1,5 +1,4 @@
-<?php require ("include/header.php"); ?>
-
+<?php require ("include/topheader.php"); ?>
 <?php
 if (isset($_GET['ProductID'])) {
     $ProductID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['ProductID']);
@@ -10,12 +9,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
     $addCart = $cart->addToCart($quantity, $ProductID);
 }
 ?>
+<?php require ("include/header.php"); ?>
+<?php require ("include/search.php"); ?>
 <?php require ("include/sidebar.php"); ?>
         <div id="content" class="float_r" style="margin-bottom: 70px">
             <?php
                 $results = $product->getProById($ProductID);
-                while( ($rows = $results->fetch_assoc())!= NULL )
-			    {
+                if (!$results){
+                    echo '<h3>Không tìm thấy sản phẩm</h3>';
+                } else {
+                    while($rows = $results->fetch_assoc())
+                    {
 			?>
         	<h1><?php echo $rows['ProductName']; ?></h1>
             <div class="content_half float_l">
@@ -25,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                 <form action="" method="post">
                 <table>
                     <tr>
-                        <td align="right"><p class="product_price"><a>₫</a><?php echo number_format($cart->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></p></td>
+                        <td align="right"><p class="product_price"><a>₫</a><?php echo number_format($product->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></p></td>
                         <td ><p class="discount"><?php if ($rows['PerDiscount'] > 0) echo '₫'.number_format($rows['UnitPrice']); ?></p></td>
                     </tr>
                     <tr>
@@ -62,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
             <h5>Mô tả sản phẩm:</h5>
             <div class="intro"><?php echo(htmlspecialchars_decode(stripslashes($rows['Intro']))); ?></div>	
             <?php 
+                    }
                 }
             ?>
             <div class="cleaner h50"></div>

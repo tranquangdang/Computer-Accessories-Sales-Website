@@ -14,7 +14,7 @@ class Page
         $this->database = new Database();
     }
     //Phân trang
-    public function Pagination($tableName, $targetpage, $total_pages, $page)
+    public function Pagination($targetpage, $total_pages, $page)
     {
         $limit = 12;
         $stages = 3;
@@ -27,54 +27,50 @@ class Page
 
         $paginate = '';
         if ($lastpage > 1) {
-
             $paginate .= "<div class='paginate'>";
             //Quay lại
             if ($page > 1) {
-                $paginate .= "<a href='$targetpage page=$prev'>Quay lại</a>";
+                $paginate .= "<a href='$targetpage"."page=$prev'>Quay lại</a>";
             } else {
                 $paginate .= "<span class='disabled'>Quay lại</span>";}
 
-            // Pages
+            //Pages
             if ($lastpage < 7 + ($stages * 2)) //Ít trang nên không ẩn
             {
                 for ($counter = 1; $counter <= $lastpage; $counter++) {
                     if ($counter == $page) {
                         $paginate .= "<span class='current'>$counter</span>";
                     } else {
-                        $paginate .= "<a href='$targetpage page=$counter'>$counter</a>";}
+                        $paginate .= "<a href='$targetpage"."page=$counter'>$counter</a>";
+                    }
                 }
-            } elseif ($lastpage > 5 + ($stages * 2))//Nhiều trang nên ẩn bớt
-            {
-                //Ẩn các trang sau nếu đang ở đầu
-                if ($page < 1 + ($stages * 2)) {
+            } elseif ($lastpage > 5 + ($stages * 2)) { //Nhiều trang nên ẩn bớt
+                if ($page < 1 + ($stages * 2)) { //Ẩn các trang sau nếu đang ở đầu
                     for ($counter = 1; $counter < 4 + ($stages * 2); $counter++) {
                         if ($counter == $page) {
                             $paginate .= "<span class='current'>$counter</span>";
                         } else {
-                            $paginate .= "<a href='$targetpage page=$counter'>$counter</a>";}
+                            $paginate .= "<a href='$targetpage"."page=$counter'>$counter</a>";
+                        }
                     }
                     $paginate .= "...";
-                    $paginate .= "<a href='$targetpage page=$LastPagem1'>$LastPagem1</a>";
-                    $paginate .= "<a href='$targetpage page=$lastpage'>$lastpage</a>";
-                }
-                //Ẩn các trang sau và đầu nếu đang ở giữa
-                elseif ($lastpage - ($stages * 2) > $page && $page > ($stages * 2)) {
-                    $paginate .= "<a href='$targetpage page=1'>1</a>";
-                    $paginate .= "<a href='$targetpage page=2'>2</a>";
+                    $paginate .= "<a href='$targetpage"."page=$LastPagem1'>$LastPagem1</a>";
+                    $paginate .= "<a href='$targetpage"."page=$lastpage'>$lastpage</a>";
+                } elseif ($lastpage - ($stages * 2) > $page && $page > ($stages * 2)) { //Ẩn các trang sau và đầu nếu đang ở giữa
+                    $paginate .= "<a href='$targetpage"."page=1'>1</a>";
+                    $paginate .= "<a href='$targetpage"."page=2'>2</a>";
                     $paginate .= "...";
                     for ($counter = $page - $stages; $counter <= $page + $stages; $counter++) {
                         if ($counter == $page) {
                             $paginate .= "<span class='current'>$counter</span>";
                         } else {
-                            $paginate .= "<a href='$targetpage page=$counter'>$counter</a>";}
+                            $paginate .= "<a href='$targetpage"."page=$counter'>$counter</a>";
+                        }
                     }
                     $paginate .= "...";
-                    $paginate .= "<a href='$targetpage page=$LastPagem1'>$LastPagem1</a>";
-                    $paginate .= "<a href='$targetpage page=$lastpage'>$lastpage</a>";
-                }
-                //Ẩn các trang đầu nếu đang ở cuối
-                else {
+                    $paginate .= "<a href='$targetpage"."page=$LastPagem1'>$LastPagem1</a>";
+                    $paginate .= "<a href='$targetpage"."page=$lastpage'>$lastpage</a>";
+                } else {  //Ẩn các trang đầu nếu đang ở cuối
                     $paginate .= "<a href='$targetpage page=1'>1</a>";
                     $paginate .= "<a href='$targetpage page=2'>2</a>";
                     $paginate .= "...";
@@ -82,14 +78,14 @@ class Page
                         if ($counter == $page) {
                             $paginate .= "<span class='current'>$counter</span>";
                         } else {
-                            $paginate .= "<a href='$targetpage page=$counter'>$counter</a>";}
+                            $paginate .= "<a href='$targetpage"."page=$counter'>$counter</a>";
+                        }
                     }
                 }
             }
-
             //Tiếp theo
             if ($page < $counter - 1) {
-                $paginate .= "<a href='$targetpage page=$next'>Tiếp theo</a>";
+                $paginate .= "<a href='$targetpage"."page=$next'>Tiếp theo</a>";
             } else {
                 $paginate .= "<span class='disabled'>Tiếp theo</span>";
             }
@@ -99,19 +95,53 @@ class Page
         echo '<div id="paginate">'.'<p>'.$total_pages . ' Kết quả</p>'.'<p>'.$paginate.'</p></div>';
     }
 
-    public function sortProduct($type) {
-        if ($type = 'asc') {
-            return 'ORDER BY UnitPrice ASC';
-        } else if ($type = 'desc') {
-            return 'ORDER BY UnitPrice ASC';
-        } else if ($type = 'az') {
-            return 'ORDER BY ProductName ASC';
-        } else if ($type = 'new') {
-            return 'ORDER BY TimeCreate ASC';
-        } else if ($type = 'discount') {
-            return 'AND PerDiscount > 0';
-        } else if ($type = 'topsell') {
-            return 'ORDER BY ProductName ASC';
+    //Thay đổi value của biến $_GET trong url
+    public function buildQuery($variable, $value){
+        $query = $_GET;
+        $query[$variable] = $value;
+        $query_result = http_build_query($query);
+        return $_SERVER['PHP_SELF'].'?'.$query_result;
+    }
+
+    public function sortSQL($type) {
+        if ($type == 'asc') {
+            return ' ORDER BY UnitPrice ASC ';
+        } else if ($type == 'desc') {
+            return ' ORDER BY UnitPrice DESC ';
+        } else if ($type == 'new') {
+            return ' ORDER BY TimeCreate DESC ';
+        } else if ($type == 'discount') {
+            return ' AND PerDiscount > 0 ORDER BY PerDiscount DESC ';
+        } else if ($type == 'topsell') {
+            return ' AND tblOrderInvoiceDetail.ProductID = tblProduct.ProductID GROUP BY ProductID ORDER BY SUM(QtyOrdered) DESC ';
+        } else {
+            return '';
+        }
+    }
+
+    public function setVariableSort($type) {
+        if ($type == 'asc') {
+            return 'Sort=asc';
+        } else if ($type == 'desc') {
+            return 'Sort=desc';
+        } else if ($type == 'new') {
+            return 'Sort=new';
+        } else if ($type == 'discount') {
+            return 'Sort=discount';
+        } else if ($type == 'topsell') {
+            return 'Sort=topsell';
+        } else {
+            return '';
+        }
+    }
+
+    public function checkType($type) {
+        if($type == 'CPU01' || $type == 'CPU02') {
+            return 'CPU';
+        } else if($type == 'MAIN1' || $type == 'MAIN2') {
+            return 'MAIN';
+        } else {
+            return "";
         }
     }
 }

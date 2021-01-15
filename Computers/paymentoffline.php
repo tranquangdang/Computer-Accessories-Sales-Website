@@ -1,4 +1,4 @@
-<?php require "include/header.php"; ?>
+<?php require "include/topheader.php"; ?>
 <?php 
 if(!Session::get('customerId')) {
     header("Location:login.php");
@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header("Location:success.php");
 }
   ?>
+<?php require "include/header.php"; ?>
+<?php require "include/search.php"; ?>
 <style type="text/css">
 .tblone{ float: left; width:68%;}
 .tblone th{ vertical-align: middle; text-align:center; font-size: 15px;}
@@ -46,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			<tr>
 				<td><?php echo $i; ?></td>
 				<td><?php echo $result['ProductName']; ?></td>								
-				<td>₫<?php echo number_format($cart->DiscountPrice($result['UnitPrice'],$result['PerDiscount'])); ?></td>
+				<td>₫<?php echo number_format($product->DiscountPrice($result['UnitPrice'],$result['PerDiscount'])); ?></td>
 				<td><?php echo $result['QtyOrdered']; ?></td>								
-				<td>₫<?php echo number_format($total = $cart->DiscountPrice($result['UnitPrice'],$result['PerDiscount']) * $result['QtyOrdered']); ?></td>								
+				<td>₫<?php echo number_format($total = $product->DiscountPrice($result['UnitPrice'],$result['PerDiscount']) * $result['QtyOrdered']); ?></td>								
 			</tr>
 			<?php 
 				}}

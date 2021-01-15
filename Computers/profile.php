@@ -1,5 +1,5 @@
+<?php require "include/topheader.php"; ?>
 <?php require "include/header.php"; ?>
-<?php require "include/sidebarprofile.php"; ?>
 <?php 
 if(!Session::get('customerId')) {
     header("Location:login.php");
@@ -9,6 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 	$update = $customer->customerUpdate($_POST, $CustID);
 }
 ?>
+<?php require "include/search.php"; ?>
+<?php require "include/sidebarprofile.php"; ?>
  <style type="text/css">
  	 .tbl {width: 50%; margin: 0 auto}
 	 .tbl tr td{text-align: justify;}

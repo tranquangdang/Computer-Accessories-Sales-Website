@@ -30,7 +30,7 @@ class Customer
         $CustAddress= mysqli_real_escape_string($this->database->link, $CustAddress);
         $TelNo 		= mysqli_real_escape_string($this->database->link, $TelNo);
         $Email 		= mysqli_real_escape_string($this->database->link, $Email);
-        $Pass 		= mysqli_real_escape_string($this->database->link, md5($Pass));
+        $Pass 		= mysqli_real_escape_string($this->database->link, $Pass);
 
         if ($CustName == "" || $CustAddress == "" || $TelNo == "" || $Email == "" || $Pass == "" ) {
             $msg = "<span class='error'>Không được bỏ trống trường nào!</span>";
@@ -42,6 +42,7 @@ class Customer
             $msg = "<span class='error'>Email này đã được sử dụng trước đó!</span>";
             return $msg;
         } else {
+            $Pass = md5($Pass);
             $query = "INSERT INTO tblCustomer (CustName, CustAddress, TelNo, Email, Pass) VALUES('$CustName', '$CustAddress', '$TelNo', '$Email', '$Pass')";
             $inserted_row = $this->database->insert($query);
             if ($inserted_row) {
@@ -61,12 +62,13 @@ class Customer
         $Pass  	= $this->format->validation($data['Pass']);
 
         $Email 	= mysqli_real_escape_string($this->database->link, $Email);
-        $Pass 	= mysqli_real_escape_string($this->database->link, md5($Pass));
+        $Pass 	= mysqli_real_escape_string($this->database->link, $Pass);
 
         if (empty($Email) || empty($Pass)) {
             $msg = "<span class='error'>Không được bỏ trống trường nào!</span>";
             return $msg;
         }
+        $Pass = md5($Pass);
         $query = "SELECT * FROM tblCustomer WHERE email = '$Email' AND pass = '$Pass'";
         $result = $this->database->select($query);
         if ($result != false) {
@@ -125,6 +127,10 @@ class Customer
         $NewPass= $this->format->validation($data['NewPass']);
         $ConfirmPass= $this->format->validation($data['ConfirmPass']);
 
+        $OldPass 	= mysqli_real_escape_string($this->database->link, $OldPass);
+        $NewPass 	= mysqli_real_escape_string($this->database->link, $NewPass);
+        $ConfirmPass= mysqli_real_escape_string($this->database->link, $ConfirmPass);
+
         if($OldPass == "" || $NewPass == "" || $ConfirmPass == ""){
             $msg = "<span class='error'>Không được bỏ trống trường nào!</span>";
         } else if ($NewPass != $ConfirmPass) {
@@ -132,12 +138,11 @@ class Customer
         } else if ($OldPass == $NewPass) {
             $msg = "<span class='error'>Mật khẩu cũ và mật khẩu mới không được giống nhau!</span>";
         } else  {
-            $OldPass 	= mysqli_real_escape_string($this->database->link, md5($OldPass));
-            $NewPass 	= mysqli_real_escape_string($this->database->link, md5($NewPass));
-
+            $OldPass = md5($OldPass);
             $query = "SELECT * FROM tblCustomer WHERE CustID = '$CustID' AND Pass = '$OldPass'";
             $checkpass = $this->database->select($query);
             if($checkpass) {
+                $NewPass = md5($NewPass);
                 $query = "UPDATE tblCustomer
                 SET
                 Pass 	= '$NewPass'

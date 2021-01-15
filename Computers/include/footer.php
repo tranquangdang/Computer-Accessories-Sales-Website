@@ -18,17 +18,15 @@
 						<ul>
 							<li><a href="about.php">Về chúng tôi</a></li>
 							<li><a href="contact.php">Liên hệ</a></li>
-							<li><a href="faqs.php">Tuyển dụng</a></li>
 							<li><a href="faqs.php">Điều khoản sử dụng</a></li>
 						</ul>
 				</div>
 				<div class="col_1_of_4 span_1_of_4">
 					<h4>Tài khoản</h4>
 						<ul>
-							<li><a href="signin.php">Đăng nhập</a></li>
-							<li><a href="#">Tài khoản</a></li>
+							<li><a href="profile.php">Tài khoản</a></li>
 							<li><a href="shoppingcart.php">Xem giỏ hàng</a></li>
-							<li><a href="#">Sản phẩm yêu thích</a></li>
+							<li><a href="buildpc.php">Xây dựng cấu hình</a></li>
 						</ul>
 				</div>
 				<div class="col_1_of_4 span_1_of_4">
@@ -54,12 +52,10 @@
 		   </div>
      	</div>
 	</div>
-	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> 
     <script type="text/javascript" src="js/move-top.js"></script>
     <script type="text/javascript" src="js/easing.js"></script> 
 	<script type="text/javascript">
-		var $1_7_2 = $.noConflict();
-		$1_7_2(document).ready(function() {
+		$(document).ready(function() {
 			/*
 			var defaults = {
 	  			containerID: 'toTop', // fading element id
@@ -69,7 +65,7 @@
 	 		};
 			*/
 			
-			$1_7_2().UItoTop({ easingType: 'easeOutQuart' });
+			$().UItoTop({ easingType: 'easeOutQuart' });
 			
 		});
 	</script>

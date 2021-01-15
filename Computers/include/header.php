@@ -1,5 +1,3 @@
-<?php require "include/topheader.php"; ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -8,11 +6,20 @@
     <meta name="keywords" content="" />
     <meta name="description" content="" />
     <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://superal.github.io/canvas2image/canvas2image.js"></script>
+
+    <script src="https://pagination.js.org/dist/2.1.5/pagination.js"></script>
     <script type="text/javascript" src="js/ddsmoothmenu.js"></script>
     <script type="text/javascript">
         ddsmoothmenu.init({
@@ -28,8 +35,14 @@
             classname: 'ddsmoothmenuvertical', 
             contentsource: "markup" 
         })
-    </script>
 
+        function formatMoney(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        }
+        function unFormatMoney(num) {
+            return num.replace(/[.,\s]/g, '')
+        }
+    </script>
 </head>
 
 <body>
@@ -80,29 +93,25 @@
                 <li><a class="visited" href="index.php">Trang chủ</a></li>
                 <li><a href="products.php">Sản phẩm</a>
                     <ul>
-                        <li><a href="#submenu1">PC - Máy tính bộ</a>
+                        <li><a href="products.php?CategoryNo='PC001','PC002'">PC - Máy tính bộ</a>
                             <ul>
-                                <li><a href="#submenu1">Văn phòng</a></li>
-                                <li><a href="#submenu2">Gaming</a></li>
+                                <li><a href="products.php?CategoryNo='PC001'">PC văn phòng</a></li>
+                                <li><a href="products.php?CategoryNo='PC002'">PC Gaming</a></li>
                             </ul>
                         </li>
-                        <li><a href="#submenu2">Laptop</a></li>
-                        <li><a href="#submenu3">Linh kiện cũ</a></li>
+                        <li><a href="products.php?CategoryNo='LAP01','LAP02'">Laptop</a>
+                            <ul>
+                                <li><a href="products.php?CategoryNo='LAP02'">Laptop làm việc</a></li>
+                                <li><a href="products.php?CategoryNo='LAP01'">Laptop gaming</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Linh kiện cũ</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Xây dựng cấu hình</a></li>
+                <li><a href="buildpc.php">Xây dựng cấu hình</a></li>
                 <li><a href="contact.php">Liên hệ</a></li>
                 <li><a href="about.php">Về chúng tôi</a></li>
             </ul>
             <br style="clear: left" />
         </div> <!-- end of ddsmoothmenu -->
-        <div id="search">
-            <form action="products.php" method="get">
-              <input type="text" value="" name="Keyword" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
-              <input type="submit" name="" value="" alt="Search" id="searchbutton" title="Search" class="sub_btn"  />
-            </form>
-        </div>
-    </div> <!-- END of menubar -->
     
-    <div id="main">
-    	

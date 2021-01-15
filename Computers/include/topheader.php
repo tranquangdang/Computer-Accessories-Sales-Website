@@ -1,5 +1,6 @@
 <?php 
 include 'lib/Session.php';
+include 'lib/Cookie.php';
 Session::init();
 include 'lib/Database.php';
 include 'helpers/Format.php';
@@ -12,4 +13,5 @@ $format = new Format();
 $product = new Product();
 $cart = new Cart();
 $customer = new Customer(); 
-$pagination = new Page();?>
+$Page = new Page();
+?>

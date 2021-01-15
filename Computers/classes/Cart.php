@@ -4,8 +4,6 @@ include_once($filepath.'/../lib/Database.php');
 include_once($filepath.'/../helpers/Format.php');
  ?>
 <?php 
-
-
 class Cart
 {
     private $database;
@@ -15,11 +13,6 @@ class Cart
     {
         $this->database = new Database();
         $this->format = new Format();
-    }
-
-    public function DiscountPrice($UnitPrice, $PerDiscount)
-    {
-        return $UnitPrice - (($UnitPrice * $PerDiscount)/100);
     }
 
     //Tính tổng tiền giỏ hàng, hóa đơn
@@ -36,9 +29,11 @@ class Cart
         $Amount = 0;
         $OrderTotalMoney = 0;
         //Duyệt và tính tổng tiền
-        while( ($rows = $getQtyOrdered->fetch_assoc()) != NULL ) {
-            $Amount = $this->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])*$rows['QtyOrdered'];
-            $OrderTotalMoney += $Amount;
+        if($this->getCartProduct($CartID)){
+            while( ($rows = $getQtyOrdered->fetch_assoc()) != NULL ) {
+                $Amount = ($rows['UnitPrice'] - (($rows['UnitPrice'] * $rows['PerDiscount'])/100))*$rows['QtyOrdered'];
+                $OrderTotalMoney += $Amount;
+            }
         }
         return $OrderTotalMoney;
     }
@@ -53,7 +48,12 @@ class Cart
         //Đếm các sản phẩm trong chi tiết giỏ hàng
         $query = "SELECT * FROM tblProduct, tblCartDetail, tblCart WHERE 
         tblCart.CustNo ='$CustNo' AND tblCartDetail.CartID = '$CartID' AND tblCartDetail.ProductID = tblProduct.ProductID";
-        $result = mysqli_num_rows($this->database->select($query));
+        $select = $this->database->select($query);
+        if(!$select) {
+            $result = 0;
+        } else {
+            $result = mysqli_num_rows($select);
+        }
         return $result;
     }
 
@@ -125,7 +125,7 @@ class Cart
     }
 
 
-    //Cập nhật số lượng trong giỏ hàng
+    //Cập nhật số lượng giỏ hàng
     public function updateCartQuantity($CartID, $ProductID, $QtyOrdered)
     {
         $CartID    = mysqli_real_escape_string($this->database->link, $CartID);
@@ -150,6 +150,9 @@ class Cart
         $ProductID= mysqli_real_escape_string($this->database->link, $ProductID);
         $query = "DELETE FROM tblCartDetail WHERE CartID = '$CartID' AND ProductID = '$ProductID'";
         $deldata = $this->database->delete($query);
+        if(!$this->getCartProduct($CartID)){
+            header("Location:index.php");
+        }
         if ($deldata) {
             echo "<script> window.location = 'shoppingcart.php'; </script>";
         } else {
@@ -181,7 +184,13 @@ class Cart
         $query = "SELECT * FROM tblCart WHERE CustNo = '$CustID'";
         $getCart = $this->database->select($query);
         if ($getCart) {
-            $query = "INSERT INTO tblOrderInvoice(CustNo, OrderTotalMoney) VALUES($CustID, $OrderTotalMoney)";
+            $select = "SELECT * FROM tblCustomer WHERE CustID = '$CustID'";
+            $getInfo = $this->database->select($select);
+            while(($rows = $getInfo->fetch_assoc()) != NULL ) {
+                $OrderAddress = $rows['CustAddress']; 
+                $TelNo = $rows['TelNo'];
+            }
+            $query = "INSERT INTO tblOrderInvoice(CustNo, OrderAddress, OrderTotalMoney, TelNo) VALUES($CustID, '$OrderAddress', $OrderTotalMoney, '$TelNo')";
             $inserted_row = $this->database->insert($query);
         }
 
@@ -195,7 +204,7 @@ class Cart
             while ($result = $getPro->fetch_assoc()) {
                 $ProductID      = $result['ProductID'];
                 $QtyOrdered       = $result['QtyOrdered'];
-                $Amount          = $this->DiscountPrice($result['UnitPrice'],$result['PerDiscount']) * $QtyOrdered;
+                $Amount          = ($result['UnitPrice'] - (($result['UnitPrice'] * $result['PerDiscount'])/100)) * $QtyOrdered;
 
                 $query = "INSERT INTO tblOrderInvoiceDetail (OrderID, ProductID, QtyOrdered, Amount) VALUES($OrderID, $ProductID, $QtyOrdered, $Amount)";
                 $inserted_row = $this->database->insert($query);
@@ -208,7 +217,11 @@ class Cart
         $CustID = Session::get('customerId');
         $query = "SELECT * FROM tblOrderInvoice WHERE CustNo = '$CustID' AND OrderDate = now()";
         $result = $this->database->select($query);
-        while( ($rows = $result->fetch_assoc()) != NULL ) {$Total = $rows['OrderTotalMoney'];}
+        if(!$result) {
+            $Total = 0;
+        } else {
+            while( ($rows = $result->fetch_assoc()) != NULL ) {$Total = $rows['OrderTotalMoney'];}
+        }
         return $Total;
     }
 
@@ -286,5 +299,16 @@ class Cart
             WHERE  OrderID = '$OrderID'";
         $updated_row = $this->database->update($query);
     }
-    
+
+    public function buildPCtoCart($ProductList) {
+        if($ProductList != "") {
+            $Product = explode(';',substr($ProductList,1));
+
+            foreach($Product as $Value) {
+                $temp = '';
+                $temp = explode(',',$Value);
+                $this->addToCart($temp[0],$temp[1]);
+            }
+        }
+    }
 }

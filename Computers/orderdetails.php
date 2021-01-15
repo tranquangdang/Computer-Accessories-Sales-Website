@@ -1,10 +1,8 @@
-<?php require "include/header.php"; ?>
+<?php require "include/topheader.php"; ?>
 <?php 
 if(!Session::get('customerId')) {
     header("Location:login.php");
 }
- ?>
- <?php 
 if (isset($_GET['cancel'])) {
     $OrderID = $_GET['cancel'];
     $cancel = $cart->orderCancel($OrderID);
@@ -13,7 +11,9 @@ if (isset($_GET['confirm'])) {
     $OrderID =  $_GET['confirm'];
     $confirm = $cart->ConfirmShip($OrderID);
 }
-  ?>
+?>
+<?php require "include/header.php"; ?>
+<?php require "include/search.php"; ?>
  <style type="text/css">
     .order {width: 94%;}
  	.tblone  tr td{text-align:center;}
@@ -97,17 +97,16 @@ if (isset($_GET['confirm'])) {
   </div>
 </div>
 <script type="text/javascript">
-var $details = $.noConflict();
-$details(document).ready(function(){  
-    $details('.detailsBtn').click(function(){
-        var OrderNo = $details(this).data("id");  
-           $details.ajax({  
+$(document).ready(function(){  
+    $('.detailsBtn').click(function(){
+        var OrderNo = $(this).data("id");  
+           $.ajax({  
                 url:"modalorderdetails.php",  
                 method:"post",  
                 data:{OrderNo:OrderNo},  
                 success:function(data){  
-                    $details('.modal-body').html(data);  
-                    $details('#myModal').modal('show');  
+                    $('.modal-body').html(data);  
+                    $('#myModal').modal('show');  
                 }  
            });  
     });  
