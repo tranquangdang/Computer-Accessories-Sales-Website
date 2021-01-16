@@ -5,7 +5,6 @@ if(isset($_POST['Type']))
     $output = '';  
     $select = "SELECT * FROM tblProduct WHERE CategoryNo in (" . $_POST['Type'] . ")";
     $getPro = $database->select($select);
-    $output .= '<input type="Text"; placeholder="Tìm kiếm" style="width: 100%;"/>'; 
     if($getPro) {
     while ($rows = $getPro->fetch_assoc()) {
         $ProductID = $rows['ProductID'];

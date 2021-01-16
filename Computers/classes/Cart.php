@@ -59,7 +59,6 @@ class Cart
 
     public function addToCart($QtyOrdered, $ProductID)
     {
-        $QtyOrdered = $this->format->validation($QtyOrdered);
         $QtyOrdered = mysqli_real_escape_string($this->database->link, $QtyOrdered);
         $ProductID = mysqli_real_escape_string($this->database->link, $ProductID);
         $CustNo = Session::get('customerId');
@@ -118,6 +117,7 @@ class Cart
     //Lấy thông tin sản phẩm trong giỏ hàng
     public function getCartProduct($CartID)
     {
+        $CartID = mysqli_real_escape_string($this->database->link, $CartID);
         $query = "SELECT * FROM tblProduct, tblCartDetail WHERE 
         tblCartDetail.CartID = $CartID AND tblCartDetail.ProductID = tblProduct.ProductID";
         $result = $this->database->select($query);
@@ -181,6 +181,9 @@ class Cart
 
     public function orderProduct($CustID,$OrderTotalMoney)
     {
+        $CustID         = mysqli_real_escape_string($this->database->link, $CustID);
+        $OrderTotalMoney= mysqli_real_escape_string($this->database->link, $OrderTotalMoney);
+
         $query = "SELECT * FROM tblCart WHERE CustNo = '$CustID'";
         $getCart = $this->database->select($query);
         if ($getCart) {
@@ -235,6 +238,8 @@ class Cart
 
     public function orderCancel($OrderID)
     {
+        $OrderID   = mysqli_real_escape_string($this->database->link, $OrderID);
+
         $query = "DELETE FROM tblOrderInvoiceDetail WHERE OrderID = '$OrderID'";
         $result = $this->database->delete($query);
         $query = "DELETE FROM tblOrderInvoice WHERE OrderID = '$OrderID'";
@@ -243,6 +248,8 @@ class Cart
 
     public function getOrderDetailById($OrderID)
     {
+        $OrderID   = mysqli_real_escape_string($this->database->link, $OrderID);
+
         $query = "SELECT * FROM tblOrderDetail WHERE OrderID = '$OrderID'";
         $result = $this->database->select($query);
         return $result;
@@ -301,6 +308,8 @@ class Cart
     }
 
     public function buildPCtoCart($ProductList) {
+        $ProductList   = mysqli_real_escape_string($this->database->link, $ProductList);
+        
         if($ProductList != "") {
             $Product = explode(';',substr($ProductList,1));
 

@@ -6,22 +6,25 @@ if (isset($_GET['CategoryNo'])) {
     $sql2 = "select * from tblProductCategory where CategoryID in (" . $cate . ")";
     $getCateName = $database->select($sql2);
     $st = '';
-    while (($row = $getCateName->fetch_assoc()) != null) {
+    if ($getCateName) {
+        while ($row = $getCateName->fetch_assoc()) {
         $st .= ' ' . $row['CategoryName'];
     }
+    }
+    
     echo '<h1>' . $st . '</h1>';
-    $sql = "SELECT * FROM tblProduct WHERE CategoryNo in (" . $cate . ")";
+    $sql = "SELECT * FROM tblProduct WHERE QtyOnHand > 0 AND CategoryNo in (" . $cate . ")";
 
     $targetPage = "products.php?CategoryNo=".urlencode($_GET['CategoryNo']).'&';
 //Lấy sản phẩm theo tìm kiếm
 } else if (isset($_GET['Keyword'])) {
     $keyword = $_GET['Keyword'];
-    $sql = "SELECT * FROM tblProduct WHERE ProductName LIKE '%$keyword%'";
+    $sql = "SELECT * FROM tblProduct WHERE QtyOnHand > 0 AND ProductName LIKE '%$keyword%'";
 
     $targetPage = "products.php?Keyword=".$_GET['Keyword'].'&';
 //Hiển thị bình thường
 } else {
-    $sql = "SELECT * FROM tblProduct WHERE tblProduct.ProductID > 0";
+    $sql = "SELECT * FROM tblProduct WHERE QtyOnHand > 0";
 
     $targetPage = "products.php?";
 }
@@ -64,8 +67,7 @@ $getProduct = $database->select($sql.$type." LIMIT " . $start . ", " . $limit);
             <a href="<?php echo $Page->buildQuery('Sort', 'topsell') ?>" > Mua nhiều </a>
         </div>
         <?php
-        while ($rows = $getProduct->fetch_assoc()) {
-            if ($rows['QtyOnHand'] > 0) {?>
+        while ($rows = $getProduct->fetch_assoc()) {?>
             <div class="product_box"  style="position: relative;">
                 <a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>" style="display: block ">
                     <h3><?php echo $rows['ProductName']; ?></h3>
@@ -76,7 +78,6 @@ $getProduct = $database->select($sql.$type." LIMIT " . $start . ", " . $limit);
                 </a>
             </div>
     <?php   }
-        }
     $total_pages = mysqli_num_rows($database->select($sql.$type));
     } else {
         echo '<h1>Không tìm thấy kết quả trên!</h1><br>';

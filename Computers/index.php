@@ -9,6 +9,12 @@
                     <div class="swiper-slide"><a href="#"><img src="images/slider/01.jpg" alt="" /></a></div>
                     <div class="swiper-slide"><a href="#"><img src="images/slider/02.jpg" alt="" /></a></div>
                     <div class="swiper-slide"><a href="#"><img src="images/slider/03.jpg" alt="" /></a></div>
+                    <div class="swiper-slide"><a href="#"><img src="images/slider/04.jpg" alt="" /></a></div>
+                    <div class="swiper-slide"><a href="#"><img src="images/slider/05.jpg" alt="" /></a></div>
+                    <div class="swiper-slide"><a href="#"><img src="images/slider/06.jpg" alt="" /></a></div>
+                    <div class="swiper-slide"><a href="#"><img src="images/slider/07.jpg" alt="" /></a></div>
+                    <div class="swiper-slide"><a href="#"><img src="images/slider/08.jpg" alt="" /></a></div>
+                    <div class="swiper-slide"><a href="#"><img src="images/slider/09.jpg" alt="" /></a></div>
                 </div>
                 
                 <div class="swiper-pagination"></div>

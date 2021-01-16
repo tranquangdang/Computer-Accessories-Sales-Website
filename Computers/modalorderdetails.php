@@ -31,8 +31,8 @@ if(isset($_POST['OrderNo']))
         $total = $product->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount']) * $rows['QtyOrdered'];
         $output .= '
         <tr>
-            <td style="vertical-align: middle;  text-align: center;"><img style="width: 100px; height: 100px" src="'. $product->checkImg($rows['ProductImg']) .'" alt="image" /></td> 
-            <td style="vertical-align: middle;  text-align: center;"><span>'. $rows['ProductName'].'</span></td> 
+            <td><a href="productdetail.php?ProductID='.$rows['ProductID'].' style="display: block "><img style="max-width: 140px; height: 150px; vertical-align: middle;  text-align: center;" src="'.$product->checkImg($rows['ProductImg']).'" alt="image" /></a></td> 
+            <td style="font-size:15px; color: black; font-weight: bold; vertical-align: middle;  text-align: center;"><a href="productdetail.php?ProductID='. $rows['ProductID'].'" style="display: block; color: #000;"><span>'. $rows['ProductName'].'</span></a></td> 
             <td style="vertical-align: middle;  text-align: center;"><p>'. $rows['QtyOrdered'].'</p></td>
             <td style="vertical-align: middle;  text-align: center;">₫'. number_format($product->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])).'</td>
             <td style="vertical-align: middle;  text-align: center;">₫'. number_format($total) .'</td></td>

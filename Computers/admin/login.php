@@ -1,9 +1,9 @@
-<?php include '../classes/Adminlogin.php' ?>
+<?php include '../classes/Admin.php' ?>
 <?php 
-$admin = new Adminlogin();
+$admin = new Admin();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $AdminUser = $_POST['AdminUser'];
-    $AdminPass = md5($_POST['AdminPass']);
+    $AdminPass = $_POST['AdminPass'];
 
     $loginChk= $admin->adminLogin($AdminUser, $AdminPass);
 }

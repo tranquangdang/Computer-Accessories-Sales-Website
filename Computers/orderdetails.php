@@ -4,11 +4,11 @@ if(!Session::get('customerId')) {
     header("Location:login.php");
 }
 if (isset($_GET['cancel'])) {
-    $OrderID = $_GET['cancel'];
+    $OrderID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['cancel']);
     $cancel = $cart->orderCancel($OrderID);
 }
 if (isset($_GET['confirm'])) {
-    $OrderID =  $_GET['confirm'];
+    $OrderID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['confirm']);
     $confirm = $cart->ConfirmShip($OrderID);
 }
 ?>

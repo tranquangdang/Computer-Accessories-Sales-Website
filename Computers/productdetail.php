@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                     while($rows = $results->fetch_assoc())
                     {
 			?>
-        	<h1><?php echo $rows['ProductName']; ?></h1>
+        	<h3><?php echo $rows['ProductName']; ?></h3>
             <div class="content_half float_l">
         	    <a  rel="lightbox[portfolio]" href="#"><img class="detail" src="<?php echo $product->checkImg($rows['ProductImg']);  ?>" alt="image" /></a>
             </div>

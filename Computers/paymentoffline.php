@@ -3,8 +3,9 @@
 if(!Session::get('customerId')) {
     header("Location:login.php");
 }
- ?>
- <?php 
+if(!$cart->checkCartItem()) {
+    header("Location:index.php");
+}
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$Total = $_POST['Total'];
 	$CustID = Session::get('customerId');

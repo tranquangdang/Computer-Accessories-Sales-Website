@@ -1,3 +1,7 @@
+<?php 
+include '../lib/Session.php';
+Session::checkSession();
+?>
 <?php include 'inc/header.php';?>
 <?php include 'inc/sidebar.php';?>
 <?php include '../classes/Product.php'; ?>

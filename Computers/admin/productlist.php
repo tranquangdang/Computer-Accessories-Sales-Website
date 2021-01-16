@@ -1,10 +1,12 @@
-﻿<?php include 'inc/header.php';?>
+﻿<?php 
+include '../lib/Session.php';
+Session::checkSession();
+?>
+<?php include 'inc/header.php';?>
 <?php include 'inc/sidebar.php';?>
 <?php include '../classes/Product.php'; ?>
-<?php include '../classes/Cart.php'; ?>
 <?php include_once '../helpers/Format.php'; ?>
 <?php 
-$cart = new Cart();
 $pd = new Product();
 $fm = new Format();
  ?>
@@ -47,7 +49,7 @@ if (isset($_GET['delpro'])) {
 						<td><?php echo $fm->textShorten($result['ProductName'],50); ?></td>
 						<td><?php echo $result['CategoryNo']; ?></td>
 						<td><?php echo $result['Brand']; ?></td>
-						<td>đ<?php echo number_format($cart->DiscountPrice($result['UnitPrice'],$result['PerDiscount'])); ?></td>
+						<td>đ<?php echo number_format($pd->DiscountPrice($result['UnitPrice'],$result['PerDiscount'])); ?></td>
 						<td><?php echo $result['PerDiscount']; ?></td>
 						<td><?php echo $result['QtyOnHand']." cái"; ?></td>
 						<td><a href="productedit.php?proid=<?php echo $result['ProductID']; ?>">Sửa</a> || <a onclick="return confirm('Bạn có muốn xóa sản phẩm này không?')" href="?delpro=<?php echo $result['ProductID']; ?>">Xóa</a></td>

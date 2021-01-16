@@ -3,6 +3,9 @@
 if(!Session::get('customerId')) {
     header("Location:login.php");
 }
+if($cart->getTotalMoneyInvoice() == 0) {
+    header("Location:index.php");
+}
 ?>
 <?php require "include/header.php"; ?>
 <?php require "include/search.php"; ?>

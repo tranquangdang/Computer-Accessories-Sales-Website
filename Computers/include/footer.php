@@ -24,8 +24,15 @@
 				<div class="col_1_of_4 span_1_of_4">
 					<h4>Tài khoản</h4>
 						<ul>
+							<?php if(Session::get('customerId')) {?>
 							<li><a href="profile.php">Tài khoản</a></li>
+							<?php
+							$CustNo = Session::get('customerId');
+							$select = "SELECT * FROM tblCart WHERE CustNo = '$CustNo'";
+							$result = $database->select($select);
+							if($result && $cart->checkCartItem()) {?>
 							<li><a href="shoppingcart.php">Xem giỏ hàng</a></li>
+							<?php }}?>
 							<li><a href="buildpc.php">Xây dựng cấu hình</a></li>
 						</ul>
 				</div>
@@ -56,17 +63,7 @@
     <script type="text/javascript" src="js/easing.js"></script> 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			/*
-			var defaults = {
-	  			containerID: 'toTop', // fading element id
-				containerHoverID: 'toTopHover', // fading element hover id
-				scrollSpeed: 1200,
-				easingType: 'linear' 
-	 		};
-			*/
-			
 			$().UItoTop({ easingType: 'easeOutQuart' });
-			
 		});
 	</script>
     

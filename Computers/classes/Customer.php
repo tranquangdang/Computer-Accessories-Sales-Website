@@ -158,4 +158,26 @@ class Customer
         }
         return $msg;
     }
+
+    public function getAllCus()
+    {
+        $query = "SELECT * FROM tblCustomer ORDER BY CustID DESC";
+        $result = $this->database->select($query);
+        return $result;
+    }
+
+    public function delCusById($id)
+    {
+        $id = $this->format->validation($id);
+        $id = mysqli_real_escape_string($this->database->link, $id);
+        $query = "DELETE FROM tblCustomer WHERE CustID = '$id'";
+        $deldata = $this->database->delete($query);
+        if ($deldata) {
+            $msg = "<span class='success'>Thành công</span>";
+            return $msg;
+        } else {
+            $msg = "<span class='error'>Thất bại!</span>";
+            return $msg;
+        }
+    }
 }

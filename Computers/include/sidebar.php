@@ -41,8 +41,8 @@
                         </li>
                         <li><a href="products.php?CategoryNo='AVKEY','WDKEY','OSKEY'">Phần mềm</a>
                             <ul>
-                                <li><a href="products.php?CategoryNo='AVKEY'">Windows</a></li>
-                                <li><a href="products.php?CategoryNo='WDKEY'">Anti Virus</a></li>
+                                <li><a href="products.php?CategoryNo='WDKEY'">Windows</a></li>
+                                <li><a href="products.php?CategoryNo='AVKEY'">Anti Virus</a></li>
                                 <li><a href="products.php?CategoryNo='OSKEY'">Khác</a></li>
                             </ul>
                         </li>

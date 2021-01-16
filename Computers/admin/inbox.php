@@ -1,4 +1,8 @@
-﻿<?php include 'inc/header.php';?>
+﻿<?php 
+include '../lib/Session.php';
+Session::checkSession();
+?>
+<?php include 'inc/header.php';?>
 <?php include 'inc/sidebar.php';?>
 <?php
 $filepath = realpath(dirname(__FILE__));
@@ -8,23 +12,22 @@ $fm = new Format();
 ?>
 <?php 
 if (isset($_GET['Confirm'])) {
-    $OrderID	= $_GET['Confirm'];
+    $OrderID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['Confirm']);
     $Confirm = $ct->Confirm($OrderID);
 }
 
 if (isset($_GET['Prepare'])) {
-    $OrderID	= $_GET['Prepare'];
+    $OrderID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['Prepare']);
     $Prepare = $ct->Prepare($OrderID);
 }
 
 if (isset($_GET['Ship'])) {
-    $OrderID	= $_GET['Ship'];
+    $OrderID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['Ship']);
     $Ship = $ct->Ship($OrderID);
 }
 
 if (isset($_GET['Remove'])) {
-    $OrderID	= $_GET['Remove'];
-
+    $OrderID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['Remove']);
     $Remove = $ct->orderCancel($OrderID);
 }
  ?>

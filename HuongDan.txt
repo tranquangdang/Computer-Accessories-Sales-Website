@@ -1,0 +1,9 @@
+- Sử dụng file database.sql để khởi tạo Database.
+- Thay đổi các cài đặt của Database tại WebsiteDangTruong > Computers > config > config.php.
+- Chạy file index.php, website cần internet để hiển thị chính xác, sử dụng tốt nhất trên trình duyệt Google Chrome.
+- Tài khoản website là:
+	Tên tài khoản: dang@gmail.com
+	Mật khẩu: 123
+- Tài khoản trang admin là:
+	Tên tài khoản: admin
+	Mật khẩu: admin

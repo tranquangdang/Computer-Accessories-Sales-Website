@@ -9,13 +9,11 @@ class Product
 {
     private $database;
     private $format;
-    private $cart;
 
     public function __construct()
     {
         $this->database = new Database();
         $this->format = new Format();
-        $this->cart = new Cart();
     }
 
     //Lấy tất cả các sp
@@ -29,6 +27,7 @@ class Product
     //Lấy sản phẩm theo id
     public function getProById($ProductID)
     {
+        $ProductID  = mysqli_real_escape_string($this->database->link, $ProductID);
         $query = "SELECT * FROM tblProduct WHERE ProductId = '$ProductID'";
         $result = $this->database->select($query);
         return $result;
@@ -90,6 +89,9 @@ class Product
         } elseif ($CategoryNo == "" || $Brand == "" || $ProductName == "" || $Intro == "" || $UnitPrice == "" || $PerDiscount == "" || $QtyOnHand == "") {
             $msg = "<span class='error'>Chưa điền đầy đủ cho tất cả các trường!</span>";
             return $msg;
+        } else if (!is_numeric($QtyOnHand) || !is_numeric($UnitPrice) || !is_numeric($PerDiscount)) {
+            $msg = "<span class='error'>Phải là số!</span>";
+            return $msg;
         } else if ($QtyOnHand <= 0) {
             $msg = "<span class='error'>Phải lớn hơn 0!</span>";
             return $msg;
@@ -141,6 +143,9 @@ class Product
 
         if ($CategoryNo == "" || $Brand == "" || $ProductName == "" || $Intro == "" || $UnitPrice == "" || $PerDiscount == "" ||  $QtyOnHand == "") {
             $msg = "<span class='error'>Chưa điền đầy đủ cho tất cả các trường!</span>";
+            return $msg;
+        } else if (!is_numeric($QtyOnHand) || !is_numeric($UnitPrice) || !is_numeric($PerDiscount)) {
+            $msg = "<span class='error'>Phải là số!</span>";
             return $msg;
         } else if ($QtyOnHand <= 0) {
             $msg = "<span class='error'>Phải lớn hơn 0!</span>";
@@ -204,6 +209,7 @@ class Product
     //Xóa sp
     public function delProById($ProductId)
     {
+        $ProductId  = mysqli_real_escape_string($this->database->link, $ProductId);
         $query = "SELECT * FROM tblProduct WHERE ProductID = '$ProductId'";
         $getData = $this->database->select($query);
         if ($getData) {
@@ -239,6 +245,7 @@ class Product
     }
 
     public function checkType($Type) {
+        $Type  = mysqli_real_escape_string($this->database->link, $Type);
         if ($Type != "") {
             switch ($Type) {
                 case 'MAIN':
@@ -275,6 +282,8 @@ class Product
     }
 
     public function buildPC($Type,$ProductID) {
+        $Type       = mysqli_real_escape_string($this->database->link, $Type);
+        $ProductID  = mysqli_real_escape_string($this->database->link, $ProductID);
         $dot = "'";
         $select = $this->getProById($ProductID);
         if($select) {

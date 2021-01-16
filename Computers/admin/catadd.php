@@ -1,11 +1,14 @@
-﻿<?php include 'inc/header.php'; ?>
+﻿<?php 
+include '../lib/Session.php';
+Session::checkSession();
+?>
+<?php include 'inc/header.php'; ?>
 <?php include 'inc/sidebar.php'; ?>
 <?php include '../classes/Category.php'; ?>
 <?php 
 $cat = new Category();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $catName = $_POST['CategoryName'];
-    
     $insertCat= $cat->catInsert($catName);
 }
 ?>

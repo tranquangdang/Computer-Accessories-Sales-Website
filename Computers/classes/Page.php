@@ -97,6 +97,8 @@ class Page
 
     //Thay đổi value của biến $_GET trong url
     public function buildQuery($variable, $value){
+        $variable  = mysqli_real_escape_string($this->database->link, $variable);
+        $value  = mysqli_real_escape_string($this->database->link, $value);
         $query = $_GET;
         $query[$variable] = $value;
         $query_result = http_build_query($query);
@@ -104,6 +106,7 @@ class Page
     }
 
     public function sortSQL($type) {
+        $type  = mysqli_real_escape_string($this->database->link, $type);
         if ($type == 'asc') {
             return ' ORDER BY UnitPrice ASC ';
         } else if ($type == 'desc') {
@@ -120,6 +123,7 @@ class Page
     }
 
     public function setVariableSort($type) {
+        $type  = mysqli_real_escape_string($this->database->link, $type);
         if ($type == 'asc') {
             return 'Sort=asc';
         } else if ($type == 'desc') {
@@ -136,6 +140,7 @@ class Page
     }
 
     public function checkType($type) {
+        $type  = mysqli_real_escape_string($this->database->link, $type);
         if($type == 'CPU01' || $type == 'CPU02') {
             return 'CPU';
         } else if($type == 'MAIN1' || $type == 'MAIN2') {

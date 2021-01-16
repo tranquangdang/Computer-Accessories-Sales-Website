@@ -19,7 +19,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script src="https://superal.github.io/canvas2image/canvas2image.js"></script>
 
-    <script src="https://pagination.js.org/dist/2.1.5/pagination.js"></script>
     <script type="text/javascript" src="js/ddsmoothmenu.js"></script>
     <script type="text/javascript">
         ddsmoothmenu.init({

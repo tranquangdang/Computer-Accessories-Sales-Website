@@ -46,6 +46,7 @@ class Category
 
     public function getCatById($catid)
     {
+        $catid = mysqli_real_escape_string($this->database->link, $catid);
         $query = "SELECT * FROM tblProductCategory WHERE CategoryID = '$catid'";
         $result = $this->database->select($query);
         return $result;
@@ -76,8 +77,8 @@ class Category
     }
     public function delCatById($id)
     {
-        $query = "DELETE FROM tblProductCategory WHERE CategoryID = '$id'";
-        $deldata = $this->database->delete($query);
+        $id = $this->format->validation($id);
+        $id = mysqli_real_escape_string($this->database->link, $id);
         $query = "DELETE FROM tblProductCategory WHERE CategoryID = '$id'";
         $deldata = $this->database->delete($query);
         if ($deldata) {

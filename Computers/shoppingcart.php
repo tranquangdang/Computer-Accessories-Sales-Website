@@ -1,6 +1,15 @@
 <?php require ("include/topheader.php"); ?>
 <?php 
-//Sự kiện xóa
+
+if (isset($_GET['DelCart'])) {
+    $DelCart = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['DelCart']);
+    if($DelCart == 'True'){
+        $delAllProducts = $cart->delCustomerCart();
+        header("Location:index.php");
+    }
+}
+
+//Sự kiện xóa từng sản phẩm
 if (isset($_GET['ProductID']) && isset($_GET['CartID'])) {
     $ProductID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['ProductID']);
     $CartID = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['CartID']);
@@ -27,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <th style="padding: 5px; vertical-align: middle;  text-align: center;" >Số lượng </th> 
                     <th style="vertical-align: middle;  text-align: center;">Giá tiền </th> 
                     <th style="padding-right: 5px; vertical-align: middle;  text-align: center;">Tổng cộng </th> 
-                    <th style="vertical-align: middle;  text-align: center;">Xóa </th> 
+                    <th style="vertical-align: middle;  text-align: center;"><a href="shoppingcart.php?DelCart=True" class="btnBlack" style="color: crimson; cursor: pointer; padding: 0">Xóa hết</a></th> 
                 </tr
                 <?php 
                     //Lấy id của khách đang đăng nhập
@@ -44,8 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     ?>
                 <tr>
-                    <td><img style="max-width: 140px; height: 150px; vertical-align: middle;  text-align: center;" src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="image" /></td> 
-                    <td style="font-size:15px; color: black; font-weight: bold; vertical-align: middle;  text-align: center;"><span><?php echo $rows['ProductName']; ?></span></td> 
+                    <td><a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>" style="display: block "><img style="max-width: 140px; height: 150px; vertical-align: middle;  text-align: center;" src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="image" /></a></td> 
+                    <td style="font-size:15px; color: black; font-weight: bold; vertical-align: middle;  text-align: center;"><a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>" style="display: block; color: #000;"><span><?php echo $rows['ProductName']; ?></span></a></td> 
                     <td style="vertical-align: middle;  text-align: center;">
                         <form action="" method="post">
                             <input type="hidden" name="CartID" value="<?php echo $rows['CartID']; ?>"/>
@@ -56,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </td>
                     <td style="vertical-align: middle;  text-align: center;">₫<?php echo number_format($product->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount'])); ?></td>
                     <td style="vertical-align: middle;  text-align: center;">₫<?php $total = $product->DiscountPrice($rows['UnitPrice'],$rows['PerDiscount']) * $rows['QtyOrdered']; echo number_format($total); ?></td></td>
-                    <td style="vertical-align: middle;  text-align: center;"> <a class="btn" href="shoppingcart.php?CartID=<?php echo $rows['CartID']; ?>&ProductID=<?php echo $rows['ProductID']; ?>"><img src="images/remove_x.gif" alt="remove" /><br />Xóa</a> </td>
+                    <td style="vertical-align: middle;  text-align: center;"> <a class="btn" href="shoppingcart.php?CartID=<?php echo $rows['CartID']; ?>&ProductID=<?php echo $rows['ProductID']; ?>" style="color: crimson;"><img src="images/remove_x.gif" alt="remove" /><br />Xóa</a> </td>
                 </tr>
                     <?php 
                         }
