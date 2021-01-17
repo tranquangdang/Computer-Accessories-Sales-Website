@@ -8,12 +8,11 @@ if(isset($_POST['OrderNo']))
     $query = "SELECT * FROM tblOrderInvoice WHERE OrderID = '".$_POST['OrderNo']."'";
     $getInfo = $database->select($query);
     if($getInfo) {
-        while ($rows = $getInfo->fetch_assoc()) {
+    $row = $getInfo->fetch_assoc();
     $output .= '
-    <p>Số điện thoại: '.$rows['TelNo'].'</p>
-    <p>Địa chỉ nhận hàng: '.$rows['OrderAddress'].'</p>
+    <p>Số điện thoại: '.$row['TelNo'].'</p>
+    <p>Địa chỉ nhận hàng: '.$row['OrderAddress'].'</p>
     <br>';
-        }
     }
     $output .= '
     <table class="table table-responsive table-bordered">

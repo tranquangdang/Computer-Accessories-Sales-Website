@@ -1,6 +1,10 @@
 <?php require ("include/topheader.php"); ?>
 <?php 
 
+if (!$cart->checkCartItem()) {
+    header("Location:index.php");
+}
+
 if (isset($_GET['DelCart'])) {
     $DelCart = preg_replace('/[^-a-zA-Z0-9_]/', '', $_GET['DelCart']);
     if($DelCart == 'True'){
@@ -50,7 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if($getPro) {
                     //Duyệt để hiển thị thông tin sản phẩm trong giỏ hàng của khách
                     while ($rows = $getPro->fetch_assoc()) {
-                    
                     ?>
                 <tr>
                     <td><a href="productdetail.php?ProductID=<?php echo $rows['ProductID']; ?>" style="display: block "><img style="max-width: 140px; height: 150px; vertical-align: middle;  text-align: center;" src="<?php echo $product->checkImg($rows['ProductImg']); ?>" alt="image" /></a></td> 
@@ -59,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <form action="" method="post">
                             <input type="hidden" name="CartID" value="<?php echo $rows['CartID']; ?>"/>
                             <input type="hidden" name="ProductID" value="<?php echo $rows['ProductID']; ?>"/>
-                            <input type="number" name="QtyOrdered" value="<?php echo $rows['QtyOrdered']; ?>" min="1" onKeyDown="return false" style="width: 50px; text-align: right" />
+                            <input type="number" name="QtyOrdered" value="<?php echo $rows['QtyOrdered']; ?>" min="1" onKeyDown="return false"  max="<?php echo $rows["QtyOnHand"]; ?>" style="width: 50px; text-align: right" />
                             <input class="update btn" type="submit" name="submit" value="Cập nhật"/>
                         </form>
                     </td>
@@ -68,6 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <td style="vertical-align: middle;  text-align: center;"> <a class="btn" href="shoppingcart.php?CartID=<?php echo $rows['CartID']; ?>&ProductID=<?php echo $rows['ProductID']; ?>" style="color: crimson;"><img src="images/remove_x.gif" alt="remove" /><br />Xóa</a> </td>
                 </tr>
                     <?php 
+                        if ($rows["QtyOnHand"] == 0) {
+                            $cart->delProductByCart($CartID,$rows['ProductID']);
+                        }
                         }
                     }
                     ?>

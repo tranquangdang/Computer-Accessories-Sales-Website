@@ -21,7 +21,8 @@ class Cart
         $CustNo = Session::get('customerId');
         $select = "SELECT * FROM tblCart WHERE CustNo = '$CustNo'";
         $getCustNo = $this->database->select($select);
-        while( ($rows = $getCustNo->fetch_assoc()) != NULL ) {$CartID = $rows['CartID'];}
+        $rows = $getCustNo->fetch_assoc();
+        $CartID = $rows['CartID'];
         //Lấy ra bảng chi tiết giỏ hàng của khách hàng
         $query = "SELECT * FROM tblProduct, tblCartDetail, tblCart WHERE 
         tblCart.CustNo ='$CustNo' AND tblCartDetail.CartID = '$CartID' AND tblCartDetail.ProductID = tblProduct.ProductID";
@@ -30,7 +31,7 @@ class Cart
         $OrderTotalMoney = 0;
         //Duyệt và tính tổng tiền
         if($this->getCartProduct($CartID)){
-            while( ($rows = $getQtyOrdered->fetch_assoc()) != NULL ) {
+            while(($rows = $getQtyOrdered->fetch_assoc()) != NULL ) {
                 $Amount = ($rows['UnitPrice'] - (($rows['UnitPrice'] * $rows['PerDiscount'])/100))*$rows['QtyOrdered'];
                 $OrderTotalMoney += $Amount;
             }
@@ -38,13 +39,14 @@ class Cart
         return $OrderTotalMoney;
     }
     
-    //Tính tổng món hàng
+    //Sô lượng sản phẩm trong giỏ
     public function getQty() {
         //Lấy ra id giỏ hàng
         $CustNo = Session::get('customerId');
         $select = "SELECT * FROM tblCart WHERE CustNo = '$CustNo'";
         $getCustNo = $this->database->select($select);
-        while( ($rows = $getCustNo->fetch_assoc()) != NULL ) {$CartID = $rows['CartID'];}
+        $rows = $getCustNo->fetch_assoc();
+        $CartID = $rows['CartID'];
         //Đếm các sản phẩm trong chi tiết giỏ hàng
         $query = "SELECT * FROM tblProduct, tblCartDetail, tblCart WHERE 
         tblCart.CustNo ='$CustNo' AND tblCartDetail.CartID = '$CartID' AND tblCartDetail.ProductID = tblProduct.ProductID";
@@ -76,7 +78,8 @@ class Cart
         //Nếu có rồi thì lấy ra ID giỏ hàng
         $select = "SELECT * FROM tblCart WHERE CustNo = '$CustNo'";
         $getCustNo = $this->database->select($select);
-        while( ($rows = $getCustNo->fetch_assoc()) != NULL ) {$CartID = $rows['CartID'];}
+        $rows = $getCustNo->fetch_assoc();
+        $CartID = $rows['CartID'];
 
         //Kiểm tra xem sản phẩm đó đã có trong giỏ hàng hay chưa
         $chquery = "SELECT tblCartDetail.* FROM tblCartDetail, tblCart WHERE 
@@ -87,21 +90,29 @@ class Cart
         if ($getPro) {
             $new = $QtyOrdered;
             //Lấy ra số lượng sản phẩm sẽ tăng
-            $select = "SELECT QtyOrdered FROM tblCartDetail WHERE CartID = '$CartID' AND ProductID = '$ProductID' ";
             $getQtyOrdered = $this->database->select($select);
-            while( ($row = $getQtyOrdered->fetch_assoc()) != NULL ) {$old = $row['QtyOrdered'];}
+            $row = $getPro->fetch_assoc();
+            $old = $row['QtyOrdered'];
             //Tăng lên 1 rồi cập nhật
             $QtyOrdered = $old + $new;
-            $query = "UPDATE tblCartDetail
+            $check = "SELECT * FROM tblProduct WHERE ProductId = '$ProductID'";
+            $result = $this->database->select($check);
+            $row = $result->fetch_assoc();
+            if ($QtyOrdered <= $row['QtyOnHand']) {
+                $query = "UPDATE tblCartDetail
                 SET
                 QtyOrdered = $QtyOrdered
                 WHERE CartID = '$CartID' AND ProductID = '$ProductID' ";
-            $updated_row = $this->database->update($query);
-            if ($updated_row) {
-                header("Location:shoppingcart.php");
+                $updated_row = $this->database->update($query);
+                if ($updated_row) {
+                    header("Location:shoppingcart.php");
+                } else {
+                    echo "<script language='javascript'>alert('Lỗi')</script>";
+                }
             } else {
-                echo "<script language='javascript'>alert('Lỗi')</script>";
+                echo "<script language='javascript'>alert('Không thành công! Vượt quá số lượng trong kho!')</script>";
             }
+            
         } else {
             //Nếu chưa có thì chèn vô bảng chi tiết giỏ hàng
             $query = "INSERT INTO tblCartDetail (CartID, ProductID, QtyOrdered) VALUES ($CartID, $ProductID, $QtyOrdered)";
@@ -165,7 +176,8 @@ class Cart
         $CustNo = Session::get('customerId');
         $select = "SELECT * FROM tblCart WHERE CustNo = '$CustNo'";
         $getCustNo = $this->database->select($select);
-        while( ($rows = $getCustNo->fetch_assoc()) != NULL ) {$CartID = $rows['CartID'];}
+        $rows = $getCustNo->fetch_assoc();
+        $CartID = $rows['CartID'];
         $query = "DELETE FROM tblCartDetail WHERE CartID = '$CartID'";
         $this->database->delete($query);
     }
@@ -189,10 +201,9 @@ class Cart
         if ($getCart) {
             $select = "SELECT * FROM tblCustomer WHERE CustID = '$CustID'";
             $getInfo = $this->database->select($select);
-            while(($rows = $getInfo->fetch_assoc()) != NULL ) {
-                $OrderAddress = $rows['CustAddress']; 
-                $TelNo = $rows['TelNo'];
-            }
+            $rows = $getInfo->fetch_assoc();
+            $OrderAddress = $rows['CustAddress']; 
+            $TelNo = $rows['TelNo'];
             $query = "INSERT INTO tblOrderInvoice(CustNo, OrderAddress, OrderTotalMoney, TelNo) VALUES($CustID, '$OrderAddress', $OrderTotalMoney, '$TelNo')";
             $inserted_row = $this->database->insert($query);
         }
@@ -203,7 +214,8 @@ class Cart
         if ($getPro) {
             $select = "SELECT * FROM tblOrderInvoice WHERE CustNo = '$CustID' AND OrderDate = now()";
             $getOrderID = $this->database->select($select);
-            while( ($rows = $getOrderID->fetch_assoc()) != NULL ) {$OrderID = $rows['OrderID'];}
+            $rows = $getOrderID->fetch_assoc();
+            $OrderID = $rows['OrderID'];
             while ($result = $getPro->fetch_assoc()) {
                 $ProductID      = $result['ProductID'];
                 $QtyOrdered       = $result['QtyOrdered'];
@@ -223,7 +235,8 @@ class Cart
         if(!$result) {
             $Total = 0;
         } else {
-            while( ($rows = $result->fetch_assoc()) != NULL ) {$Total = $rows['OrderTotalMoney'];}
+            $rows = $result->fetch_assoc();
+            $Total = $rows['OrderTotalMoney'];
         }
         return $Total;
     }

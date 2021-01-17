@@ -3,7 +3,7 @@ require "include/topheader.php";
 if(isset($_POST['Type']))  
 {  
     $output = '';  
-    $select = "SELECT * FROM tblProduct WHERE CategoryNo in (" . $_POST['Type'] . ")";
+    $select = "SELECT * FROM tblProduct WHERE CategoryNo in (" . $_POST['Type'] . ") AND QtyOnHand > 0 ";
     $getPro = $database->select($select);
     if($getPro) {
     while ($rows = $getPro->fetch_assoc()) {

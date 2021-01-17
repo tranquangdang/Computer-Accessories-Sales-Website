@@ -7,3 +7,4 @@
 - Tài khoản trang admin là:
 	Tên tài khoản: admin
 	Mật khẩu: admin
+https://github.com/tranquangdang/websitedangtruong

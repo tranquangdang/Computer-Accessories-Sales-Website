@@ -9,7 +9,7 @@ if (isset($_GET['CategoryNo'])) {
     if ($getCateName) {
         while ($row = $getCateName->fetch_assoc()) {
         $st .= ' ' . $row['CategoryName'];
-    }
+        }
     }
     
     echo '<h1>' . $st . '</h1>';

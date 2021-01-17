@@ -48,7 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                         <input type="hidden" name="ProductID" value="<?php echo $rows['ProductID']; ?>"/>
                         <td colspan="2">
                             <?php 
-                            if(Session::get('customerId')) {
+                            if ($rows['QtyOnHand'] == 0) {
+                                echo '<a class="btn blackBtn" style="margin-top: 30px; text-align:center;">Hết hàng!</a>';
+                            } else if(Session::get('customerId')) {
                                 echo '<input type="submit" name="submit" class="btn blackBtn" style="width: 100%; margin-top: 30px; text-align:center; cursor: pointer;" value="THÊM VÀO GIỎ HÀNG" />';
                             } else {
                                 echo '<a href="login.php" class="btn blackBtn" style="margin-top: 30px; text-align:center; cursor: pointer;">ĐĂNG NHẬP NGAY</a>';
