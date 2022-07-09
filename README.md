@@ -6,4 +6,4 @@
 - Admin
   + Order, Product and Customer Management
 
-Demo: https://dangtruongpc.000webhostapp.com/about.php
+Demo: https://dangtruongpc.000webhostapp.com
